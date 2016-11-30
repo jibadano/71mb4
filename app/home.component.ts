@@ -14,7 +14,6 @@ import './rxjs-extensions';
 @Component({
   selector: 'home',
   templateUrl:'app/home.component.html',
-	providers:[AppService],
 	directives: [FORM_DIRECTIVES, REACTIVE_FORM_DIRECTIVES]
 })
 
@@ -30,22 +29,24 @@ export class HomeComponent implements OnInit {
     constructor(private services: AppService, private fb: FormBuilder) {};
 
   	login(){
-		if(this.user.password != ''  && this.user.email != '')
-			this.services.login(this.user).then(()=>this.loginSuccess.emit(this.user))
-  	};
+      if(this.user.password != ''  && this.user.email != ''){
+        this.services.login(this.user).then(()=>{
+        this.services.fetchTimba();
+        });
+      }
+  	}
   
   	logout(){
 		this.services.logout(); 
 	}
 
   	ngOnInit(){
-		      this.buildForm();
 
-	  this.services.exec('getCurrentUser',{}).then(user =>{
-		if(user) 
-			this.loginSuccess.emit(user);
-  	});
-  }
+		 this.buildForm();
+     this.services.getCurrentUser().then(()=>{
+           this.services.fetchTimba();
+     });
+    }
 
 
 

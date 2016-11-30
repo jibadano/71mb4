@@ -40,19 +40,19 @@ var HomeComponent = (function () {
     ;
     HomeComponent.prototype.login = function () {
         var _this = this;
-        if (this.user.password != '' && this.user.email != '')
-            this.services.login(this.user).then(function () { return _this.loginSuccess.emit(_this.user); });
+        if (this.user.password != '' && this.user.email != '') {
+            this.services.login(this.user).then(function () {
+                _this.services.fetchTimba();
+            });
+        }
     };
-    ;
     HomeComponent.prototype.logout = function () {
         this.services.logout();
     };
     HomeComponent.prototype.ngOnInit = function () {
-        var _this = this;
+        this.services.fetchTimba();
         this.buildForm();
-        this.services.exec('getCurrentUser', {}).then(function (user) {
-            if (user)
-                _this.loginSuccess.emit(user);
+        this.services.getCurrentUser().then(function () {
         });
     };
     HomeComponent.prototype.buildForm = function () {
@@ -104,7 +104,6 @@ var HomeComponent = (function () {
         core_1.Component({
             selector: 'home',
             templateUrl: 'app/home.component.html',
-            providers: [app_service_1.AppService],
             directives: [forms_1.FORM_DIRECTIVES, forms_1.REACTIVE_FORM_DIRECTIVES]
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService, forms_1.FormBuilder])

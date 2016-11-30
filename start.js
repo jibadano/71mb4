@@ -8,7 +8,6 @@
 //Modules
 var express = require('express');
 var session = require('express-session');
-var cookieParser = require('cookie-parser');
 
 //Server modules
 var server = require('./scripts/server/server');
@@ -19,8 +18,15 @@ var requestHandler = require('./scripts/server/requestHandler');
 //Config application
 var app = express();
 app.use(express.static('.'));
-app.use(cookieParser());
-app.use(session({secret: '1234567890QWERTY',  resave: false, saveUninitialized: true}));
+
+app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { maxAge: 3600000}
+}))
+
 
 //Parameters
 app.locals.host = "0.0.0.0";

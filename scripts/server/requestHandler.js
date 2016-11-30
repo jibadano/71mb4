@@ -8,20 +8,50 @@
 var database = require('./database');
 var eh = require('./errorHandler');
 var atob = require('atob');
+var io = require('socket.io').listen(4000);
+
+var logType = {CHAT:0, LOGIN:1, LOGOUT:2, KICKED:3,TIMBA:4};
+var sockets = [];
+
+var timba = {
+	betAmount: 10,
+	maxBetsPerPlayer : 10,
+	date: new Date(),
+	numbers: [],
+	log: [{type:logType.TIMBA, email: 'timbaBot@', msg: 'Timba has been created successfully!'}],
+	players: [],
+	winners: [],
+	executing: false,
+	closed: false
+}
+
+io.sockets.on('connection', function(socket){
+	sockets.push(socket);
+	socket.emit('timbaChange',timba);
+});
+
+for(var i=0; i< 36; i++){
+	timba.numbers[i] = {players:[]};
+}
 
 function redirect(req, res){
 	res.redirect('/');
 }
 
 function logout(req, res) {
-	delete req.session.user;
+	if(req.session.user){
+		removePlayer(req.session.user.email);
+		timba.log.push({type:logType.LOGOUT, email:req.session.user.email, msg: req.session.user.email + ' disconnected'});
+		delete req.session.user;
+		sendTimba();
+	}
 	res.end('{}');
 }
 
 function login(req, res) {
 	if(req.session.user)
 		return res.end(eh.USER.ALRDY_LOGGED_IN);
-
+	
 	var enc_auth = req.headers.authorization;
 	var auth = atob(enc_auth.substring(6,enc_auth.length));
 	
@@ -34,45 +64,19 @@ function login(req, res) {
 
 		if(!user)
 			return res.end(eh.USER.AUTH_FAILED);
-
+		
+		if(getPlayerIndex(timba.players, email) == -1){
+			timba.players.push({email:user.email});
+			timba.log.push({type:logType.LOGIN, email:user.email, msg: user.email + ' connected'});
+			sendTimba();
+		}
+		delete user.password;
 		req.session.user = user;
 		res.end(JSON.stringify(user));
 	});
 }
 
-function signin(req, res) {
-	if(req.session.user)
-		return res.end(eh.USER.ALRDY_LOGGED_IN);
-
-	getData(req, function(authenticationData){
-		
-		try{
-			database.existsUser({email : authenticationData.user.email}, function(err, exists){
-				if(err)
-					return res.end(eh.DATABASE(err));
-				
-				if(exists)
-					return res.end(eh.USER.ALRDY_EXTS);
-				
-				database.insertUser(authenticationData.user,function (err, user){
-					if(err)
-						return res.end(eh.DATABASE(err));
-
-					delete user.password;	
-					req.session.user = user;
-					res.end(JSON.stringify(user));
-				});
-			});
-		}
-		catch(e){
-			res.end(eh.GENERIC(err));
-		}
-	});
-}
-
-
 function execService(req, res) {
-
 	getData(req, function(serviceExecution){
 		if(!req.session.user){
 			serviceExecution.err = eh.USER.SESSION_EXPIRED;
@@ -99,6 +103,7 @@ function execService(req, res) {
 
 
 var services = {
+//ADD USER
 addUser : function (user, data, then){
 	database.insertUser(data.user,function(err,user){
 		if(err)
@@ -107,237 +112,104 @@ addUser : function (user, data, then){
 		return then(null, '');
 	});
 },
-addField : function (user, data, then){
-	database.insertField(data.field,function(err,field){
-		if(err)
-			then(eh.DATABASE(err),null);
-		
-		return then(null, '');
-	});
-},
-getFields : function (user, data, then){
-	database.findFields({name: {$regex: new RegExp('^.*' + data.fieldName + '.*$', "i")}},function (err, fields){
-		if(err)
-			then(eh.DATABASE(err),null);
-		
-		return then(null, fields);
-	});
-},
 
-getMatchs : function (user, data, then){
-	data.match.status = 'public';
-	database.findMatchs(data.match, data.pagination, function(err, matches){
-		if(err)
-			return then(eh.DATABASE(err),null);
-		
-		return then(null, matches);
-	});
-},
-
-getMyMatchs : function (user, data, then){
-	data.match.admins = user._id;
-	database.findMatchs(data.match, data.pagination,function (err, matches){
-		if(err)
-			return then(eh.DATABASE(err),null);
-		
-		return then(null, matches);
-	});
-},
-
-getMatch : function (user, data, then){
-	//TODO puede buscar un match que sea privado
-	database.findMatch({name: data.matchName}, function(err, match){
-		if(err)
-			return then(eh.DATABASE(err),null);
-		
-		if(!match)
-			return then(eh.MATCH.NOT_FOUND, null);
-
-		return then(null, match);
-	});
-},
-
-addMatch : function(user, data, then){
-	data.match.admins.push(user._id);
-	database.existsMatch({name: data.matchName}, function(err, exists){
-		if(err)
-			return then(eh.DATABASE(err),null);
-		
-		if(exists)
-			return then(eh.MATCH.ALRDY_EXTS, null);
-
-		database.insertMatch(data.match, function(err, match){
-			if(err)
-				return then(eh.DATABASE(err),null);
-				
-			return then(null,match);
-		});
-	});
-},
-
-remMatch : function(user, data, then){
-	//TODO puede borrar cualquier match
-	database.removeMatch(data.match, function(err, match){
-		if(err)
-			return then(eh.DATABASE(err),null);
-			
-		return then(null,match);
-	});
-},
-
-updMatch : function(user, data, then){
-	//TODO puede actualizar cualquier match
-	database.updateMatch(data.match, function(err, match){
-		if(err)
-			return then(eh.DATABASE(err),null);
-			
-		return then(null,match);
-	});
-},
-
-confirmMatch : function(user, data,then){
-	//TODO actualiza todo el match con lo que viene del servicio
-	data.match.players.forEach(function(player){
-		if(player._user._id == user._id){
-			player.confirm = true;
-			database.updateMatch(data.match, then);
-		}
-	});	
-},
-
-declineMatch : function(user, data,then){
-	//TODO actualiza todo el match con lo que viene del servicio
-	data.match.players.forEach(function(player){
-		if(player._user._id == user._id){
-			var i = data.match.players.indexOf(player);
-			if( i > -1)
-				data.match.players.splice(i,1);
-			
-			database.updateMatch(data.match, then);
-
-		}
-	});
+//SET BET
+setBet : function (user, data, then){
+	var index = -1;
+	for(var i = 0; i < timba.numbers[data.number -1].players.length; i++){
+		if(timba.numbers[data.number - 1].players[i].email == user.email)
+			index = i;
+	}
+	if(index != -1)
+		timba.numbers[data.number -1].players.splice(index,1);
+	else
+		timba.numbers[data.number-1].players.push({email:user.email});
 	
+	sendTimba();
+	return then(null, '');
 },
 
-getNextMatch : function(user, data){
-	//TODO
+//REMOVE PLAYER
+removePlayer : function (user, data, then){
+	if(user.admin){
+		removePlayer(data.player.email);
+		timba.log.push({type:logType.KICKED, email:user.email, msg: user.email + ' kicked'});
+		sendTimba();
+		return then(null, '');
+	}
+	return then('admin violation', undefined);
 },
 
-
-getCurrentUser : function(user, data, then){
-	return then(null,user);
+//ADD LOG
+addLog : function (user, data, then){
+	if(data.log.type == logType.CHAT)
+		data.log.email = user.email;
+	else if(!user.admin)
+		return then('user violation',undefined);
+	
+	timba.log.push(data.log);
+	sendTimba();
+	return then(undefined,timba);
 },
 
-getUsers : function(user, data, then){
-	database.findUsers({email: {$regex: new RegExp('^.*' + data.user.email + '.*$', "i")}}, function(err, users){
-		if(err)
-			return then(eh.DATABASE(err),null);
-		
-		return then(null, users);
-	});
+//GET CURRENT USER
+getCurrentUser : function (user, data, then){
+	sendTimba();
+	return then(undefined,user);
 },
 
-getGroups : function(user, data, then){
-	database.findUser({_id: user._id}, function(err, userFound){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!userFound)
-			return then(eh.USER.NOT_FND,null);
-		
-		return then(null, userFound.groups);
-	});
+//GET TIMBA
+getTimba: function (user, data, then){
+	return then(undefined, timba);
 },
 
-addGroup : function(user, data, then){
-	database.findUser({_id: user._id}, function(err, user){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!user)
-			return then(eh.USER.NOT_FND,null);
-
-		user.groups.push(data.group);
-		user.save();
-
-		return then(null, user);
-	});
+//CLOSE TIMBA
+closeTimba: function (user, data, then){
+	if(user.admin){
+		addBotLog(logType.TIMBA, 'SE CERRO LA TIMBA, EN BREVE LOS VISITARÁ EL RECAUDADOR');
+		timba.closed = true;
+		sendTimba();
+	}
+	return then(undefined, {});
 },
 
-addFriend : function(user, data, then){
-	database.findUser({_id: user._id},function(err, user){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!user)
-			return then(eh.USER.NOT_FND,null);
-		
-		user.groups.forEach(function(group){
-			if(group.name==data.groupName){
-				group.friends.push(data.friend);
-				user.save();
-				return then(err, user);
-			}
-		});
-	});
-},
-
-updGroups : function(user, data,then){
-	database.findUser({_id: user._id},function(err, user){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!user)
-			return then(eh.USER.NOT_FND,null);
-		
-		user.groups = data.groups;
-		user.save();
-		return then(null,user);
-	});
-},
-
-remFriend : function(user, data,then){
-	database.findUser({_id: user._id},function(err, user){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!user)
-			return then(eh.USER.NOT_FND,null);
-		
-		user.groups.forEach(function(group){
-			if(group.name==data.groupName){
-				var index = group.friends.indexOf(data.friend);
-				if(index != -1){
-					group.friends.splice(index,1);
-					user.save();
+//START TIMBA
+startTimba : function(user, data, then){
+		if(user.admin){
+			timba.executing = true;
+			sendTimba();
+			setTimeout(function() {
+				timba.executing = false;
+				
+				var listaPonderada = [];
+				for(var i=0; i < timba.players.length; i++){
+					for(var j=0; j < timba.players[i].bets; j++)
+						listaPonderada.push(timba.players[i]);
 				}
-				return then(null, user);
-			}
-		});
-	});
-},
-
-remGroup : function(user, data,then){
-	database.findUser({_id: user._id},function(err, user){
-		if(err)
-			return then(eh.DATABASE(err),null);
-
-		if(!user)
-			return then(eh.USER.NOT_FND,null);
-		
-		user.groups.forEach(function(group){
-			if(group.name==data.groupName){
-				var index = user.groups.indexOf(group);
-				if(index != -1){
-					user.groups.splice(index,1);	
-					user.save();
-				}
-				return then(err, user);
-			}				
-		});
-	});
+				
+				var number = Math.floor((Math.random() * timba.numbers.length));
+				timba.winners = timba.numbers[number].players;
+				sendTimba();
+			},20000);
+		};
+	},
 }
+
+
+function fetchTimba(req, res){
+	changes.push(res);
+}
+
+function getCurrentUser(req, res){
+	if(req.session.user)
+		return res.end(JSON.stringify(req.session.user));
+	return res.end('{}');
+}
+
+function sendTimba(){
+	sockets.forEach(function(socket){
+		socket.emit('timbaChange',timba);
+	});
 }
 
 //Private methods
@@ -353,9 +225,36 @@ var getData = function(req, then){
 	});
 }
 
+function addBotLog(type, message){
+	timba.log.push({type:type, email: 'timbaBot@', msg:message});
+}
+
+function getPlayerIndex(players, email){
+	var index = -1;
+	for(var i = 0; i < players.length; i++){
+		if(players[i].email == email)
+			index = i;
+	}
+	
+	return index;
+}
+
+function removePlayer(email){
+	for(var i =0; i < timba.numbers; i++){
+		var index = getPlayerIndex(timba.numbers[i].players, email);
+		if(index != -1)
+			timba.numbers[i].players.splice(index,1);
+	}
+	
+	var index = getPlayerIndex(timba.players, email);
+	if(index != -1)
+		timba.players.splice(index,1);
+}
+
 exports.logout = logout;
 exports.login = login;
-exports.signin = signin;
 exports.execService = execService;
 exports.redirect = redirect;
+exports.fetchTimba = fetchTimba;
+exports.getCurrentUser = getCurrentUser;
 

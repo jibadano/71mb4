@@ -9,24 +9,33 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var user_1 = require('./user');
+var timba_1 = require('./timba');
 var app_service_1 = require('./app.service');
-var AppComponent = (function () {
-    function AppComponent(services) {
+require('./rxjs-extensions');
+var ChatComponent = (function () {
+    function ChatComponent(services) {
         this.services = services;
-        this.nav = 'dashboard';
     }
-    ;
-    AppComponent.prototype.ngOnInit = function () {
+    ChatComponent.prototype.ngOnInit = function () {
     };
-    AppComponent = __decorate([
+    ChatComponent.prototype.sendMessage = function (message) {
+        if (message != '')
+            this.services.exec('addLog', { log: { type: timba_1.logType.CHAT, username: this.services.user.email, msg: message } }).then(function (res) { });
+    };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', user_1.User)
+    ], ChatComponent.prototype, "user", void 0);
+    ChatComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            providers: [app_service_1.AppService]
+            selector: 'chat',
+            templateUrl: 'app/chat.component.html',
+            styleUrls: ['app/chat.component.css']
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService])
-    ], AppComponent);
-    return AppComponent;
+    ], ChatComponent);
+    return ChatComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.ChatComponent = ChatComponent;
+//# sourceMappingURL=chat.component.js.map

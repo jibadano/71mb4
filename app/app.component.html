@@ -1,25 +1,24 @@
-<nav id="mainNav" class="navbar navbar-default navbar-fixed-top">
+<nav *ngIf="services.user.email" id="mainNav" class="navbar navbar-default navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
 				<span class="sr-only">Toggle navigation</span> Menu <i class="fa fa-bars"></i>
 			</button>
-			<a class="navbar-brand page-scroll" href="#page-top">Too Match</a>
+			<a class="navbar-brand page-scroll" href="#page-top">71mb4</a>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1" style="float: right;position: relative;top: 9px;">
 			<user-session *ngIf="services.user.email" (return)="nav = $event" (logOut)="services.logout();"></user-session>
 		</div>
 	</div>
 </nav>
-<home *ngIf="!services.user.email" (loginSuccess)="services.user = $event"></home>
+<home *ngIf="!services.user.email" ></home>
 
 
   <section *ngIf="services.user.email" id="about">
-        <div class="container">
-            <div class="row">
-				<dashboard *ngIf="services.user.email && nav=='dashboard'" ></dashboard>
-				<groups *ngIf="nav=='groups'" (return)="nav = $event" ></groups>
-				<admin *ngIf="nav=='admin'" (return)="nav = $event" ></admin>
-			</div>
-        </div>
-    </section>
+	<div class="container">
+		<div class="row">
+			<dashboard *ngIf="services.timba.numbers && services.user.email && nav=='dashboard'" ></dashboard>
+			<admin *ngIf="nav=='admin'" (return)="nav = $event" ></admin>
+		</div>
+	</div>
+</section>

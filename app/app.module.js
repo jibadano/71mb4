@@ -16,14 +16,11 @@ var common_1 = require('@angular/common');
 var app_component_1 = require('./app.component');
 var dashboard_component_1 = require('./dashboard.component');
 var home_component_1 = require('./home.component');
-var map_component_1 = require('./map.component');
 var user_session_component_1 = require('./user-session.component');
-var players_component_1 = require('./players.component');
-var new_match_component_1 = require('./new-match.component');
-var view_match_component_1 = require('./view-match.component');
-var groups_component_1 = require('./groups.component');
 var menu_component_1 = require('./menu.component');
 var admin_component_1 = require('./admin.component');
+var board_component_1 = require('./board.component');
+var chat_component_1 = require('./chat.component');
 var app_service_1 = require('./app.service');
 var AppModule = (function () {
     function AppModule() {
@@ -39,16 +36,13 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
+                board_component_1.BoardComponent,
                 dashboard_component_1.DashboardComponent,
                 home_component_1.HomeComponent,
-                map_component_1.MapComponent,
                 user_session_component_1.UserSessionComponent,
-                players_component_1.PlayersComponent,
-                new_match_component_1.NewMatchComponent,
-                groups_component_1.GroupsComponent,
-                view_match_component_1.ViewMatchComponent,
                 menu_component_1.MenuComponent,
-                admin_component_1.AdminComponent
+                admin_component_1.AdminComponent,
+                chat_component_1.ChatComponent
             ],
             providers: [
                 app_service_1.AppService

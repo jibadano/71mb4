@@ -9,24 +9,31 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var user_1 = require('./user');
 var app_service_1 = require('./app.service');
-var AppComponent = (function () {
-    function AppComponent(services) {
+require('./rxjs-extensions');
+var BoardComponent = (function () {
+    function BoardComponent(services) {
         this.services = services;
-        this.nav = 'dashboard';
     }
-    ;
-    AppComponent.prototype.ngOnInit = function () {
+    BoardComponent.prototype.setBet = function (number) {
+        this.services.exec('setBet', { number: number }).then(function (res) { });
     };
-    AppComponent = __decorate([
+    BoardComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', user_1.User)
+    ], BoardComponent.prototype, "user", void 0);
+    BoardComponent = __decorate([
         core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            providers: [app_service_1.AppService]
+            selector: 'board',
+            templateUrl: 'app/board.component.html',
+            styleUrls: ['app/board.component.css'],
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService])
-    ], AppComponent);
-    return AppComponent;
+    ], BoardComponent);
+    return BoardComponent;
 }());
-exports.AppComponent = AppComponent;
-//# sourceMappingURL=app.component.js.map
+exports.BoardComponent = BoardComponent;
+//# sourceMappingURL=board.component.js.map

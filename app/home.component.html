@@ -1,54 +1,50 @@
-<header>
-	<div class="header-content">
-		<div class="header-content-inner">
 
-			<div class="col-lg-4 col-lg-offset-4 text-center">
-				<h1>Too Match</h1>
-				<div *ngIf="nav=='welcome'">
-					<p>Organiza partidos y juega con tus amigos</p>
-					<div class="btn-group">
-						<button type="submit" (click)="nav='login'" class="btn btn-primary">Get in</button>
-						<button type="submit" (click)="nav='signin'" class="btn btn-default">Start</button>
-					</div>
-				</div>
-				<form [formGroup]="formGroup" *ngIf="nav=='login'" role="form">
-					<div class="form-group">
-						<input formControlName="email" type="email" [(ngModel)]="user.email" placeholder="Email" class="form-control input-lg" id="email">
-					</div>
-					<div *ngIf="formErrors.email" class="alert alert-danger">
-						{{ formErrors.email }}
-					</div>
-					<div class="form-group">
-						<div style="display:flex">
-							<input formControlName="password" type="password" [(ngModel)]="user.password" style="margin-right:15px" placeholder="Password"
-								class="form-control" id="pwd">
-							<button type="submit" (click)="login()" class="btn btn-primary">Log in</button>
-						</div>
-						<div *ngIf="formErrors.password" class="alert alert-danger">
-							{{ formErrors.password }}
-						</div>
-					</div>
-					<div class="form-group">
-						<button type="link" (click)="login()" class="btn btn-link">forgot password?</button>
-					</div>
-				</form>
-				<form *ngIf="nav=='signin'" role="form">
-					<div class="form-group">
-						<input type="email" [(ngModel)]="user.email" placeholder="Email" class="form-control" id="email" [ngModelOptions]="{standalone: true}">
-					</div>
-					<div class="form-group">
-						<input type="password" [(ngModel)]="user.password" placeholder="Password" class="form-control" id="pwd" [ngModelOptions]="{standalone: true}">
-					</div>
-					<div class="form-group">
-						<div style="display:flex">
-							<input type="password" [(ngModel)]="user.password" style="margin-right:15px" placeholder="Repeat password" class="form-control"
-								id="pwd" [ngModelOptions]="{standalone: true}">
-							<button type="submit" (click)="login()" class="btn btn-primary">Sign in</button>
-						</div>
-					</div>
-				</form>
-			</div>
-
+<div class="intro-header">
+	<div class="col-xs-4 col-xs-offset-4 text-center abcen1">
+		<h1 class="h1_home wow fadeIn" data-wow-delay="0.4s">71mb4</h1>
+		<div *ngIf="nav=='welcome'">
+			<h3 class="h3_home wow fadeIn" data-wow-delay="0.6s">Esta vez va en serio</h3>
+			<ul class="list-inline intro-social-buttons">
+				<li id="login" ><a (click)="nav='login'" href="#" class="btn  btn-lg mybutton_standard wow swing wow fadeIn" data-wow-delay="1.2s"><span class="network-name">Entrar</span></a>
+				</li>
+			</ul>
 		</div>
-	</div>
-</header>
+
+		<form [formGroup]="formGroup" *ngIf="nav=='login'" role="form">
+			<div class="form-group">
+				<input formControlName="email" type="email" [(ngModel)]="user.email" placeholder="Email" class="form-control input-lg" id="email">
+			</div>
+			<div *ngIf="formErrors.email" class="alert alert-danger">
+				{{ formErrors.email }}
+			</div>
+			<div class="form-group">
+				<div style="display:flex">
+					<input formControlName="password" type="password" [(ngModel)]="user.password" style="margin-right:15px" placeholder="Password"
+						class="form-control" id="pwd">
+					<button type="submit" (click)="login()" class="btn btn-primary">Log in</button>
+				</div>
+				<div *ngIf="formErrors.password" class="alert alert-danger">
+					{{ formErrors.password }}
+				</div>
+			</div>
+			<div class="form-group">
+				<button type="link" (click)="login()" class="btn btn-link">forgot password?</button>
+			</div>
+		</form>
+		<form *ngIf="nav=='signin'" role="form">
+			<div class="form-group">
+				<input type="email" [(ngModel)]="user.email" placeholder="Email" class="form-control" id="email" [ngModelOptions]="{standalone: true}">
+			</div>
+			<div class="form-group">
+				<input type="password" [(ngModel)]="user.password" placeholder="Password" class="form-control" id="pwd" [ngModelOptions]="{standalone: true}">
+			</div>
+			<div class="form-group">
+				<div style="display:flex">
+					<input type="password" [(ngModel)]="user.password" style="margin-right:15px" placeholder="Repeat password" class="form-control"
+						id="pwd" [ngModelOptions]="{standalone: true}">
+					<button type="submit" (click)="login()" class="btn btn-primary">Sign in</button>
+				</div>
+			</div>
+		</form>
+	</div>    
+</div>

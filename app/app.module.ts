@@ -7,14 +7,11 @@ import { CommonModule } from '@angular/common';
 import { AppComponent }  from './app.component';
 import { DashboardComponent }   from './dashboard.component';
 import { HomeComponent }   from './home.component';
-import { MapComponent }   from './map.component';
 import { UserSessionComponent }   from './user-session.component';
-import { PlayersComponent }   from './players.component';
-import { NewMatchComponent }   from './new-match.component';
-import { ViewMatchComponent }   from './view-match.component';
-import { GroupsComponent }   from './groups.component';
 import { MenuComponent }   from './menu.component';
 import { AdminComponent }   from './admin.component';
+import { BoardComponent }   from './board.component';
+import { ChatComponent }   from './chat.component';
 
 import { AppService }   from './app.service';
 
@@ -28,16 +25,13 @@ import { AppService }   from './app.service';
   ],
   declarations: [
     AppComponent,
+    BoardComponent,
     DashboardComponent,
     HomeComponent,
-    MapComponent,
     UserSessionComponent,
-    PlayersComponent,
-    NewMatchComponent,
-    GroupsComponent,
-    ViewMatchComponent,
     MenuComponent,
-    AdminComponent
+    AdminComponent,
+    ChatComponent
   ],
    providers: [
     AppService

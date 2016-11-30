@@ -11,9 +11,10 @@ function init(app,requestHandler){
 	app.all('/dashboard',requestHandler.redirect );
 	app.post('/login', requestHandler.login);
 	app.post('/logout', requestHandler.logout);
-	app.post('/signin', requestHandler.signin);
 	app.post('/services', requestHandler.execService);
-	
+	app.post('/fetchTimba',requestHandler.fetchTimba );
+	app.get('/getCurrentUser',requestHandler.getCurrentUser );
+
 }
 
 exports.init = init;

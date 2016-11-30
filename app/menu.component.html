@@ -1,3 +1,23 @@
-<div class="btn-group">
-	<button *ngFor="let option of menuOptions" type="button" class="btn btn-primary" (click)="optionSelected.emit(option)">{{option}}</button>
+<div style="width:100%;display:inline-flex;height:40px">
+	<div style="background-color:#ccc; width:calc(100% - 360px); display:-webkit-box">
+		<p style="margin:0; padding-left:10px" *ngFor="let log of services.timba.log | noChat">
+			<i *ngIf="log.type==1" style="text-align: center;padding-top: 12px;padding-right: 5px;" class="fa fa-plus"></i>
+			<i *ngIf="log.type==2" style="text-align: center;padding-top: 12px;padding-right: 5px;" class="fa fa-minus"></i>
+			<i *ngIf="log.type==3" style="text-align: center;padding-top: 12px;padding-right: 5px;" class="fa fa-times"></i>
+			<i *ngIf="log.type==4" style="text-align: center;padding-top: 12px;padding-right: 5px;" class="fa fa-star"></i>
+			{{log.msg}}
+		</p>
+	</div>
+	<div style="background-color:#ccc; width:80px">
+		<i class="fa fa-users" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> {{services.timba.players.length}}
+	</div>
+	<div style="background-color:#ccc; width:80px">
+		<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> {{getTotalAmount()}}
+	</div>
+	<div style="background-color:#ccc; width:150px">
+		<i class="fa fa-clock-o" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> {{timeCountDown}}
+	</div>
+	<div style="background-color:#ccc; width:50px">
+		<i class="fa fa-chevron-down" style="width: 100%;height: 100%;text-align: center;padding-top: 12px;"></i>
+	</div>
 </div>
