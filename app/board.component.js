@@ -20,6 +20,17 @@ var BoardComponent = (function () {
         this.services.exec('setBet', { number: number }).then(function (res) { });
     };
     BoardComponent.prototype.ngOnInit = function () {
+        var buttons = $("board button");
+        for (var i = 0; i < buttons.length; i++) {
+            $(buttons[i]).addClass(this.getColor());
+        }
+    };
+    BoardComponent.prototype.getColor = function () {
+        return "c" + (Math.floor((Math.random() * 12)) + 1);
+    };
+    BoardComponent.prototype.isSelected = function (number) {
+        var _this = this;
+        return !this.services.timba.numbers[number - 1].players.every(function (player) { return player.email != _this.services.user.email; });
     };
     __decorate([
         core_1.Input(), 

@@ -1,7 +1,7 @@
-<div style="display:inline-table">
+<div style="margin-bottom:40px;margin-top:40px;display:inline-table">
 	<table>
 		<tr>
-			<td><button type="button" class="btn btn-primary btn-board" (click)="setBet(1)">1</button></td>
+			<td><button type="button" [class.bet]="isSelected(1)" class="btn btn-primary btn-board" (click)="setBet(1)">1</button></td>
 			<td><button type="button" class="btn btn-primary btn-board2" (click)="setBet(4)">4</button></td>
 			<td><button type="button" class="btn btn-primary btn-board" (click)="setBet(7)">7</button></td>
 			<td><button type="button" class="btn btn-primary btn-board2" (click)="setBet(10)">10</button></td>

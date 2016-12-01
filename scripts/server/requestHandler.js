@@ -41,7 +41,7 @@ function redirect(req, res){
 function logout(req, res) {
 	if(req.session.user){
 		removePlayer(req.session.user.email);
-		timba.log.push({type:logType.LOGOUT, email:req.session.user.email, msg: req.session.user.email + ' disconnected'});
+		timba.log.push({type:logType.LOGOUT, email:'timbaBot@', msg: req.session.user.email + ' disconnected'});
 		delete req.session.user;
 		sendTimba();
 	}
@@ -67,7 +67,7 @@ function login(req, res) {
 		
 		if(getPlayerIndex(timba.players, email) == -1){
 			timba.players.push({email:user.email});
-			timba.log.push({type:logType.LOGIN, email:user.email, msg: user.email + ' connected'});
+			timba.log.push({type:logType.LOGIN, email: 'timbaBot@', msg: user.email + ' connected'});
 			sendTimba();
 		}
 		delete user.password;
@@ -208,6 +208,7 @@ function getCurrentUser(req, res){
 
 function sendTimba(){
 	sockets.forEach(function(socket){
+		timba.log.slice(timba.log.length - 10, timba.log.length);
 		socket.emit('timbaChange',timba);
 	});
 }

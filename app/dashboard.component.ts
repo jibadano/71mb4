@@ -17,7 +17,7 @@ export class DashboardComponent implements OnInit {
   constructor(private services: AppService) {}
   
   ngOnInit(){
-		console.log(this.services.timba);
+		
   }
 
 	getTotalBetAmount(){

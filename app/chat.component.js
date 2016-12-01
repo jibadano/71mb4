@@ -18,6 +18,10 @@ var ChatComponent = (function () {
         this.services = services;
     }
     ChatComponent.prototype.ngOnInit = function () {
+        window.setInterval(function () {
+            var elem = document.getElementById('messages');
+            elem.scrollTop = elem.scrollHeight;
+        }, 1000);
     };
     ChatComponent.prototype.sendMessage = function (message) {
         if (message != '')

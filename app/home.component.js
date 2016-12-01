@@ -50,9 +50,10 @@ var HomeComponent = (function () {
         this.services.logout();
     };
     HomeComponent.prototype.ngOnInit = function () {
-        this.services.fetchTimba();
+        var _this = this;
         this.buildForm();
         this.services.getCurrentUser().then(function () {
+            _this.services.fetchTimba();
         });
     };
     HomeComponent.prototype.buildForm = function () {

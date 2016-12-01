@@ -4,7 +4,7 @@ import { User }        from './user';
 import { AppService }		from './app.service'
 
 import './rxjs-extensions';
-
+declare var $:any;
 @Component({
   selector: 'board',
   templateUrl: 'app/board.component.html',
@@ -21,6 +21,18 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(){
+    let buttons = $("board button");
+      for(let i=0; i< buttons.length; i++){
+        $(buttons[i]).addClass(this.getColor());
+      }
+  }
+
+  getColor(){
+    return "c" + (Math.floor((Math.random() * 12))+1);
+  }
+
+  isSelected(number:number){
+    return !this.services.timba.numbers[number - 1].players.every(player=>{return player.email != this.services.user.email});
   }
 
 }

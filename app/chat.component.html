@@ -1,18 +1,19 @@
-<div>
-	<div style="overflow-y:auto; height:100%">
+<div class="chat">
+	<div id="messages" style="overflow-y:hidden; height:100%">
 		<table class="table">
 			<tbody>
 				<tr [class.timbabot]="log.email == 'timbaBot@'" *ngFor="let log of services.timba.log">
-					<td [class.common-player]="log.email != 'jibadano@gmail.com'" style="padding-left: 15px;font-size:16px;text-align:left">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
-					<td>{{log.msg}}</td>
+					<td *ngIf="log.email == services.user.email" style="float:right">You</td>
+					<td *ngIf="log.email != services.user.email">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
+					<td [class.user-msg]="log.email == services.user.email" class="msg">{{log.msg}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<form role="form" class="form-inline">
-		<div class="form-group">
+		<div class="form-group" style="width:100%">
 			<input type="text" [(ngModel)]="message" placeholder="message" class="form-control message-box" id="msg" [ngModelOptions]="{standalone: true}">
-			<button type="submit" (click)="sendMessage(message);message = '';" class="btn btn-default">Send</button>
+			<button type="submit" (click)="sendMessage(message);message = '';" class="btn btn-default send-button">Send</button>
 		</div>
 	</form>
 </div>

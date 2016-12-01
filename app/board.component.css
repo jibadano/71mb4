@@ -153,6 +153,71 @@ tr.selected:hover {
     font-size: 28px;
     background-color:#ccc;
 }
+
+.btn:hover{
+  transition: font-size 0.3s, font-weight 0.3s ,background-color 0.3s;
+  border:0;
+  font-size:43px;
+  font-weight:bold;
+  padding:0;
+  background-color:#111;
+
+}
+
+.bet{
+    background-color:#fafafa;
+    color:#111;
+}
+
+.c1:hover{
+  background-color:#9ec22c;
+}
+
+.c2:hover{
+  background-color:#fdc300;
+}
+
+.c3:hover{
+  background-color:#f19435;
+}
+
+.c4:hover{
+  background-color:#de3282;
+}
+
+.c5:hover{
+  background-color:#884c96;
+}
+
+.c6:hover{
+  background-color:#5961a2;
+}
+
+.c7:hover{
+  background-color:#3494ce;
+}
+
+.c8:hover{
+  background-color:#3494ce;
+}
+
+.c9:hover{
+  background-color:#88a82b;
+}
+
+.c10:hover{
+  background-color:#7ec581;
+}
+
+.c11:hover{
+  background-color:#66b5af;
+}
+
+.c12:hover{
+  background-color:#b56182;
+}
+
+
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

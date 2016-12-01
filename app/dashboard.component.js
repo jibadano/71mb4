@@ -17,7 +17,6 @@ var DashboardComponent = (function () {
         this.services = services;
     }
     DashboardComponent.prototype.ngOnInit = function () {
-        console.log(this.services.timba);
     };
     DashboardComponent.prototype.getTotalBetAmount = function () {
         var _this = this;

@@ -43,7 +43,17 @@ var AppService = (function () {
     };
     AppService.prototype.fetchTimba = function () {
         var _this = this;
-        this.socket.on('timbaChange', function (timba) { return _this.timba = timba; });
+        this.socket.on('timbaChange', function (timba) {
+            if (timba.log.length != _this.timba.log.length || _this.timba.log.length == 0) {
+                _this.timba = timba;
+                setTimeout(function () {
+                    var objDiv = document.getElementById("messages");
+                    if (objDiv)
+                        objDiv.scrollTop = objDiv.scrollHeight;
+                }, 1000);
+            }
+            _this.timba = timba;
+        });
     };
     AppService.prototype.logout = function () {
         var _this = this;

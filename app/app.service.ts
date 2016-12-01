@@ -36,7 +36,16 @@ export class AppService implements OnInit{
     }
 
     fetchTimba(){
-      this.socket.on('timbaChange', (timba)=>this.timba = timba);
+      this.socket.on('timbaChange', (timba)=>{
+        if(timba.log.length != this.timba.log.length || this.timba.log.length == 0){
+          this.timba = timba
+          setTimeout(()=>{
+            var objDiv = document.getElementById("messages");
+            if(objDiv)
+            objDiv.scrollTop = objDiv.scrollHeight;
+          },1000);
+        }
+          this.timba = timba});
 	  }
 
     logout(){
