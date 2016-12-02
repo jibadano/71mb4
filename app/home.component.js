@@ -28,12 +28,12 @@ var HomeComponent = (function () {
             'email': {
                 'required': 'Email is required.',
                 'minlength': 'Email must be at least 4 characters long.',
-                'maxlength': 'Email cannot be more than 24 characters long.'
+                'maxlength': 'Email cannot be more than 54 characters long.'
             },
             'password': {
                 'required': 'password is required.',
                 'minlength': 'password must be at least 4 characters long.',
-                'maxlength': 'password cannot be more than 24 characters long.'
+                'maxlength': 'password cannot be more than 54 characters long.'
             }
         };
     }
@@ -62,13 +62,13 @@ var HomeComponent = (function () {
             'email': [this.user.email, [
                     forms_1.Validators.required,
                     forms_1.Validators.minLength(4),
-                    forms_1.Validators.maxLength(24)
+                    forms_1.Validators.maxLength(54)
                 ]
             ],
             'password': [this.user.password, [
                     forms_1.Validators.required,
                     forms_1.Validators.minLength(4),
-                    forms_1.Validators.maxLength(24)
+                    forms_1.Validators.maxLength(54)
                 ]
             ]
         });

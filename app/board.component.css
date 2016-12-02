@@ -51,7 +51,7 @@ h4 {
 
 .selected{
    background-color: #CFD8DC !important;
-      color: white;
+   color: white;
 }
 
 tr.selected:hover {
@@ -171,7 +171,7 @@ tr.selected:hover {
 
 .bet{
     transition: color 0.3s;
-  border:0;
+    border:0;
     font-size:43px;
     font-weight:bold;
     padding:0;

@@ -115,17 +115,20 @@ addUser : function (user, data, then){
 
 //SET BET
 setBet : function (user, data, then){
-	var index = -1;
-	for(var i = 0; i < timba.numbers[data.number -1].players.length; i++){
-		if(timba.numbers[data.number - 1].players[i].email == user.email)
-			index = i;
+
+	if(!timba.closed && getBetCount(user.email,data.number)< 10 ){
+		var index = -1;
+		for(var i = 0; i < timba.numbers[data.number -1].players.length; i++){
+			if(timba.numbers[data.number - 1].players[i].email == user.email)
+				index = i;
+		}
+		if(index != -1)
+			timba.numbers[data.number - 1].players.splice(index,1);
+		else
+			timba.numbers[data.number - 1].players.push({email:user.email});
+		
+		sendTimba();
 	}
-	if(index != -1)
-		timba.numbers[data.number -1].players.splice(index,1);
-	else
-		timba.numbers[data.number-1].players.push({email:user.email});
-	
-	sendTimba();
 	return then(null, '');
 },
 
@@ -176,13 +179,17 @@ closeTimba: function (user, data, then){
 //START TIMBA
 startTimba : function(user, data, then){
 		if(user.admin){
-			var number = Math.floor((Math.random() * 36));
-			var winnerNumber = timba.numbers[number];
+			var number = Math.floor((Math.random() * 36)) + 1;
+			var winnerNumber = timba.numbers[number -1];
 			winnerNumber.number = number;
+			if(winnerNumber.players.length != 0){
+				var winnerIndex = Math.floor((Math.random() * winnerNumber.players.length));
+				winnerNumber.winner = winnerNumber.players[winnerIndex];
+			}
 			sockets.forEach(function(socket){
 				socket.emit('timbaWinnerNumber',winnerNumber);
 			});
-			/*	
+			/*
 			timba.executing = true;
 			sendTimba();
 			setTimeout(function() {
@@ -245,6 +252,20 @@ function getPlayerIndex(players, email){
 	}
 	
 	return index;
+}
+
+function getBetCount(email, number){
+	var betCount = 0;
+	for(var i=0; i<timba.numbers.length; i++){
+		var index = getPlayerIndex(timba.numbers[i].players, email);
+		if(index != -1){
+			betCount++;
+			if(number - 1 == i)
+				return 0;
+		}
+	}
+	
+	return betCount;
 }
 
 function removePlayer(email){

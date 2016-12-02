@@ -17,7 +17,10 @@ export class BoardComponent implements OnInit {
   hide1st:boolean = false;
   hide2nd:boolean = false;
   hide3rd:boolean = false;
-  winnerNumber:number =0;
+  winnerNumber:number = 0;
+  winners:any;
+  showWinners: boolean = false;  lastWinner: boolean = false; sorteando: boolean = false;
+
   constructor(private services: AppService) {}
   
   setBet(number:number){
@@ -25,17 +28,30 @@ export class BoardComponent implements OnInit {
   }
 
   ngOnInit(){
+    this.showWinners = false;
+
     let buttons = $("board button");
       for(let i=0; i< buttons.length; i++){
         $(buttons[i]).addClass(this.getColor());
       }
 
       this.services.socket.on('timbaWinnerNumber', (winnerNumber)=>{
+        this.winners = winnerNumber;
           setTimeout(()=>{
               this.hideNotSelectedBoards(winnerNumber.number);
                setTimeout(()=>{
                  console.log(winnerNumber);
                 this.winnerNumber = winnerNumber.number;
+                  setTimeout(()=>{
+                    this.showWinners = true;
+                    setTimeout(()=>{
+                      this.sorteando = true;
+                      setTimeout(()=>{
+                        this.sorteando=false;
+                        this.lastWinner = true; 
+                      },5000);
+                    },5000);
+                },5000);
               },5000);
           },3000);
         });

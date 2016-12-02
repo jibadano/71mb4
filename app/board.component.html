@@ -44,3 +44,31 @@
 		</tr>
 	</table>
 </div>
+
+<div *ngIf="showWinners" style="margin-bottom:40px;margin-top:40px;display:inline-table">
+	<div class="col-xs-4 " style="width:47%">
+		<h4>N° Ganador</h4>
+		<h1>{{winners.number}}</h1>
+	</div>
+	<div class="col-xs-4" style="width:50%">
+		<div *ngIf="winners.players.length == 0">
+			<h4>VACANTE</h4>
+		</div>
+		<div *ngIf="winners.players.length > 1">
+			<h4>Ganador/es</h4>
+			<h4 *ngIf="sorteando">SORTEANDO GANADOR</h4>
+			<h4 *ngIf="lastWinner">GANADOR TOTAL: {{winners.winner.email}}</h4>
+			<table *ngIf="!lastWinner" class="table">
+				<tbody>
+					<tr *ngFor="let player of winners.players">
+						<td style="float:right">{{player.email}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div *ngIf="winners.players.length == 1">
+			<h4>Ganador</h4>
+			<p style="float:right">{{winners.players[0].email}}</p>
+		</div>
+	</div>
+</div>

@@ -8,10 +8,8 @@ import './rxjs-extensions';
   template: `
         <div *ngIf="services.user" class="btn-group">
             <button type="button" class="btn btn-primary" (click)="showMenu = !showMenu" ><i class="fa fa-user"></i>  {{services.user.email}}</button>
-            <button *ngIf="showMenu" (click)="return.emit('groups');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-users"></i></button>
-            <button *ngIf="showMenu" (click)="return.emit('config');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-gear"></i></button>
-            <button *ngIf="showMenu" (click)="return.emit('help');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-question"></i></button>
-            <button *ngIf="showMenu && services.user.admin" (click)="startTimba();showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-chevron-up"></i></button>
+            <button *ngIf="showMenu && services.user.admin" (click)="closeTimba();showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-times"></i></button>
+            <button *ngIf="showMenu && services.user.admin" (click)="startTimba();showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-play"></i></button>
             <button type="button" (click)="logOut.emit();showMenu = false" class="btn btn-primary" ><i class="fa fa-power-off"></i></button>
         </div>
     `,
@@ -29,6 +27,10 @@ export class UserSessionComponent implements OnInit {
 
     startTimba(){
         this.services.exec('startTimba',{}).then(res =>{});
+    }
+
+    closeTimba(){
+        this.services.exec('closeTimba',{}).then(res =>{});
     }
     
     ngOnInit(){

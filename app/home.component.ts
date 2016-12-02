@@ -57,13 +57,13 @@ export class HomeComponent implements OnInit {
       'email': [this.user.email, [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(24)
+          Validators.maxLength(54)
        ]
       ],
 	'password': [this.user.password, [
           Validators.required,
           Validators.minLength(4),
-          Validators.maxLength(24)
+          Validators.maxLength(54)
        ]
       ]
     });
@@ -101,12 +101,12 @@ export class HomeComponent implements OnInit {
     'email': {
       'required':      'Email is required.',
       'minlength':     'Email must be at least 4 characters long.',
-      'maxlength':     'Email cannot be more than 24 characters long.'
+      'maxlength':     'Email cannot be more than 54 characters long.'
     },
     'password': {
       'required':      'password is required.',
       'minlength':     'password must be at least 4 characters long.',
-      'maxlength':     'password cannot be more than 24 characters long.'
+      'maxlength':     'password cannot be more than 54 characters long.'
     }
   };
   

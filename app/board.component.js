@@ -19,22 +19,37 @@ var BoardComponent = (function () {
         this.hide2nd = false;
         this.hide3rd = false;
         this.winnerNumber = 0;
+        this.showWinners = false;
+        this.lastWinner = false;
+        this.sorteando = false;
     }
     BoardComponent.prototype.setBet = function (number) {
         this.services.exec('setBet', { number: number }).then(function (res) { });
     };
     BoardComponent.prototype.ngOnInit = function () {
         var _this = this;
+        this.showWinners = false;
         var buttons = $("board button");
         for (var i = 0; i < buttons.length; i++) {
             $(buttons[i]).addClass(this.getColor());
         }
         this.services.socket.on('timbaWinnerNumber', function (winnerNumber) {
+            _this.winners = winnerNumber;
             setTimeout(function () {
                 _this.hideNotSelectedBoards(winnerNumber.number);
                 setTimeout(function () {
                     console.log(winnerNumber);
                     _this.winnerNumber = winnerNumber.number;
+                    setTimeout(function () {
+                        _this.showWinners = true;
+                        setTimeout(function () {
+                            _this.sorteando = true;
+                            setTimeout(function () {
+                                _this.sorteando = false;
+                                _this.lastWinner = true;
+                            }, 5000);
+                        }, 5000);
+                    }, 5000);
                 }, 5000);
             }, 3000);
         });

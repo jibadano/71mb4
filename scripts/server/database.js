@@ -10,7 +10,7 @@ var mongoose = require('mongoose');
 
 var ObjectId = mongoose.Schema.Types.ObjectId;
 
-mongoose.connect('mongodb://localhost/database');
+mongoose.connect('mongodb://localhost/db');
 
 /*	Schemas	*/
 var timbaSchema = new mongoose.Schema({
