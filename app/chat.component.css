@@ -11,14 +11,18 @@ tr{
 .msg{
   font-family:arvo;
   color:#fafafa;
-  background-color:#111;
+  background-color:#3494ce;
   padding-left:10px;
   padding-right:10px;
 }
 
+.timba-msg{
+    background-color:#111;
+}
+
 .user-msg{
     float:right;
-    background-color:green;
+    background-color:#f44336;
 }
 
 .chat{
@@ -34,6 +38,40 @@ tr{
   width:calc(100% - 80px);
 }
 
+button{
+    border-radius: 0;
+    font-family: arvo;
+    background-color: #fdc300;
+    color: #111;
+    border-color:#fdc300;
+}
+
+input{
+  border-radius:0;
+      font-family: arvo;
+}
+
+input:focus{
+  border-color:#fdc300;
+
+}
+
+button:hover{
+    background-color: #111;
+    color:#fff;
+    border-color:#111;
+}
+
+button:focus{
+   background-color: #fdc300;
+    color: #111;
+}
+
+button:hover:focus{
+  background-color: #111;
+    color:#fff;
+    border-color:#111;
+}
 
 /*
 Copyright 2016 Google Inc. All Rights Reserved.

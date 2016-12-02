@@ -18,6 +18,9 @@ var UserSessionComponent = (function () {
         this.logOut = new core_1.EventEmitter();
         this.showMenu = false;
     }
+    UserSessionComponent.prototype.startTimba = function () {
+        this.services.exec('startTimba', {}).then(function (res) { });
+    };
     UserSessionComponent.prototype.ngOnInit = function () {
     };
     __decorate([
@@ -31,7 +34,8 @@ var UserSessionComponent = (function () {
     UserSessionComponent = __decorate([
         core_1.Component({
             selector: 'user-session',
-            template: "\n        <div *ngIf=\"services.user\" class=\"btn-group\">\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showMenu = !showMenu\" ><i class=\"fa fa-user\"></i>  {{services.user.email}}</button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('groups');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-users\"></i></button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('config');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-gear\"></i></button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('help');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-question\"></i></button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('admin');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-chevron-up\"></i></button>\n            <button type=\"button\" (click)=\"logOut.emit();showMenu = false\" class=\"btn btn-primary\" ><i class=\"fa fa-power-off\"></i></button>\n        </div>\n    "
+            template: "\n        <div *ngIf=\"services.user\" class=\"btn-group\">\n            <button type=\"button\" class=\"btn btn-primary\" (click)=\"showMenu = !showMenu\" ><i class=\"fa fa-user\"></i>  {{services.user.email}}</button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('groups');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-users\"></i></button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('config');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-gear\"></i></button>\n            <button *ngIf=\"showMenu\" (click)=\"return.emit('help');showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-question\"></i></button>\n            <button *ngIf=\"showMenu && services.user.admin\" (click)=\"startTimba();showMenu = false\" type=\"button\" class=\"btn btn-primary\" ><i class=\"fa fa-chevron-up\"></i></button>\n            <button type=\"button\" (click)=\"logOut.emit();showMenu = false\" class=\"btn btn-primary\" ><i class=\"fa fa-power-off\"></i></button>\n        </div>\n    ",
+            styleUrls: ['app/user-session.component.css'],
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService])
     ], UserSessionComponent);

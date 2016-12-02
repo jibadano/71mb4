@@ -20,6 +20,7 @@ export class NoChat {
 @Component({
   selector: 'menu',
   templateUrl: 'app/menu.component.html',
+    styleUrls: ['app/menu.component.css'],
   pipes: [NoChat]
 })
 

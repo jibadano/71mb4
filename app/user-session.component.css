@@ -8,6 +8,25 @@ h3 {
   text-align: center; margin-bottom: 0;
 }
 
+h1{
+      display: inline;
+    color: #fafafa;
+    background-color: #111;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: arvo;
+}
+
+h4{
+    display: table;
+    color: #fafafa;
+    background-color: #111;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding:10px;
+    font-family: arvo;
+}
+
 .grid {
   margin: 0;
 }
@@ -139,106 +158,30 @@ tr.selected:hover {
   padding-right:3px;
 }
 
-.btn-board{
-    border-radius: 0;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    background-color:#ddd;
-
-}
-
-.btn-board2{
-    border-radius: 0;
-    width: 60px;
-    height: 60px;
-    font-size: 28px;
-    background-color:#ccc;
-}
-
-.btn:hover{
-  transition: font-size 0.3s, font-weight 0.3s ,background-color 0.3s;
-  border:0;
-  font-size:43px;
-  font-weight:bold;
-  padding:0;
+.menu-item{
   background-color:#111;
+  font-family:arvo;
+  color:#eee;
 }
 
-.btn:focus{
-  border:0;
+button{
+    border-radius: 0;
+    font-family: arvo;
+    background-color: #fdc300;
+    color: #111;
 }
 
-.bet{
-    transition: color 0.3s;
-  border:0;
-    font-size:43px;
-    font-weight:bold;
-    padding:0;
-    color:#111;    
+button:hover{
+    background-color: #fff;
+    color:#111;
+    border-color:#fff;
 }
 
-.c1.bet, .c1:hover{
-  background-color:#9ec22c;
+button:focus{
+    background-color: #fff;
+    color:#111;
+    border-color:#fff;
 }
-
-.c2.bet, .c2:hover{
-  background-color:#fdc300;
-}
-
-.c3.bet, .c3:hover{
-  background-color:#f19435;
-}
-
-.c4.bet, .c4:hover{
-  background-color:#de3282;
-}
-
-.c5.bet, .c5:hover{
-  background-color:#884c96;
-}
-
-.c6.bet, .c6:hover{
-  background-color:#5961a2;
-}
-
-.c7.bet, .c7:hover{
-  background-color:#3494ce;
-}
-
-.c8.bet, .c8:hover{
-  background-color:#3494ce;
-}
-
-.c9.bet, .c9:hover{
-  background-color:#88a82b;
-}
-
-.c10.bet, .c10:hover{
-  background-color:#7ec581;
-}
-
-.c11.bet, .c11:hover{
-  background-color:#66b5af;
-}
-
-.c12.bet, .c12:hover{
-  background-color:#b56182;
-}
-
-
-.winnerNumber{
-    background-color:#111;
-    color:#fff;
-}
-
-.hideNumber{
-    transition:opacity 1s;
-    opacity:0;
-}
-
-
-
 /*
 Copyright 2016 Google Inc. All Rights Reserved.
 Use of this source code is governed by an MIT-style license that

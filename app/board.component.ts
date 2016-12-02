@@ -14,6 +14,10 @@ declare var $:any;
 export class BoardComponent implements OnInit {
 	@Input() user:User;
 
+  hide1st:boolean = false;
+  hide2nd:boolean = false;
+  hide3rd:boolean = false;
+  winnerNumber:number =0;
   constructor(private services: AppService) {}
   
   setBet(number:number){
@@ -25,6 +29,33 @@ export class BoardComponent implements OnInit {
       for(let i=0; i< buttons.length; i++){
         $(buttons[i]).addClass(this.getColor());
       }
+
+      this.services.socket.on('timbaWinnerNumber', (winnerNumber)=>{
+          setTimeout(()=>{
+              this.hideNotSelectedBoards(winnerNumber.number);
+               setTimeout(()=>{
+                 console.log(winnerNumber);
+                this.winnerNumber = winnerNumber.number;
+              },5000);
+          },3000);
+        });
+  }
+
+  hideNotSelectedBoards(number:number){
+    if(number < 13){
+     this.hide2nd = true;
+      this.hide3rd = true;
+      return;
+    }
+
+     if(number > 24){
+     this.hide1st = true;
+      this.hide2nd = true;
+      return;
+    }
+
+      this.hide1st = true;
+      this.hide3rd = true;
   }
 
   getColor(){

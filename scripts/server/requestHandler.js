@@ -176,6 +176,13 @@ closeTimba: function (user, data, then){
 //START TIMBA
 startTimba : function(user, data, then){
 		if(user.admin){
+			var number = Math.floor((Math.random() * 36));
+			var winnerNumber = timba.numbers[number];
+			winnerNumber.number = number;
+			sockets.forEach(function(socket){
+				socket.emit('timbaWinnerNumber',winnerNumber);
+			});
+			/*	
 			timba.executing = true;
 			sendTimba();
 			setTimeout(function() {
@@ -190,8 +197,8 @@ startTimba : function(user, data, then){
 				var number = Math.floor((Math.random() * timba.numbers.length));
 				timba.winners = timba.numbers[number].players;
 				sendTimba();
-			},20000);
-		};
+			},20000);*/
+		}
 	},
 }
 

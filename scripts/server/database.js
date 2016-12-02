@@ -95,7 +95,7 @@ function findAllTimbas(then){
 
 function findUserBasic(user, then){
 	User.findOne(user).
-	select('_id email').
+	select('_id email admin').
 	exec(then);
 }
 

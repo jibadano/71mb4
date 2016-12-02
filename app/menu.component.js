@@ -82,6 +82,7 @@ var MenuComponent = (function () {
         core_1.Component({
             selector: 'menu',
             templateUrl: 'app/menu.component.html',
+            styleUrls: ['app/menu.component.css'],
             pipes: [NoChat]
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService])

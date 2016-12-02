@@ -15,15 +15,43 @@ require('./rxjs-extensions');
 var BoardComponent = (function () {
     function BoardComponent(services) {
         this.services = services;
+        this.hide1st = false;
+        this.hide2nd = false;
+        this.hide3rd = false;
+        this.winnerNumber = 0;
     }
     BoardComponent.prototype.setBet = function (number) {
         this.services.exec('setBet', { number: number }).then(function (res) { });
     };
     BoardComponent.prototype.ngOnInit = function () {
+        var _this = this;
         var buttons = $("board button");
         for (var i = 0; i < buttons.length; i++) {
             $(buttons[i]).addClass(this.getColor());
         }
+        this.services.socket.on('timbaWinnerNumber', function (winnerNumber) {
+            setTimeout(function () {
+                _this.hideNotSelectedBoards(winnerNumber.number);
+                setTimeout(function () {
+                    console.log(winnerNumber);
+                    _this.winnerNumber = winnerNumber.number;
+                }, 5000);
+            }, 3000);
+        });
+    };
+    BoardComponent.prototype.hideNotSelectedBoards = function (number) {
+        if (number < 13) {
+            this.hide2nd = true;
+            this.hide3rd = true;
+            return;
+        }
+        if (number > 24) {
+            this.hide1st = true;
+            this.hide2nd = true;
+            return;
+        }
+        this.hide1st = true;
+        this.hide3rd = true;
     };
     BoardComponent.prototype.getColor = function () {
         return "c" + (Math.floor((Math.random() * 12)) + 1);

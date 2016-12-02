@@ -11,10 +11,12 @@ import './rxjs-extensions';
             <button *ngIf="showMenu" (click)="return.emit('groups');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-users"></i></button>
             <button *ngIf="showMenu" (click)="return.emit('config');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-gear"></i></button>
             <button *ngIf="showMenu" (click)="return.emit('help');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-question"></i></button>
-            <button *ngIf="showMenu" (click)="return.emit('admin');showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-chevron-up"></i></button>
+            <button *ngIf="showMenu && services.user.admin" (click)="startTimba();showMenu = false" type="button" class="btn btn-primary" ><i class="fa fa-chevron-up"></i></button>
             <button type="button" (click)="logOut.emit();showMenu = false" class="btn btn-primary" ><i class="fa fa-power-off"></i></button>
         </div>
-    `
+    `,
+    styleUrls: ['app/user-session.component.css'],
+
 })
 
 export class UserSessionComponent implements OnInit {
@@ -25,6 +27,9 @@ export class UserSessionComponent implements OnInit {
     showMenu = false;
     constructor( private services: AppService) {}
 
+    startTimba(){
+        this.services.exec('startTimba',{}).then(res =>{});
+    }
     
     ngOnInit(){
     }

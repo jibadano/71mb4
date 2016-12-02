@@ -2,10 +2,10 @@
 	<div id="messages" style="overflow-y:hidden; height:100%">
 		<table class="table">
 			<tbody>
-				<tr [class.timbabot]="log.email == 'timbaBot@'" *ngFor="let log of services.timba.log">
+				<tr *ngFor="let log of services.timba.log">
 					<td *ngIf="log.email == services.user.email" style="float:right">You</td>
 					<td *ngIf="log.email != services.user.email">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
-					<td [class.user-msg]="log.email == services.user.email" class="msg">{{log.msg}}</td>
+					<td [class.timba-msg]="log.email == 'timbaBot@'" [class.user-msg]="log.email == services.user.email" class="msg">{{log.msg}}</td>
 				</tr>
 			</tbody>
 		</table>
