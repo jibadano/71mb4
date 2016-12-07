@@ -14,6 +14,9 @@ declare var $:any;
 export class BoardComponent implements OnInit {
 	@Input() user:User;
 
+  firstRow:[number]= [1,4,7,10,13,16,19,22,25,28,31,34];
+  secondRow:[number]= [2,5,8,11,14,17,20,23,26,29,32,35];
+  thirdRow:[number]= [3,6,9,12,15,18,21,24,27,30,33,36];
   hide1st:boolean = false;
   hide2nd:boolean = false;
   hide3rd:boolean = false;
@@ -22,39 +25,37 @@ export class BoardComponent implements OnInit {
   showWinners: boolean = false;  lastWinner: boolean = false; sorteando: boolean = false;
 
   constructor(private services: AppService) {}
-  
-  setBet(number:number){
-    this.services.exec('setBet',{number:number}).then(res =>{});
-  }
 
   ngOnInit(){
     this.showWinners = false;
 
-    let buttons = $("board button");
-      for(let i=0; i< buttons.length; i++){
-        $(buttons[i]).addClass(this.getColor());
-      }
+    let buttons = $("number button");
+    for(let i=0; i< buttons.length; i++){
+      $(buttons[i]).addClass(this.getColor());
+    }
 
-      this.services.socket.on('timbaWinnerNumber', (winnerNumber)=>{
-        this.winners = winnerNumber;
-          setTimeout(()=>{
-              this.hideNotSelectedBoards(winnerNumber.number);
-               setTimeout(()=>{
-                 console.log(winnerNumber);
-                this.winnerNumber = winnerNumber.number;
+    
+
+
+    this.services.socket.on('timbaWinnerNumber', (winnerNumber)=>{
+      this.winners = winnerNumber;
+        setTimeout(()=>{
+            this.hideNotSelectedBoards(winnerNumber.number);
+              setTimeout(()=>{
+              this.winnerNumber = winnerNumber.number;
+                setTimeout(()=>{
+                  this.showWinners = true;
                   setTimeout(()=>{
-                    this.showWinners = true;
+                    this.sorteando = true;
                     setTimeout(()=>{
-                      this.sorteando = true;
-                      setTimeout(()=>{
-                        this.sorteando=false;
-                        this.lastWinner = true; 
-                      },5000);
+                      this.sorteando=false;
+                      this.lastWinner = true; 
                     },5000);
-                },5000);
+                  },5000);
               },5000);
-          },3000);
-        });
+            },5000);
+        },3000);
+      });
   }
 
   hideNotSelectedBoards(number:number){
@@ -76,10 +77,6 @@ export class BoardComponent implements OnInit {
 
   getColor(){
     return "c" + (Math.floor((Math.random() * 12))+1);
-  }
-
-  isSelected(number:number){
-    return !this.services.timba.numbers[number - 1].players.every(player=>{return player.email != this.services.user.email});
   }
 
 }

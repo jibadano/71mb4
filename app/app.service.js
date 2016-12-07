@@ -18,7 +18,7 @@ var AppService = (function () {
         this.http = http;
         this.user = new user_1.User();
         this.timba = new timba_1.Timba();
-        this.socket = io.connect('http://172.23.130.217:4000');
+        this.socket = io.connect('http://localhost:4000');
     }
     ;
     AppService.prototype.exec = function (serviceId, data) {
@@ -32,7 +32,7 @@ var AppService = (function () {
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('/login', '', options)
             .toPromise()
-            .then(function (res) { _this.user = res.json(); });
+            .then(function (res) { return _this.user = res.json(); });
     };
     ;
     AppService.prototype.getCurrentUser = function () {

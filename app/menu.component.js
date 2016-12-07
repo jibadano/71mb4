@@ -67,6 +67,20 @@ var MenuComponent = (function () {
             totalAmount += numbers[i].players.length;
         return totalAmount * this.services.timba.betAmount;
     };
+    MenuComponent.prototype.getPlayerAmount = function (player) {
+        var numbers = this.services.timba.numbers;
+        var playerAmount = 0;
+        for (var i = 0; i < numbers.length; i++)
+            playerAmount += this.containsPlayer(numbers[i].players, player.email) ? 1 : 0;
+        return playerAmount * this.services.timba.betAmount;
+    };
+    MenuComponent.prototype.containsPlayer = function (players, email) {
+        var result = false;
+        for (var i = 0; i < players.length; i++)
+            if (players[i].email == email)
+                result = true;
+        return result;
+    };
     MenuComponent.prototype.ngOnInit = function () {
         console.log(this.services.timba);
     };

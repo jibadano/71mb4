@@ -15,6 +15,9 @@ require('./rxjs-extensions');
 var BoardComponent = (function () {
     function BoardComponent(services) {
         this.services = services;
+        this.firstRow = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
+        this.secondRow = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35];
+        this.thirdRow = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36];
         this.hide1st = false;
         this.hide2nd = false;
         this.hide3rd = false;
@@ -23,13 +26,10 @@ var BoardComponent = (function () {
         this.lastWinner = false;
         this.sorteando = false;
     }
-    BoardComponent.prototype.setBet = function (number) {
-        this.services.exec('setBet', { number: number }).then(function (res) { });
-    };
     BoardComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.showWinners = false;
-        var buttons = $("board button");
+        var buttons = $("number button");
         for (var i = 0; i < buttons.length; i++) {
             $(buttons[i]).addClass(this.getColor());
         }
@@ -38,7 +38,6 @@ var BoardComponent = (function () {
             setTimeout(function () {
                 _this.hideNotSelectedBoards(winnerNumber.number);
                 setTimeout(function () {
-                    console.log(winnerNumber);
                     _this.winnerNumber = winnerNumber.number;
                     setTimeout(function () {
                         _this.showWinners = true;
@@ -70,10 +69,6 @@ var BoardComponent = (function () {
     };
     BoardComponent.prototype.getColor = function () {
         return "c" + (Math.floor((Math.random() * 12)) + 1);
-    };
-    BoardComponent.prototype.isSelected = function (number) {
-        var _this = this;
-        return !this.services.timba.numbers[number - 1].players.every(function (player) { return player.email != _this.services.user.email; });
     };
     __decorate([
         core_1.Input(), 

@@ -12,7 +12,7 @@ export class AppService implements OnInit{
     user : User = new User();
     timba : Timba = new Timba();
     constructor(private http: Http) {};
-    socket : any = io.connect('http://172.23.130.217:4000');
+    socket : any = io.connect('http://localhost:4000');
 
     exec(serviceId : string, data: any): Promise<any>{
       return this.http.post('/services', JSON.stringify({serviceId: serviceId, data: data}))
@@ -26,7 +26,7 @@ export class AppService implements OnInit{
 
       return this.http.post('/login','',options)
       .toPromise()
-      .then(res => {this.user = res.json();});
+      .then(res => this.user = res.json() as any);
     };
 
     getCurrentUser(){

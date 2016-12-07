@@ -68,6 +68,24 @@ dhms(t){
     return totalAmount * this.services.timba.betAmount;
   }
 
+  getPlayerAmount(player:any){
+    let numbers = this.services.timba.numbers;
+    let playerAmount = 0;
+    for(var i = 0; i<numbers.length;i++)
+      playerAmount += this.containsPlayer(numbers[i].players, player.email)? 1 : 0;
+    
+    return playerAmount * this.services.timba.betAmount;
+  }
+
+  containsPlayer(players, email){
+    let result = false;
+    for(var i = 0; i<players.length;i++)
+      if(players[i].email == email)
+        result = true;
+
+    return result;
+  }
+
   ngOnInit(){
     console.log(this.services.timba);
   }

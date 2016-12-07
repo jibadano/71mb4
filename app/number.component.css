@@ -234,7 +234,7 @@ tr.selected:hover {
 
 .hideNumber{
     transition:opacity 1s;
-    opacity:0;
+    opacity:0.15;
 }
 
 .number-detail{
@@ -242,28 +242,21 @@ tr.selected:hover {
     color: #fafafa;
     font-family: arvo;
     position: absolute;
-    top: 40px;
     padding: 5px;
     display: inline;
 }
 
-.board-modal{
-      z-index: 9999;
-      background-color: #884c96;
-    color: #fafafa;
-    font-family: arvo;
-    position: absolute;
-    top: 9%;
-    left: 25%;
-    width: 50%;
-    opacity:0;
-        transition: opacity 0.4s;
-
+.closed{
+  background-color:#888;
 }
 
-.show{
-    transition: opacity 0.4s;
-    opacity:1;
+.closed:hover{
+  transition: font-size 0s, font-weight 0s ,background-color 0s;
+  border:1px solid #eee;
+  font-size:28px;
+  font-weight:normal;
+
+  background-color:#888;
 }
 
 /*

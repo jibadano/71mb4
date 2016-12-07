@@ -12,6 +12,7 @@ import { MenuComponent }   from './menu.component';
 import { AdminComponent }   from './admin.component';
 import { BoardComponent }   from './board.component';
 import { ChatComponent }   from './chat.component';
+import { NumberComponent }   from './number.component';
 
 import { AppService }   from './app.service';
 
@@ -31,7 +32,8 @@ import { AppService }   from './app.service';
     UserSessionComponent,
     MenuComponent,
     AdminComponent,
-    ChatComponent
+    ChatComponent,
+    NumberComponent
   ],
    providers: [
     AppService

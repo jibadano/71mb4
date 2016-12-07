@@ -1,0 +1,10 @@
+<div (mouseenter)="showDetails=true" (mouseleave)="showDetails=false">
+	<div *ngIf="showDetails && services.timba.closed" class="number-detail" >
+		<table>
+			<tr *ngFor="let player of services.timba.numbers[number -1].players">
+				<td>{{player.email}}</td>
+			</tr>
+		</table>
+	</div>
+	<button id="button{{number}}" type="button" [class.closed]="services.timba.closed && !isSelected()" [class.winnerNumber]="winnerNumber==number" [class.hideNumber]=" (services.timba.status > 0 && !winnerSection()) || (services.timba.status > 1 && number != services.timba.winnerNumber.number)" [class.bet]="isSelected()" class="btn btn-primary btn-board {{classColor}}" (click)="setBet()">{{number}}</button>
+</div>

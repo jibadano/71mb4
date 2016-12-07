@@ -19,7 +19,7 @@ exports.SERVICE_EXECUTION = function(err, serviceId){
 
 
 exports.USER = {
-	AUTH_FAILED: '{err:{code:"AUTH_FAILED",msg:"Authentication failed"}}',
+	AUTH_FAILED: '{"err":{"code":"AUTH_FAILED","msg":"Authentication failed"}}',
 	ALRDY_EXTS: '{err:{code:"ALRDY_EXTS",msg:"User already exists"}}',
 	NOT_FND: '{err:{code:"NOT_FND",msg:"No user found"}}',
 	ALRDY_LOGGED_IN: '{err:{code:"ALRDY_LOGGED_IN",msg:"User already logged in"}}',

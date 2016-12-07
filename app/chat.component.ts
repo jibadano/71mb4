@@ -19,10 +19,10 @@ export class ChatComponent implements OnInit {
   constructor(private services: AppService) {}
   
   ngOnInit(){
-    window.setInterval(function() {
-      var elem = document.getElementById('messages');
-      elem.scrollTop = elem.scrollHeight;
-    }, 1000);
+      this.services.socket.on('logChange', ()=>{
+         var elem = document.getElementById('messages');
+        elem.scrollTop = elem.scrollHeight;
+      });
   }
 
   sendMessage(message: string){

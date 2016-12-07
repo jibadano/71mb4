@@ -11,6 +11,7 @@ var Timba = (function () {
         this.winners = [];
         this.executing = false;
         this.closed = false;
+        this.status = 0;
     }
     return Timba;
 }());

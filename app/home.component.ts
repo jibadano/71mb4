@@ -20,7 +20,7 @@ import './rxjs-extensions';
 export class HomeComponent implements OnInit {
 	nav : string = 'welcome';
 	formGroup :FormGroup;
-
+err : any;
 	@Input()
 	user : User = new User();
 	
@@ -29,9 +29,13 @@ export class HomeComponent implements OnInit {
     constructor(private services: AppService, private fb: FormBuilder) {};
 
   	login(){
-      if(this.user.password != ''  && this.user.email != ''){
-        this.services.login(this.user).then(()=>{
-        this.services.fetchTimba();
+      if(this.user.password != '' && this.user.email != ''){
+        this.services.login(this.user).then((res)=>{
+         console.log(res);
+          if(res.err)
+           this.err = res.err;
+          else
+            this.services.fetchTimba();
         });
       }
   	}
@@ -42,72 +46,10 @@ export class HomeComponent implements OnInit {
 
   	ngOnInit(){
 
-		 this.buildForm();
      this.services.getCurrentUser().then(()=>{
            this.services.fetchTimba();
      });
     }
 
-
-
-
-
-  buildForm(): void {
-    this.formGroup = this.fb.group({
-      'email': [this.user.email, [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(54)
-       ]
-      ],
-	'password': [this.user.password, [
-          Validators.required,
-          Validators.minLength(4),
-          Validators.maxLength(54)
-       ]
-      ]
-    });
-
-    this.formGroup.valueChanges
-      .subscribe(data => this.onValueChanged(data));
-
-    this.onValueChanged(); // (re)set validation messages now
-  }
-
-  onValueChanged(data?: any) {
-    if (!this.formGroup) { return; }
-    const form = this.formGroup;
-
-    for (const field in this.formErrors) {
-      // clear previous error message (if any)
-      this.formErrors[field] = '';
-      const control = form.get(field);
-
-      if (control && control.dirty && !control.valid) {
-        const messages = this.validationMessages[field];
-        for (const key in control.errors) {
-          this.formErrors[field] += messages[key] + ' ';
-        }
-      }
-    }
-  }
-
- formErrors = {
-    'email': '',
-    'password': ''
-  };
-
-  validationMessages = {
-    'email': {
-      'required':      'Email is required.',
-      'minlength':     'Email must be at least 4 characters long.',
-      'maxlength':     'Email cannot be more than 54 characters long.'
-    },
-    'password': {
-      'required':      'password is required.',
-      'minlength':     'password must be at least 4 characters long.',
-      'maxlength':     'password cannot be more than 54 characters long.'
-    }
-  };
   
 }

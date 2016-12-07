@@ -8,7 +8,7 @@ h3 {
   text-align: center; margin-bottom: 0;
 }
 
-h1{
+h4,h5{
       display: inline;
     color: #fafafa;
     background-color: #111;
@@ -162,6 +162,24 @@ tr.selected:hover {
   background-color:#111;
   font-family:arvo;
   color:#eee;
+}
+
+.details{
+      background: #111;
+    width: 88%;
+    height: 200px;
+    position: absolute;
+    z-index: 999999;
+    display:flex;
+}
+
+td{
+   display: inline;
+    color: #fafafa;
+    background-color: #111;
+
+    font-family: arvo;
+    font-size:20px;
 }
 /*
 Copyright 2016 Google Inc. All Rights Reserved.

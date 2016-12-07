@@ -1,74 +1,95 @@
-<div style="margin-bottom:40px;margin-top:40px;display:inline-table">
+<div style="margin-bottom:30px;margin-top:20px;display:inline-table">
+
 	<table>
 		<tr>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==1" [class.hideNumber]="hide1st" [class.bet]="isSelected(1)" class="btn btn-primary btn-board" (click)="setBet(1)">1</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==4" [class.hideNumber]="hide1st" [class.bet]="isSelected(4)" class="btn btn-primary btn-board2" (click)="setBet(4)">4</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==7" [class.hideNumber]="hide1st" [class.bet]="isSelected(7)" class="btn btn-primary btn-board" (click)="setBet(7)">7</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==10" [class.hideNumber]="hide1st" [class.bet]="isSelected(10)" class="btn btn-primary btn-board2" (click)="setBet(10)">10</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==13" [class.hideNumber]="hide2nd" [class.bet]="isSelected(13)" class="btn btn-primary btn-board" (click)="setBet(13)">13</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==16" [class.hideNumber]="hide2nd" [class.bet]="isSelected(16)" class="btn btn-primary btn-board2" (click)="setBet(16)">16</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==19" [class.hideNumber]="hide2nd" [class.bet]="isSelected(19)" class="btn btn-primary btn-board" (click)="setBet(19)">19</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==22" [class.hideNumber]="hide2nd" [class.bet]="isSelected(22)" class="btn btn-primary btn-board2" (click)="setBet(22)">22</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==25" [class.hideNumber]="hide3rd" [class.bet]="isSelected(25)" class="btn btn-primary btn-board" (click)="setBet(25)">25</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==28" [class.hideNumber]="hide3rd" [class.bet]="isSelected(28)" class="btn btn-primary btn-board2" (click)="setBet(28)">28</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==31" [class.hideNumber]="hide3rd" [class.bet]="isSelected(31)" class="btn btn-primary btn-board" (click)="setBet(31)">31</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==34" [class.hideNumber]="hide3rd" [class.bet]="isSelected(34)" class="btn btn-primary btn-board2" (click)="setBet(34)">34</button></td>
+			<td *ngFor="let n of firstRow"><number [number]="n"></number></td>
 		</tr>
 		<tr>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==2" [class.hideNumber]="hide1st" [class.bet]="isSelected(2)" class="btn btn-primary btn-board2" (click)="setBet(2)">2</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==5" [class.hideNumber]="hide1st" [class.bet]="isSelected(5)" class="btn btn-primary btn-board" (click)="setBet(5)">5</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==8" [class.hideNumber]="hide1st" [class.bet]="isSelected(8)" class="btn btn-primary btn-board2" (click)="setBet(8)">8</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==11" [class.hideNumber]="hide1st" [class.bet]="isSelected(11)" class="btn btn-primary btn-board" (click)="setBet(11)">11</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==14" [class.hideNumber]="hide2nd" [class.bet]="isSelected(14)" class="btn btn-primary btn-board2" (click)="setBet(14)">14</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==17" [class.hideNumber]="hide2nd" [class.bet]="isSelected(17)" class="btn btn-primary btn-board" (click)="setBet(17)">17</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==20" [class.hideNumber]="hide2nd" [class.bet]="isSelected(20)" class="btn btn-primary btn-board2" (click)="setBet(20)">20</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==23" [class.hideNumber]="hide2nd" [class.bet]="isSelected(23)" class="btn btn-primary btn-board" (click)="setBet(23)">23</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==26" [class.hideNumber]="hide3rd" [class.bet]="isSelected(26)" class="btn btn-primary btn-board2" (click)="setBet(26)">26</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==29" [class.hideNumber]="hide3rd" [class.bet]="isSelected(29)" class="btn btn-primary btn-board" (click)="setBet(29)">29</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==32" [class.hideNumber]="hide3rd" [class.bet]="isSelected(32)" class="btn btn-primary btn-board2" (click)="setBet(32)">32</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==35" [class.hideNumber]="hide3rd" [class.bet]="isSelected(35)" class="btn btn-primary btn-board" (click)="setBet(35)">35</button></td>
+			<td *ngFor="let n of secondRow"><number [number]="n"></number></td>
 		</tr>
 		<tr>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==3" [class.hideNumber]="hide1st" [class.bet]="isSelected(3)" class="btn btn-primary btn-board" (click)="setBet(3)">3</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==6" [class.hideNumber]="hide1st" [class.bet]="isSelected(6)" class="btn btn-primary btn-board2" (click)="setBet(6)">6</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==9" [class.hideNumber]="hide1st" [class.bet]="isSelected(9)" class="btn btn-primary btn-board" (click)="setBet(9)">9</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==12" [class.hideNumber]="hide1st" [class.bet]="isSelected(12)" class="btn btn-primary btn-board2" (click)="setBet(12)">12</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==15" [class.hideNumber]="hide2nd" [class.bet]="isSelected(15)" class="btn btn-primary btn-board" (click)="setBet(15)">15</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==18" [class.hideNumber]="hide2nd" [class.bet]="isSelected(18)" class="btn btn-primary btn-board2" (click)="setBet(18)">18</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==21" [class.hideNumber]="hide2nd" [class.bet]="isSelected(21)" class="btn btn-primary btn-board" (click)="setBet(21)">21</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==24" [class.hideNumber]="hide2nd" [class.bet]="isSelected(24)" class="btn btn-primary btn-board2" (click)="setBet(24)">24</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==27" [class.hideNumber]="hide3rd" [class.bet]="isSelected(27)" class="btn btn-primary btn-board" (click)="setBet(27)">27</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==30" [class.hideNumber]="hide3rd" [class.bet]="isSelected(30)" class="btn btn-primary btn-board2" (click)="setBet(30)">30</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==33" [class.hideNumber]="hide3rd" [class.bet]="isSelected(33)" class="btn btn-primary btn-board" (click)="setBet(33)">33</button></td>
-			<td><button type="button" [class.winnerNumber]="winnerNumber==36" [class.hideNumber]="hide3rd" [class.bet]="isSelected(36)" class="btn btn-primary btn-board2" (click)="setBet(36)">36</button></td>
+			<td *ngFor="let n of thirdRow"><number [number]="n"></number></td>
 		</tr>
 	</table>
 </div>
 
-<div *ngIf="showWinners" style="margin-bottom:40px;margin-top:40px;display:inline-table">
-	<div class="col-xs-4 " style="width:47%">
-		<h4>N° Ganador</h4>
-		<h1>{{winners.number}}</h1>
-	</div>
-	<div class="col-xs-4" style="width:50%">
-		<div *ngIf="winners.players.length == 0">
-			<h4>VACANTE</h4>
+<!--div *ngIf="false" class="board-modal">
+	<div style="display:flex">
+		<div style="width:33%">
+			<h1 style="font-size:125px;font-family:arvo">3</h1>
 		</div>
-		<div *ngIf="winners.players.length > 1">
-			<h4>Ganador/es</h4>
-			<h4 *ngIf="sorteando">SORTEANDO GANADOR</h4>
-			<h4 *ngIf="lastWinner">GANADOR TOTAL: {{winners.winner.email}}</h4>
-			<table *ngIf="!lastWinner" class="table">
+		<div style="width:33%">
+			<h1 style="font-size:125px;font-family:arvo">2</h1>
+		</div>
+		<div style="width:33%">
+			<h1 style="font-size:125px;font-family:arvo">1</h1>
+		</div>
+	</div>
+</div-->
+
+<div *ngIf="services.timba.status == 3" [class.show]="services.timba.status == 3" class="board-modal">
+	<div *ngIf="services.timba.winnerNumber.players.length == 1" style="display:flex">
+		
+		<div style="width:67%;overflow-y:auto">
+			<h4>Ganador</h4>
+			<h3>{{services.timba.winnerNumber.players[0].email}}</h3>
+		</div>
+		<div style="width:33%">
+			<h1 style="font-size:125px;font-family:arvo">{{services.timba.winnerNumber.number}}</h1>
+		</div>
+	</div>
+	<div *ngIf="services.timba.winnerNumber.players.length > 1" style="display:flex">
+		<div style="width:67%;overflow-y:auto">
+			<h4 style="float:left">Ganadores</h4>
+
+			<table  class="table">
 				<tbody>
-					<tr *ngFor="let player of winners.players">
-						<td style="float:right">{{player.email}}</td>
+					<tr *ngFor="let player of services.timba.winnerNumber.players">
+						<td style="float:left">{{player.email}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-		<div *ngIf="winners.players.length == 1">
-			<h4>Ganador</h4>
-			<p style="float:right">{{winners.players[0].email}}</p>
+		<div style="width:33%">
+			<h1 style="font-size:125px;font-family:arvo">{{services.timba.winnerNumber.number}}</h1>
+		</div>
+	</div>
+	<div *ngIf="services.timba.winnerNumber.players.length == 0" style="padding:30px;display:flex">
+		<h3>VACANTE</h3>
+		<h5>otra oportunida</h5>
+	</div>
+</div>
+
+
+<div *ngIf="services.timba.status >= 4" [class.show]="services.timba.status >=4" class="board-modal">
+	<div *ngIf="services.timba.winner" style="width:100%;padding-bottom:20px">
+		<h4>Ganador</h4>
+		<h2>{{services.timba.winner}}</h2>
+	</div>
+	<div *ngIf="!services.timba.winner" style="display:flex">
+		<div style="width:100%;overflow-y:auto">
+			<h4>Desempate a MUERTE</h4>
+			<table  class="table">
+				<tbody>
+					<tr *ngFor="let player of services.timba.winnerNumber.players">
+						<td style="float:left;width:40%">{{player.email}}</td>
+						<td style="float:left">
+							<i *ngIf="player.points > 0" class="fa fa-money"></i>
+							<i *ngIf="player.points > 1" class="fa fa-money"></i>
+							<i *ngIf="player.points > 2" class="fa fa-money"></i>
+							<i *ngIf="player.points > 3" class="fa fa-money"></i>
+							<i *ngIf="player.points > 4" class="fa fa-money"></i>
+							<i *ngIf="player.points > 5" class="fa fa-money"></i>
+							<i *ngIf="player.points > 6" class="fa fa-money"></i>
+							<i *ngIf="player.points > 7" class="fa fa-money"></i>
+							<i *ngIf="player.points > 8" class="fa fa-money"></i>
+							<i *ngIf="player.points > 9" class="fa fa-money"></i>
+						</td>
+						<td style="float:left">{{player.points}}</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
 </div>
+

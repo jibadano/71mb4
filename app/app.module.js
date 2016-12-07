@@ -21,6 +21,7 @@ var menu_component_1 = require('./menu.component');
 var admin_component_1 = require('./admin.component');
 var board_component_1 = require('./board.component');
 var chat_component_1 = require('./chat.component');
+var number_component_1 = require('./number.component');
 var app_service_1 = require('./app.service');
 var AppModule = (function () {
     function AppModule() {
@@ -42,7 +43,8 @@ var AppModule = (function () {
                 user_session_component_1.UserSessionComponent,
                 menu_component_1.MenuComponent,
                 admin_component_1.AdminComponent,
-                chat_component_1.ChatComponent
+                chat_component_1.ChatComponent,
+                number_component_1.NumberComponent
             ],
             providers: [
                 app_service_1.AppService

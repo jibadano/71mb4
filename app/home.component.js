@@ -20,29 +20,17 @@ var HomeComponent = (function () {
         this.nav = 'welcome';
         this.user = new user_1.User();
         this.loginSuccess = new core_1.EventEmitter();
-        this.formErrors = {
-            'email': '',
-            'password': ''
-        };
-        this.validationMessages = {
-            'email': {
-                'required': 'Email is required.',
-                'minlength': 'Email must be at least 4 characters long.',
-                'maxlength': 'Email cannot be more than 54 characters long.'
-            },
-            'password': {
-                'required': 'password is required.',
-                'minlength': 'password must be at least 4 characters long.',
-                'maxlength': 'password cannot be more than 54 characters long.'
-            }
-        };
     }
     ;
     HomeComponent.prototype.login = function () {
         var _this = this;
         if (this.user.password != '' && this.user.email != '') {
-            this.services.login(this.user).then(function () {
-                _this.services.fetchTimba();
+            this.services.login(this.user).then(function (res) {
+                console.log(res);
+                if (res.err)
+                    _this.err = res.err;
+                else
+                    _this.services.fetchTimba();
             });
         }
     };
@@ -51,47 +39,9 @@ var HomeComponent = (function () {
     };
     HomeComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.buildForm();
         this.services.getCurrentUser().then(function () {
             _this.services.fetchTimba();
         });
-    };
-    HomeComponent.prototype.buildForm = function () {
-        var _this = this;
-        this.formGroup = this.fb.group({
-            'email': [this.user.email, [
-                    forms_1.Validators.required,
-                    forms_1.Validators.minLength(4),
-                    forms_1.Validators.maxLength(54)
-                ]
-            ],
-            'password': [this.user.password, [
-                    forms_1.Validators.required,
-                    forms_1.Validators.minLength(4),
-                    forms_1.Validators.maxLength(54)
-                ]
-            ]
-        });
-        this.formGroup.valueChanges
-            .subscribe(function (data) { return _this.onValueChanged(data); });
-        this.onValueChanged(); // (re)set validation messages now
-    };
-    HomeComponent.prototype.onValueChanged = function (data) {
-        if (!this.formGroup) {
-            return;
-        }
-        var form = this.formGroup;
-        for (var field in this.formErrors) {
-            // clear previous error message (if any)
-            this.formErrors[field] = '';
-            var control = form.get(field);
-            if (control && control.dirty && !control.valid) {
-                var messages = this.validationMessages[field];
-                for (var key in control.errors) {
-                    this.formErrors[field] += messages[key] + ' ';
-                }
-            }
-        }
     };
     __decorate([
         core_1.Input(), 

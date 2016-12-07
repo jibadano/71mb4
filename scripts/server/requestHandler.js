@@ -21,8 +21,9 @@ var timba = {
 	log: [{type:logType.TIMBA, email: 'timbaBot@', msg: 'Timba has been created successfully!'}],
 	players: [],
 	winners: [],
-	executing: false,
-	closed: false
+	closed: false,
+	status: 0,
+	
 }
 
 io.sockets.on('connection', function(socket){
@@ -49,6 +50,16 @@ function logout(req, res) {
 }
 
 function login(req, res) {
+/*	
+for(var i=0;i < 36; i++){
+	var cantp = Math.floor((Math.random() * 7));
+	timba.numbers[i] = {};
+	timba.numbers[i].players = [];
+	for(var j=0; j< cantp; j++){
+		var p = Math.floor((Math.random() * 7));
+		timba.numbers[i].players.push({email:playersTest[p]});
+	}
+}*/
 	if(req.session.user)
 		return res.end(eh.USER.ALRDY_LOGGED_IN);
 	
@@ -99,7 +110,11 @@ function execService(req, res) {
 		}
 	});
 }
-
+function sendLog(){
+	sockets.forEach(function(socket){
+		socket.emit('logChange');
+	});
+}
 
 
 var services = {
@@ -152,6 +167,7 @@ addLog : function (user, data, then){
 	
 	timba.log.push(data.log);
 	sendTimba();
+	sendLog();
 	return then(undefined,timba);
 },
 
@@ -172,6 +188,9 @@ closeTimba: function (user, data, then){
 		addBotLog(logType.TIMBA, 'SE CERRO LA TIMBA, EN BREVE LOS VISITARÁ EL RECAUDADOR');
 		timba.closed = true;
 		sendTimba();
+		sockets.forEach(function(socket){
+			socket.emit('timbaClosed');
+		});
 	}
 	return then(undefined, {});
 },
@@ -179,34 +198,78 @@ closeTimba: function (user, data, then){
 //START TIMBA
 startTimba : function(user, data, then){
 		if(user.admin){
-			var number = Math.floor((Math.random() * 36)) + 1;
-			var winnerNumber = timba.numbers[number -1];
-			winnerNumber.number = number;
-			if(winnerNumber.players.length != 0){
-				var winnerIndex = Math.floor((Math.random() * winnerNumber.players.length));
-				winnerNumber.winner = winnerNumber.players[winnerIndex];
-			}
-			sockets.forEach(function(socket){
-				socket.emit('timbaWinnerNumber',winnerNumber);
-			});
-			/*
-			timba.executing = true;
-			sendTimba();
-			setTimeout(function() {
-				timba.executing = false;
-				
-				var listaPonderada = [];
-				for(var i=0; i < timba.players.length; i++){
-					for(var j=0; j < timba.players[i].bets; j++)
-						listaPonderada.push(timba.players[i]);
+			if(timba.status==0){
+				var number = Math.floor((Math.random() * 36)) + 1;
+				var winnerNumber = timba.numbers[number -1];
+				winnerNumber.number = number;
+				if(winnerNumber.players.length != 0){
+					var winnerIndex = Math.floor((Math.random() * winnerNumber.players.length));
+					winnerNumber.winner = winnerNumber.players[winnerIndex];
 				}
-				
-				var number = Math.floor((Math.random() * timba.numbers.length));
-				timba.winners = timba.numbers[number].players;
+				timba.winnerNumber = winnerNumber;
+				timba.status = 1;
 				sendTimba();
-			},20000);*/
+				then(null,'');
+			}
+			else if(timba.status==1){
+				timba.status=2;
+				sendTimba();
+				then(null,'');
+
+			}
+			else if(timba.status==2){
+				timba.status=3;
+				sendTimba();
+				then(null,'');
+			}
+			else if(timba.status==3){
+				if(timba.winnerNumber.players.length ==0){
+					timba.status =0;
+					sendTimba();
+					console.log(timba.status);
+					then(null,'');
+				}
+				else{
+					timba.status=4;
+					sendTimba();
+					if(timba.winnerNumber.players.length > 1){
+						for(var i=0;i< timba.winnerNumber.players.length; i++)
+							timba.winnerNumber.players[i].points = 0;
+												
+						nextPoint();
+						then(null,'');
+					}
+				}
+			}
+		
 		}
 	},
+}
+
+function nextPoint(){
+	setTimeout(function(){
+		var w = Math.floor((Math.random() * timba.winnerNumber.players.length));
+		timba.winnerNumber.players[w].points++;
+		sendTimba();
+		if(!getWinner(timba.winnerNumber.players))
+			nextPoint();
+		else{
+			timba.winner = getWinner(timba.winnerNumber.players);
+					timba.status = 5;
+					sendTimba();
+					
+		}
+	},2000);
+}
+
+function getWinner(players){
+	
+	var result = null;
+	for(var i = 0; i< players.length; i++)
+		if(players[i].points == 10)
+			result = players[i].email;
+	
+	return result;
 }
 
 

@@ -10,5 +10,7 @@ export class Timba {
 	winners: any[] = [];
 	executing: boolean = false;
 	closed: boolean = false;
+	status: number = 0;
+	winnerNumber: {winners:any[], winner:any, number:number};
 }
 
