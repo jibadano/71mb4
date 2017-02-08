@@ -1,0 +1,34 @@
+<div (mouseenter)="showButtons=true" (mouseleave)="showButtons=false" [class.big]="showButtons" [class.skewleft]="skewleft" [class.skewright]="skewright" [class.skewup]="skewup" [class.skewdown]="skewdown" class="cursor">
+	
+	<button [class.btn-hide]="!showButtons"
+		(click)="show('info','click')" 
+		(mouseenter)="show('info','enter')" 
+		(mouseleave)="show('info','leave')"
+		class="btn btn-default btn-lg btn-cursor"><i  class="fa fa-info"></i></button>
+
+	<div style="display:flex">
+		<button [class.btn-hide]="!showButtons"
+		(click)="show('players','click')" 
+		(mouseenter)="show('players','enter')" 
+		(mouseleave)="show('players','leave')"
+		 class="btn btn-default btn-lg btn-cursor"><i  class="fa fa-users"></i></button>
+		
+		<h2 class="title">
+			<div class="display" [class.on]="display=='title'">71mb4</div>
+			<div class="display" style=" left: calc(50% - 145px);font-size:55px" [class.on]="display=='timeLeft'">{{services.timeCountDown}}</div>
+			<div class="display" [class.on]="display=='totalAmount'">$ {{services.getTotalAmount()}}</div>
+		</h2>
+
+		<button [class.btn-hide]="!showButtons"
+		(click)="show('chat','click')" 
+		(mouseenter)="show('chat','enter')"  
+		(mouseleave)="show('chat','leave')" 
+		class="btn btn-default btn-lg btn-cursor"><i  class="fa fa-comments"></i></button>
+	</div>
+
+	<button [class.btn-hide]="!showButtons"
+		(click)="show('bet','click')" 
+		(mouseenter)="show('bet','enter')" 
+		(mouseleave)="show('bet','leave')"
+		 class="btn btn-default btn-lg btn-cursor"><i  class="fa fa-usd"></i></button>
+</div>

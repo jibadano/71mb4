@@ -1,0 +1,18 @@
+#roulette{
+    position: absolute;
+    z-index: 99999999;
+    transform: rotate(360deg);
+    width: 400px;
+    height: 400px;
+    left: calc(50% - 200px);
+    top: calc(50% - 200px);
+    background: transparent;
+}
+
+.nedle{
+        position: absolute;
+    left: calc(50% + 130px);
+    top: calc(50% - 8px);
+    z-index: 999999999999999999999;
+    color:#fff;
+}

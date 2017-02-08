@@ -31,7 +31,6 @@ err : any;
   	login(){
       if(this.user.password != '' && this.user.email != ''){
         this.services.login(this.user).then((res)=>{
-         console.log(res);
           if(res.err)
            this.err = res.err;
           else

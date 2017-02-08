@@ -26,7 +26,6 @@ var HomeComponent = (function () {
         var _this = this;
         if (this.user.password != '' && this.user.email != '') {
             this.services.login(this.user).then(function (res) {
-                console.log(res);
                 if (res.err)
                     _this.err = res.err;
                 else

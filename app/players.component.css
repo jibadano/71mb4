@@ -1,0 +1,14 @@
+.blur-bg{
+  top:0;
+  left:0;
+  position:absolute;
+  width:80%;
+  height:100%;
+  background:rgba(120,120,120,0.1);
+  filter:blur(8px);
+}
+
+.player-row{
+    border-bottom: 1px solid rgba(200,200,200,0.3);
+
+}

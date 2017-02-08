@@ -1,19 +1,21 @@
+<div class="blur-bg">
+</div>
 <div class="chat">
-	<div id="messages" style="overflow-y:auto; height:100%">
+	<div id="messages">
 		<table class="table">
 			<tbody>
 				<tr *ngFor="let log of services.timba.log">
-					<td *ngIf="log.email == services.user.email" style="float:right">You</td>
-					<td *ngIf="log.email != services.user.email">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
+					<td *ngIf="log.email == services.user.email" style="padding-bottom:2px;float:right;margin-top:10px;width:100%;text-align:right">You</td>
+					<td *ngIf="log.email != services.user.email" style="padding-bottom:2px;margin-top:10px;width:100%">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
 					<td [class.timba-msg]="log.email == 'timbaBot@'" [class.user-msg]="log.email == services.user.email" class="msg">{{log.msg}}</td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
-	<form role="form" class="form-inline">
+	<form role="form" style="margin-top:5px" class="form-inline">
 		<div class="form-group" style="width:100%">
 			<input type="text" [(ngModel)]="message" placeholder="message" class="form-control message-box" id="msg" [ngModelOptions]="{standalone: true}">
-			<button type="submit" (click)="sendMessage(message);message = '';" class="btn btn-default send-button">Send</button>
+			<button type="submit" (click)="sendMessage(message);message = '';" class="btn btn-primary send-button">Send</button>
 		</div>
 	</form>
 </div>

@@ -14,14 +14,25 @@ var AppComponent = (function () {
     function AppComponent(services) {
         this.services = services;
         this.nav = 'dashboard';
+        this.showPlayers = false;
+        this.showInfo = false;
+        this.showChat = false;
+        this.showBet = false;
     }
     ;
+    AppComponent.prototype.showOrHide = function (component) {
+        this.showPlayers = (component == "players") ? !this.showPlayers : this.showPlayers;
+        this.showInfo = (component == "info") ? !this.showInfo : this.showInfo;
+        this.showChat = (component == "chat") ? !this.showChat : this.showChat;
+        this.showBet = (component == "bet") ? !this.showBet : this.showBet;
+    };
     AppComponent.prototype.ngOnInit = function () {
     };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
             templateUrl: 'app/app.component.html',
+            styleUrls: ['app/app.component.css'],
             providers: [app_service_1.AppService]
         }), 
         __metadata('design:paramtypes', [app_service_1.AppService])

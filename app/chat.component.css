@@ -1,7 +1,24 @@
 
+#messages{
+      height: calc(100% - 42px);
+      overflow-y:auto;
+}
+
 td{
-  display:inline;
-      box-shadow: inset 0 0px 2px #fff;
+      font-size: 12px;
+    text-align: left;
+    background: transparent;
+    float: left;
+}
+
+.blur-bg{
+  top:24px;
+  left:20%;
+  position:absolute;
+  width:80%;
+  height:100%;
+  background:rgba(120,120,120,0.1);
+  filter:blur(8px);
 }
 
 tr{
@@ -9,28 +26,40 @@ tr{
 }
 
 .msg{
-  font-family:arvo;
+   font-size: 15px;
+    text-align: left;
+    background: rgba(200,200,200,0.3);
+    float: left;
+    display:flex;
   color:#fafafa;
-  background-color:#3494ce;
   padding-left:10px;
   padding-right:10px;
 }
 
 .timba-msg{
-    background-color:#111;
+  color:rgba(200,200,200,0.3);
+        background:transparent;
+
 }
 
 .user-msg{
     float:right;
-    background-color:#f44336;
+    text-align:right;
+    display:block;
+    background-color:rgba(200,200,200,0.1);
 }
 
 .chat{
-  height:200px;
+  float:right;
+  width:80%;
+  height:100%;
   margin-top:15px;
+  position:absolute;
+  left:20%;
 }
 
 .send-button{
+  float:right;
   width:70px;
 }
 
@@ -38,39 +67,11 @@ tr{
   width:calc(100% - 80px);
 }
 
-button{
-    border-radius: 0;
-    font-family: arvo;
-    background-color: #fdc300;
-    color: #111;
-    border-color:#fdc300;
-}
 
 input{
   border-radius:0;
-      font-family: arvo;
-}
-
-input:focus{
-  border-color:#fdc300;
-
-}
-
-button:hover{
-    background-color: #111;
-    color:#fff;
-    border-color:#111;
-}
-
-button:focus{
-   background-color: #fdc300;
-    color: #111;
-}
-
-button:hover:focus{
-  background-color: #111;
-    color:#fff;
-    border-color:#111;
+  background:transparent;
+  color:#fff;
 }
 
 /*

@@ -15,10 +15,19 @@ var timba_1 = require('./timba');
 require('./rxjs-extensions');
 var AppService = (function () {
     function AppService(http) {
+        var _this = this;
         this.http = http;
         this.user = new user_1.User();
         this.timba = new timba_1.Timba();
         this.socket = io.connect('http://localhost:4000');
+        setInterval(function () {
+            var playTime = new Date();
+            playTime.setHours(17);
+            playTime.setMinutes(0);
+            playTime.setSeconds(0);
+            var diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
+            _this.timeCountDown = _this.dhms(diff);
+        }, 1000);
     }
     ;
     AppService.prototype.exec = function (serviceId, data) {
@@ -50,7 +59,7 @@ var AppService = (function () {
                     var objDiv = document.getElementById("messages");
                     if (objDiv)
                         objDiv.scrollTop = objDiv.scrollHeight;
-                }, 1000);
+                }, 500);
             }
             _this.timba = timba;
         });
@@ -62,6 +71,35 @@ var AppService = (function () {
         });
     };
     AppService.prototype.ngOnInit = function () {
+    };
+    AppService.prototype.getTotalAmount = function () {
+        var players = this.timba.players;
+        var totalAmount = 0;
+        for (var i = 0; i < players.length; i++)
+            totalAmount += players[i].bets;
+        return totalAmount * this.timba.betAmount;
+    };
+    AppService.prototype.getPlayerAmount = function () {
+        var players = this.timba.players;
+        for (var i = 0; i < players.length; i++)
+            if (players[i].email == this.user.email)
+                return players[i].bets * this.timba.betAmount;
+        return 0;
+    };
+    AppService.prototype.dhms = function (t) {
+        var days, hours, minutes, seconds;
+        days = Math.floor(t / 86400);
+        t -= days * 86400;
+        hours = Math.floor(t / 3600);
+        t -= hours * 3600;
+        minutes = Math.floor(t / 60);
+        t -= minutes * 60;
+        seconds = t;
+        return [
+            hours + 'h',
+            minutes + 'm',
+            seconds + 's'
+        ].join(' ');
     };
     AppService = __decorate([
         core_1.Injectable(), 

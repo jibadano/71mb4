@@ -5,13 +5,10 @@ var Timba = (function () {
         this.betAmount = 10;
         this.maxBetsPerPlayer = 10;
         this.date = new Date();
-        this.numbers = [{ players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }, { players: [] }];
         this.log = [];
         this.players = [];
-        this.winners = [];
         this.executing = false;
         this.closed = false;
-        this.status = 0;
     }
     return Timba;
 }());

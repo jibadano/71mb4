@@ -5,14 +5,15 @@ import { HttpModule, XHRBackend } from '@angular/http';
 import { CommonModule } from '@angular/common';
 
 import { AppComponent }  from './app.component';
-import { DashboardComponent }   from './dashboard.component';
+import { CursorComponent }   from './cursor.component';
 import { HomeComponent }   from './home.component';
 import { UserSessionComponent }   from './user-session.component';
-import { MenuComponent }   from './menu.component';
+import { InfoComponent }   from './info.component';
 import { AdminComponent }   from './admin.component';
-import { BoardComponent }   from './board.component';
+import { BetComponent }   from './bet.component';
 import { ChatComponent }   from './chat.component';
-import { NumberComponent }   from './number.component';
+import { PlayersComponent }   from './players.component';
+import { RouletteComponent }   from './roulette.component';
 
 import { AppService }   from './app.service';
 
@@ -26,14 +27,15 @@ import { AppService }   from './app.service';
   ],
   declarations: [
     AppComponent,
-    BoardComponent,
-    DashboardComponent,
+    BetComponent,
+    CursorComponent,
     HomeComponent,
     UserSessionComponent,
-    MenuComponent,
+    InfoComponent,
     AdminComponent,
     ChatComponent,
-    NumberComponent
+    PlayersComponent,
+    RouletteComponent
   ],
    providers: [
     AppService

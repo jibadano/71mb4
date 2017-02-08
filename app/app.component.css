@@ -1,0 +1,29 @@
+.intro-header:before{
+
+}
+
+.bg-blur{
+    filter:blur(6px);
+}
+
+.timba-modal{
+	    width: 76%;
+    height: 76%;
+    position: fixed;
+    display: block;
+    background: transparent;
+    left: 12%;
+    top: 12%;
+    z-index: 9999999;
+     overflow-y: auto;
+}
+
+.modal-content{
+    border-radius: 0;
+    padding-top:0;
+    padding-bottom:50px;
+    padding-left:30px;
+    padding-right:30px;
+    background-color: rgba(200,200,200,0.7);
+}
+

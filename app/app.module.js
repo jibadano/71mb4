@@ -14,14 +14,15 @@ var forms_1 = require('@angular/forms');
 var http_1 = require('@angular/http');
 var common_1 = require('@angular/common');
 var app_component_1 = require('./app.component');
-var dashboard_component_1 = require('./dashboard.component');
+var cursor_component_1 = require('./cursor.component');
 var home_component_1 = require('./home.component');
 var user_session_component_1 = require('./user-session.component');
-var menu_component_1 = require('./menu.component');
+var info_component_1 = require('./info.component');
 var admin_component_1 = require('./admin.component');
-var board_component_1 = require('./board.component');
+var bet_component_1 = require('./bet.component');
 var chat_component_1 = require('./chat.component');
-var number_component_1 = require('./number.component');
+var players_component_1 = require('./players.component');
+var roulette_component_1 = require('./roulette.component');
 var app_service_1 = require('./app.service');
 var AppModule = (function () {
     function AppModule() {
@@ -37,14 +38,15 @@ var AppModule = (function () {
             ],
             declarations: [
                 app_component_1.AppComponent,
-                board_component_1.BoardComponent,
-                dashboard_component_1.DashboardComponent,
+                bet_component_1.BetComponent,
+                cursor_component_1.CursorComponent,
                 home_component_1.HomeComponent,
                 user_session_component_1.UserSessionComponent,
-                menu_component_1.MenuComponent,
+                info_component_1.InfoComponent,
                 admin_component_1.AdminComponent,
                 chat_component_1.ChatComponent,
-                number_component_1.NumberComponent
+                players_component_1.PlayersComponent,
+                roulette_component_1.RouletteComponent
             ],
             providers: [
                 app_service_1.AppService

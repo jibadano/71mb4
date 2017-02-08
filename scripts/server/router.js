@@ -12,7 +12,6 @@ function init(app,requestHandler){
 	app.post('/login', requestHandler.login);
 	app.post('/logout', requestHandler.logout);
 	app.post('/services', requestHandler.execService);
-	app.post('/fetchTimba',requestHandler.fetchTimba );
 	app.get('/getCurrentUser',requestHandler.getCurrentUser );
 
 }

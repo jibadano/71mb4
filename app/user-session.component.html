@@ -1,0 +1,12 @@
+<div class="header">
+  <h3 class="title">71mb4</h3>
+  <div class="session-buttons">
+    <div class="btn-group">
+      <button type="button" class="btn btn-default" (click)="showMenu = !showMenu"><i class="fa fa-user" style="margin-right:5px"></i>  {{services.user.email}}</button>
+      <button *ngIf="showMenu && services.user.admin" (click)="closeTimba();showMenu = false" type="button" class="btn btn-default"><i class="fa fa-times"></i></button>
+      <button *ngIf="showMenu && services.user.admin" (click)="startTimba();showMenu = false" type="button" class="btn btn-default"><i class="fa fa-play"></i></button>
+      <button type="button" (click)="return.emit('rules');showMenu = false" class="btn btn-default"><i class="fa fa-info"></i></button>
+      <button type="button" (click)="logOut.emit();showMenu = false" class="btn btn-default"><i class="fa fa-power-off"></i></button>
+    </div>
+  </div>
+</div>

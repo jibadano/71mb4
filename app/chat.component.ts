@@ -6,8 +6,6 @@ import { logType }        from './timba';
 
 import { AppService }		from './app.service'
 
-import './rxjs-extensions';
-
 @Component({
   selector: 'chat',
   templateUrl: 'app/chat.component.html',
@@ -15,7 +13,6 @@ import './rxjs-extensions';
 })
 
 export class ChatComponent implements OnInit {
-	@Input() user:User;
   constructor(private services: AppService) {}
   
   ngOnInit(){

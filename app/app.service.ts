@@ -11,8 +11,19 @@ declare var io: any;
 export class AppService implements OnInit{
     user : User = new User();
     timba : Timba = new Timba();
-    constructor(private http: Http) {};
+    timeCountDown : string;
     socket : any = io.connect('http://localhost:4000');
+
+    constructor(private http: Http) {
+      setInterval(() => {
+        let playTime = new Date();
+        playTime.setHours(17);
+        playTime.setMinutes(0);
+        playTime.setSeconds(0);
+        let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
+        this.timeCountDown = this.dhms(diff);
+     }, 1000);
+    };
 
     exec(serviceId : string, data: any): Promise<any>{
       return this.http.post('/services', JSON.stringify({serviceId: serviceId, data: data}))
@@ -38,12 +49,13 @@ export class AppService implements OnInit{
     fetchTimba(){
       this.socket.on('timbaChange', (timba)=>{
         if(timba.log.length != this.timba.log.length || this.timba.log.length == 0){
-          this.timba = timba
+          this.timba = timba;
+
           setTimeout(()=>{
             var objDiv = document.getElementById("messages");
             if(objDiv)
             objDiv.scrollTop = objDiv.scrollHeight;
-          },1000);
+          },500);
         }
           this.timba = timba});
 	  }
@@ -57,4 +69,46 @@ export class AppService implements OnInit{
     ngOnInit(){
       
     }
+
+
+    getTotalAmount(){
+      let players = this.timba.players;
+      let totalAmount = 0;
+      for(var i = 0; i<players.length;i++)
+        totalAmount += players[i].bets;
+      
+      return totalAmount * this.timba.betAmount;
+    }
+
+    getPlayerAmount(){
+      let players = this.timba.players;
+      for(var i = 0; i<players.length;i++)
+        if(players[i].email == this.user.email)
+          return players[i].bets * this.timba.betAmount;
+      
+      return 0;
+    }
+
+
+
+
+
+
+dhms(t){
+     var days, hours, minutes, seconds;
+     days = Math.floor(t / 86400);
+     t -= days * 86400;
+     hours = Math.floor(t / 3600);
+     t -= hours * 3600;
+     minutes = Math.floor(t / 60);
+     t -= minutes * 60;
+     seconds = t;
+
+     return [
+             hours + 'h',
+             minutes + 'm',
+             seconds + 's'
+            ].join(' ');                              
+  }
+
 }
