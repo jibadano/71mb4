@@ -9,6 +9,7 @@ var database = require('./database');
 var eh = require('./errorHandler');
 var atob = require('atob');
 var io = require('socket.io').listen(4000);
+var $ = require('jquery');
 io.sockets.on('connection', function(socket){
 	sockets.push(socket);
 	socket.emit('timbaChange',timba);
@@ -30,9 +31,24 @@ var timba = {
 	{email:'user4@gmail.com', bets:4},
 	{email:'user5@gmail.com', bets:5},
 	{email:'user6@gmail.com', bets:6},
+	{email:'user7@gmail.com', bets:7},
+	{email:'user1@gmail.com', bets:1},
+	{email:'user2@gmail.com', bets:2},
+	{email:'user3@gmail.com', bets:3},
+	{email:'user4@gmail.com', bets:4},
+	{email:'user5@gmail.com', bets:5},
+	{email:'user6@gmail.com', bets:6},
+	{email:'user7@gmail.com', bets:7},
+	{email:'user1@gmail.com', bets:1},
+	{email:'user2@gmail.com', bets:2},
+	{email:'user3@gmail.com', bets:3},
+	{email:'user4@gmail.com', bets:4},
+	{email:'user5@gmail.com', bets:5},
+	{email:'user6@gmail.com', bets:6},
 	{email:'user7@gmail.com', bets:7}
 	],
 	winner: {},
+	winnerIndex: 0,
 	closed: false,
 	status: 0
 }
@@ -229,8 +245,12 @@ function sendLog(){
 }
 
 function timbaStart(){
-	sockets.forEach(function(socket){
-		socket.emit('timbaStart', timba);
+	$.post('https://www.random.org/integers/?num=1&min=0&max=' + timba.players.length + '&col=1&base=10&format=plain&rnd=new', function(winnerIndex){
+		timba.winner = timba.players[winnerIndex];
+		timba.winnerIndex = winnerIndex;
+		sockets.forEach(function(socket){
+			socket.emit('timbaStart', timba);
+		});
 	});
 }
 

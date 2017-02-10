@@ -15,7 +15,10 @@ var RouletteComponent = (function () {
     function RouletteComponent(services) {
         this.services = services;
         this.players = ['jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo', 'jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo', 'jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo', 'jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo', 'jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo', 'jibadano', 'cacho', 'pepe', 'wacho', 'vieja', 'cagon', 'amarrete', 'hijodeputa', 'cometrava', 'conchudo'];
-        this.a = 3000 / (Math.pow(10 * this.services.timba.players.length, 35));
+        this.a = 3000 / (Math.pow(20 * this.services.timba.players.length, 35));
+        this.totalRounds = 20 * this.services.timba.players.length;
+        this.initialRounds = 10 * this.services.timba.players.length;
+        this.accRounds = 15 * this.services.timba.players.length;
     }
     RouletteComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -25,7 +28,10 @@ var RouletteComponent = (function () {
         }*/
         //this.rotate(7*this.players.length);
         this.services.socket.on('timbaStart', function (timba) {
-            _this.rotate(3 * _this.services.timba.players.length);
+            _this.totalRounds += timba.winnerIndex;
+            console.log(timba.winner);
+            console.log(timba.winnerIndex);
+            _this.rotate(_this.initialRounds);
         });
     };
     RouletteComponent.prototype.addPlayerRoulette = function (i) {
@@ -39,10 +45,12 @@ var RouletteComponent = (function () {
     };
     RouletteComponent.prototype.rotate = function (i) {
         var _this = this;
-        var timeout = Math.pow(i, 35) * this.a;
-        console.log(timeout);
+        var n = i;
+        if (i < this.accRounds)
+            n = this.initialRounds;
+        var timeout = Math.pow(n, 35) * this.a;
         setTimeout(function () {
-            if (i <= 10 * _this.services.timba.players.length) {
+            if (i <= _this.totalRounds) {
                 $("#roulette").css("transition", "transform linear " + timeout / 1000 + "s");
                 $("#roulette").css("transform", "rotate(" + i * 360 / _this.services.timba.players.length + "deg)");
                 _this.rotate(++i);
