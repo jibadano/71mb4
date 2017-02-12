@@ -12,6 +12,7 @@ export class AppService implements OnInit{
     user : User = new User();
     timba : Timba = new Timba();
     timeCountDown : string;
+    nav:string='welcome';
     socket : any = io.connect('http://localhost:4000');
 
     constructor(private http: Http) {
@@ -36,6 +37,15 @@ export class AppService implements OnInit{
       let options = new RequestOptions({ headers: headers });
 
       return this.http.post('/login','',options)
+      .toPromise()
+      .then(res => this.user = res.json() as any);
+    };
+
+    forgotPassword(user : User): Promise<any>{
+      let headers = new Headers({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(user.email+ ':' + user.password)});
+      let options = new RequestOptions({ headers: headers });
+
+      return this.http.post('/forgotPassword','',options)
       .toPromise()
       .then(res => this.user = res.json() as any);
     };
@@ -84,12 +94,23 @@ export class AppService implements OnInit{
       let players = this.timba.players;
       for(var i = 0; i<players.length;i++)
         if(players[i].email == this.user.email)
-          return players[i].bets * this.timba.betAmount;
+          return Math.trunc(players[i].bets * this.timba.betAmount*100)/100;
       
       return 0;
     }
 
+    getAverageAmount(){
+      return Math.round(this.getTotalAmount()*100 / this.timba.players.length)/100;
+    }
 
+  getWinnerAmount(){
+      let players = this.timba.players;
+      for(var i = 0; i<players.length;i++)
+        if(players[i].email == this.timba.winner)
+          return players[i].bets * this.timba.betAmount;
+      
+      return 0;
+    }
 
 
 

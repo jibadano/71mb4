@@ -15,7 +15,8 @@
 		
 		<h2 class="title">
 			<div class="display" [class.on]="display=='title'">71mb4</div>
-			<div class="display" style=" left: calc(50% - 145px);font-size:55px" [class.on]="display=='timeLeft'">{{services.timeCountDown}}</div>
+			<div *ngIf="!services.timba.winner" class="display" style=" left: calc(50% - 145px);font-size:55px" [class.on]="display=='timeLeft'">{{services.timeCountDown}}</div>
+			<div *ngIf="services.timba.winner" class="display" style=" left: calc(50% - 145px);font-size:35px;margin-top:15px" [class.on]="display=='timeLeft'">{{services.timba.winner}}</div>
 			<div class="display" [class.on]="display=='totalAmount'">$ {{services.getTotalAmount()}}</div>
 		</h2>
 

@@ -16,3 +16,13 @@
     z-index: 999999999999999999999;
     color:#fff;
 }
+
+.countDown{
+    font-size: 230px;
+    position:fixed;
+    left:130px;
+    text-align: center;
+    color: rgba(200,200,200,0.8);
+    opacity:0;
+    transition:opacity 0.5s ease-in-out;
+}

@@ -1,6 +1,6 @@
-<div *ngIf="nav=='welcome' && services.user.email" class="timba-modal">
+<div *ngIf="services.nav=='welcome' && services.user.email" class="timba-modal">
 	<div class="modal-content">
-		<button (click)="nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
+		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Bienvenidos nuevamente!</h3>
 		<h4>Volvió la timba tradicional</h4>
 		<p>Es de público conocimiento que la famosa "nueva timba" no tuvo la repercusión que esperaba. Por lo tanto, ante las fuertes
@@ -21,16 +21,16 @@
 		<p>También podes acceder desde el celular</p>
 
 		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button (click)="nav='dashboard'" class="btn btn-default" style="float:left">Cerrar</button>
-			<button (click)="nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
-			<button (click)="nav='rules'" class="btn btn-primary" style="float:right">Ver reglas</button>
+			<button (click)="services.nav='dashboard'" class="btn btn-default" style="float:left">Cerrar</button>
+			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
+			<button (click)="services.nav='rules'" class="btn btn-primary" style="float:right">Ver reglas</button>
 		</div>
 	</div>
 </div>
 
-<div *ngIf="nav=='rules' && services.user.email" class="timba-modal">
+<div *ngIf="services.nav=='rules' && services.user.email" class="timba-modal">
 	<div class="modal-content">
-		<button (click)="nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
+		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Reglas</h3>
 		<p>1. Se juega a las 17hs.</p>
 		<p>2. Paso a recaudar a 16:45hs.</p>
@@ -39,17 +39,31 @@
 
 
 		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button (click)="nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
 		</div>
 	</div>
 </div>
 
-<roulette *ngIf="services.timba.closed"></roulette>
+<div *ngIf="services.nav=='winner' && services.user.email" class="timba-modal">
+	<div class="modal-content">
+		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
+		<h3>¡Felicitaciones!</h3>
+		<p>Ganador: {{services.timba.winner}}</p>
+		<p>Premio: $ {{services.getTotalAmount()}}</p>
+		<p>Apuesta: $ {{services.getWinnerAmount()}}</p>
 
-<div [class.bg-blur]="(nav !='dashboard' || services.timba.closed) && services.user.email " class="intro-header">
+		<div style="display:block;width:100%;margin-bottom:40px;">
+			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+		</div>
+	</div>
+</div>
+
+<roulette *ngIf="services.timba.closed && !services.timba.winner"></roulette>
+
+<div [class.bg-blur]="(services.nav !='dashboard' || (services.timba.closed && !services.timba.winner)) && services.user.email " class="intro-header">
 	<home *ngIf="!services.user.email"></home>
-	<section *ngIf="services.user.email" id="about" style="height:100%">
-		<user-session (return)="nav = $event" (logOut)="services.logout();"></user-session>
+	<section *ngIf="services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))" id="about" style="height:100%">
+		<user-session (return)="services.nav = $event" (logOut)="services.logout();"></user-session>
 		<div class="container" style="height:100%">
 			<div class="row" style="height:100%">
 				<div class="col-lg-4" style="height:100%">
@@ -60,7 +74,7 @@
 						<info *ngIf="showInfo"></info>
 					</div>
 					<div class="row" style="height:50%">
-						<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email && nav=='dashboard'"></cursor>
+						<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email && services.nav=='dashboard'"></cursor>
 					</div>
 					<div class="row" style="height:20%">
 						<bet *ngIf="showBet"></bet>

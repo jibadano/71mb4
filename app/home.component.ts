@@ -38,6 +38,14 @@ err : any;
         });
       }
   	}
+
+		forgotPassword(){
+      if(this.user.email != ''){
+        this.services.forgotPassword(this.user).then((res)=>{
+          
+        });
+      }
+  	}
   
   	logout(){
 		this.services.logout(); 

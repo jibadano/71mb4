@@ -10,5 +10,6 @@ export class Timba {
 	executing: boolean = false;
 	closed: boolean = false;
 	winnerIndex: number;
+	winner: any;
 }
 

@@ -22,6 +22,9 @@ var UserSessionComponent = (function () {
     UserSessionComponent.prototype.closeTimba = function () {
         this.services.exec('closeTimba', {}).then(function (res) { });
     };
+    UserSessionComponent.prototype.notifyClose = function () {
+        this.services.exec('notifyClose', {}).then(function (res) { });
+    };
     UserSessionComponent.prototype.ngOnInit = function () {
     };
     __decorate([

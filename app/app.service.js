@@ -19,6 +19,7 @@ var AppService = (function () {
         this.http = http;
         this.user = new user_1.User();
         this.timba = new timba_1.Timba();
+        this.nav = 'welcome';
         this.socket = io.connect('http://localhost:4000');
         setInterval(function () {
             var playTime = new Date();
@@ -40,6 +41,15 @@ var AppService = (function () {
         var headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(user.email + ':' + user.password) });
         var options = new http_1.RequestOptions({ headers: headers });
         return this.http.post('/login', '', options)
+            .toPromise()
+            .then(function (res) { return _this.user = res.json(); });
+    };
+    ;
+    AppService.prototype.forgotPassword = function (user) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(user.email + ':' + user.password) });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('/forgotPassword', '', options)
             .toPromise()
             .then(function (res) { return _this.user = res.json(); });
     };
@@ -83,6 +93,16 @@ var AppService = (function () {
         var players = this.timba.players;
         for (var i = 0; i < players.length; i++)
             if (players[i].email == this.user.email)
+                return Math.trunc(players[i].bets * this.timba.betAmount * 100) / 100;
+        return 0;
+    };
+    AppService.prototype.getAverageAmount = function () {
+        return Math.round(this.getTotalAmount() * 100 / this.timba.players.length) / 100;
+    };
+    AppService.prototype.getWinnerAmount = function () {
+        var players = this.timba.players;
+        for (var i = 0; i < players.length; i++)
+            if (players[i].email == this.timba.winner)
                 return players[i].bets * this.timba.betAmount;
         return 0;
     };

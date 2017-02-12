@@ -22,6 +22,10 @@ export class UserSessionComponent implements OnInit {
     closeTimba(){
         this.services.exec('closeTimba',{}).then(res =>{});
     }
+
+    notifyClose(){
+        this.services.exec('notifyClose',{}).then(res =>{});
+    }
     
     ngOnInit(){
     }

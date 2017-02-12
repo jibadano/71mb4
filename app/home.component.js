@@ -33,6 +33,12 @@ var HomeComponent = (function () {
             });
         }
     };
+    HomeComponent.prototype.forgotPassword = function () {
+        if (this.user.email != '') {
+            this.services.forgotPassword(this.user).then(function (res) {
+            });
+        }
+    };
     HomeComponent.prototype.logout = function () {
         this.services.logout();
     };

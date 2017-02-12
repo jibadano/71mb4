@@ -7,9 +7,11 @@
 
 var database = require('./database');
 var eh = require('./errorHandler');
+var random = require('./random');
 var atob = require('atob');
 var io = require('socket.io').listen(4000);
 var $ = require('jquery');
+var mail = require('./mail');
 io.sockets.on('connection', function(socket){
 	sockets.push(socket);
 	socket.emit('timbaChange',timba);
@@ -21,7 +23,7 @@ var sockets = [];
 //Timba session
 var timba = {
 	betAmount: 10,
-	maxBetsPerPlayer : 10,
+	maxBetsPerPlayer : 50,
 	date: new Date(),
 	log: [{type:logType.TIMBA, email: 'timbaBot@', msg: 'Timba has been created successfully!'}],
 	players: [
@@ -47,7 +49,7 @@ var timba = {
 	{email:'user6@gmail.com', bets:6},
 	{email:'user7@gmail.com', bets:7}
 	],
-	winner: {},
+	winner: undefined,
 	winnerIndex: 0,
 	closed: false,
 	status: 0
@@ -66,6 +68,22 @@ addUser : function (user, data, then){
 		
 		return then(null, '');
 	});
+},
+
+//Notify Close
+notifyClose : function (user, data, then){
+	if(user.admin){
+		database.findUsers({}, function(err, users) {
+			if(err)
+				return res.end(eh.DATABASE(err));
+
+			users.forEach(function(user){
+				mail.send(user.email,'La timba está por comenzar', user.email + ' faltan 10 minutos para el cierre de la timba');
+			});
+		});
+		return then(null, '');
+	}
+	return then('admin violation', undefined);
 },
 
 //SET BET data.action = ['ADD','SUBSTRACT']
@@ -136,8 +154,24 @@ closeTimba: function (user, data, then){
 
 //START TIMBA
 startTimba : function(user, data, then){
-		timbaStart();
-	
+	var finalList = [];
+	for(var i=0; i<timba.players.length;i++)
+		for(var j=0; j< timba.players[i].bets; j++)
+			finalList.push(timba.players[i].email);
+		
+	random.get(finalList.length, function(winnerIndex){
+		timba.winnerIndex = getPlayerIndex(finalList[winnerIndex]);
+		sockets.forEach(function(socket){
+			socket.emit('timbaStart', timba);
+		});
+		
+	});
+	then(undefined,{});
+	setTimeout(function(){
+		timba.winner = timba.players[timba.winnerIndex].email;
+		addBotLog(logType.TIMBA, 'GANADOR: ' + timba.winner);
+		sendTimba();
+	},30000);
 	
 	},
 }
@@ -163,6 +197,31 @@ function sendTimba(){
 */
 function redirect(req, res){
 	res.redirect('/');
+}
+
+/*	
+*		forgotPassword
+*/
+function forgotPassword(req, res) {
+	if(req.session.user)
+		return res.end(eh.USER.ALRDY_LOGGED_IN);
+	
+	var enc_auth = req.headers.authorization;
+	var auth = atob(enc_auth.substring(6,enc_auth.length));
+	
+	var email = auth.split(':')[0];
+	var password = auth.split(':')[1];
+	
+	database.findUser({email:email}, function(err, user) {
+		if(err)
+			return res.end(eh.DATABASE(err));
+
+		if(!user)
+			return res.end(eh.USER.AUTH_FAILED);
+		
+		mail.send(user.email,'forgot password','user: ' + user.email + ' password: ' + user.password);
+		res.end();
+	});
 }
 
 /*	
@@ -244,18 +303,6 @@ function sendLog(){
 	});
 }
 
-function timbaStart(){
-	$.post('https://www.random.org/integers/?num=1&min=0&max=' + timba.players.length + '&col=1&base=10&format=plain&rnd=new', function(winnerIndex){
-		timba.winner = timba.players[winnerIndex];
-		timba.winnerIndex = winnerIndex;
-		sockets.forEach(function(socket){
-			socket.emit('timbaStart', timba);
-		});
-	});
-}
-
-
-
 //Private methods
 
 var getData = function(req, then){
@@ -308,4 +355,5 @@ exports.login = login;
 exports.execService = execService;
 exports.redirect = redirect;
 exports.getCurrentUser = getCurrentUser;
+exports.forgotPassword = forgotPassword;
 

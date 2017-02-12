@@ -15,50 +15,78 @@ declare var $:any;
 export class RouletteComponent implements OnInit {
 
   constructor(private services: AppService) {}
-  players = ['jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo','jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo','jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo','jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo','jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo','jibadano', 'cacho', 'pepe', 'wacho', 'vieja','cagon','amarrete','hijodeputa','cometrava','conchudo'];
+ 
 	a = 3000/(Math.pow(20*this.services.timba.players.length,35));
 
 	totalRounds = 20*this.services.timba.players.length;
 	initialRounds = 10*this.services.timba.players.length;
 	accRounds = 15*this.services.timba.players.length;
   ngOnInit(){
-		this.addPlayerRoulette(0);
-		/*for(var i=0;i<this.players.length;i++){
-			$("#roulette").append("<div class=\"roulette-cell\" style=\"transform: rotate(" + i*360/this.players.length + "deg) translateX(200px);\">" + this.players[i] + "</div>");
-		}*/
-		//this.rotate(7*this.players.length);
-
+		$("#welcome").css("opacity","1");
+		setTimeout(()=>{
+			$("#welcome").css("opacity","0");
+		},4000);
+		setTimeout(()=>{
+			this.addPlayerRoulette(0);
+			this.addPlayerRouletteFade(0);
+		},5000);
 		 this.services.socket.on('timbaStart', (timba)=>{
-			 this.totalRounds+= timba.winnerIndex;
-			 console.log(timba.winner);
-			 console.log(timba.winnerIndex);
-				this.rotate(this.initialRounds);
+			this.showAndHide("three");
+			setTimeout(()=>{
+				this.showAndHide("two");
+				setTimeout(()=>{
+					this.showAndHide("one");
+					setTimeout(()=>{
+						this.rotate(timba.winnerIndex);
+						setTimeout(()=>{
+							this.services.nav='winner';							
+						},24000);
+					},2000);				
+				},2000);
+			},2000);
+			console.log(timba.winner);
+			console.log(timba.winnerIndex);
 		 });
 	}
 
+startTimba(){
+        this.services.exec('startTimba',{}).then(res =>{});
+    }
+
+
+	showAndHide(n:string){
+		$("#"+n).css("opacity","1");
+		setTimeout(()=>{
+			$("#"+n).css("opacity","0");
+		},1000);
+	}
+
 	addPlayerRoulette(i:number){
+		if(i < this.services.timba.players.length){
+			$("#roulette").append("<div id=\"roulette"+i+"\" class=\"roulette-cell\" style=\"transition:opacity 0.5s ease-in-out;opacity:0;transform: rotate(" + i*360/this.services.timba.players.length + "deg) translateX(200px);\">" + this.services.timba.players[i].email + "</div>");
+			
+			this.addPlayerRoulette(++i);
+		}	
+	}
+
+	addPlayerRouletteFade(i:number){
 		setTimeout(()=>{
 			if(i < this.services.timba.players.length){
-				$("#roulette").append("<div class=\"roulette-cell\" style=\"transform: rotate(" + i*360/this.services.timba.players.length + "deg) translateX(200px);\">" + this.services.timba.players[i].email + "</div>");
-				this.addPlayerRoulette(++i);
+				$("#roulette"+ i).css("opacity","1");
+				if(this.services.timba.players[i].email == this.services.user.email){
+					$("#roulette"+ i).css("text-shadow","0 0 10px #fff");
+					$("#roulette"+ i).css("font-weight","bold");
+
+				}
+
+				this.addPlayerRouletteFade(++i);
 			}
-	},500);
+		},500);
 	}
 
 	rotate(i:number){
-		let n = i;
-		if(i< this.accRounds)
-			n = this.initialRounds;
-
-		let timeout = Math.pow(n,35)*this.a;
-		setTimeout(()=>{
-			if(i <= this.totalRounds){
-				$("#roulette").css("transition","transform linear "+ timeout/1000 + "s");
-				$("#roulette").css("transform","rotate("+ i*360/this.services.timba.players.length + "deg)");
-				
-				this.rotate(++i);
-			}
-		},timeout - 100);
+		$("#roulette").css("transition","transform 20s cubic-bezier(0.2, 0, 0.000000000000000000000000000000000000000001, 1)");
+		$("#roulette").css("transform","rotate("+ (4320 - Math.floor(i*360/this.services.timba.players.length)) + "deg)");
 	}
 
 }
