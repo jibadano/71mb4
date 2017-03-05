@@ -66,10 +66,10 @@
 		<user-session (return)="services.nav = $event" (logOut)="services.logout();"></user-session>
 		<div class="container" style="height:100%">
 			<div class="row" style="height:100%">
-				<div class="col-lg-4" style="height:100%">
+				<div class="col-lg-4 col-md-12" style="height:100%">
 					<players *ngIf="showPlayers"></players>
 				</div>
-				<div class="col-lg-4" style="height:100%">
+				<div class="col-lg-4 col-md-12" style="height:100%">
 					<div class="row" style="height:30%">
 						<info *ngIf="showInfo"></info>
 					</div>
@@ -80,7 +80,7 @@
 						<bet *ngIf="showBet"></bet>
 					</div>
 				</div>
-				<div class="col-lg-4" style="height:100%">
+				<div class="col-lg-4  col-md-12" style="height:100%">
 					<chat *ngIf="showChat"></chat>
 				</div>
 			</div>

@@ -13,7 +13,7 @@ export class AppService implements OnInit{
     timba : Timba = new Timba();
     timeCountDown : string;
     nav:string='welcome';
-    socket : any = io.connect('http://localhost:4000');
+    socket : any = io.connect('http://186.22.78.117:4000');
 
     constructor(private http: Http) {
       setInterval(() => {
