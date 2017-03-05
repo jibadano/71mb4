@@ -26,29 +26,7 @@ var timba = {
 	maxBetsPerPlayer : 50,
 	date: new Date(),
 	log: [{type:logType.TIMBA, email: 'timbaBot@', msg: 'Timba has been created successfully!'}],
-	players: [
-	{email:'user1@gmail.com', bets:1},
-	{email:'user2@gmail.com', bets:2},
-	{email:'user3@gmail.com', bets:3},
-	{email:'user4@gmail.com', bets:4},
-	{email:'user5@gmail.com', bets:5},
-	{email:'user6@gmail.com', bets:6},
-	{email:'user7@gmail.com', bets:7},
-	{email:'user1@gmail.com', bets:1},
-	{email:'user2@gmail.com', bets:2},
-	{email:'user3@gmail.com', bets:3},
-	{email:'user4@gmail.com', bets:4},
-	{email:'user5@gmail.com', bets:5},
-	{email:'user6@gmail.com', bets:6},
-	{email:'user7@gmail.com', bets:7},
-	{email:'user1@gmail.com', bets:1},
-	{email:'user2@gmail.com', bets:2},
-	{email:'user3@gmail.com', bets:3},
-	{email:'user4@gmail.com', bets:4},
-	{email:'user5@gmail.com', bets:5},
-	{email:'user6@gmail.com', bets:6},
-	{email:'user7@gmail.com', bets:7}
-	],
+	players: [],
 	winner: undefined,
 	winnerIndex: 0,
 	closed: false,
@@ -224,6 +202,25 @@ function forgotPassword(req, res) {
 	});
 }
 
+
+function signIn(req, res) {
+	if(req.session.user)
+		return res.end(eh.USER.ALRDY_LOGGED_IN);
+	
+	var enc_auth = req.headers.authorization;
+	var auth = atob(enc_auth.substring(6,enc_auth.length));
+	
+	var email = auth.split(':')[0];
+	var password = auth.split(':')[1];
+	
+	var usr = {email: email, password: password, firstLogin: false, admin: false};
+	
+	database.insertUser(usr,function(err,user){
+		
+	});
+	res.end();
+}
+
 /*	
 *		Logout
 */
@@ -356,4 +353,5 @@ exports.execService = execService;
 exports.redirect = redirect;
 exports.getCurrentUser = getCurrentUser;
 exports.forgotPassword = forgotPassword;
+exports.signIn = signIn;
 

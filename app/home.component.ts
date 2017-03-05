@@ -46,6 +46,14 @@ err : any;
         });
       }
   	}
+
+    signIn(){
+      if(this.user.email != ''){
+        this.services.signIn(this.user).then((res)=>{
+          
+        });
+      }
+  	}
   
   	logout(){
 		this.services.logout(); 

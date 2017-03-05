@@ -14,6 +14,7 @@ function init(app,requestHandler){
 	app.post('/services', requestHandler.execService);
 	app.get('/getCurrentUser',requestHandler.getCurrentUser );
 	app.post('/forgotPassword',requestHandler.forgotPassword );
+	app.post('/signIn',requestHandler.signIn );
 
 }
 

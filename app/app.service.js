@@ -54,6 +54,15 @@ var AppService = (function () {
             .then(function (res) { return _this.user = res.json(); });
     };
     ;
+    AppService.prototype.signIn = function (user) {
+        var _this = this;
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(user.email + ':' + user.password) });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post('/signIn', '', options)
+            .toPromise()
+            .then(function (res) { return _this.user = res.json(); });
+    };
+    ;
     AppService.prototype.getCurrentUser = function () {
         var _this = this;
         return this.http.get('/getCurrentUser')

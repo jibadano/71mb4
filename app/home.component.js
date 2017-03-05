@@ -39,6 +39,12 @@ var HomeComponent = (function () {
             });
         }
     };
+    HomeComponent.prototype.signIn = function () {
+        if (this.user.email != '') {
+            this.services.signIn(this.user).then(function (res) {
+            });
+        }
+    };
     HomeComponent.prototype.logout = function () {
         this.services.logout();
     };

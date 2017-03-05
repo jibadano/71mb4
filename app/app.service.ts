@@ -50,6 +50,16 @@ export class AppService implements OnInit{
       .then(res => this.user = res.json() as any);
     };
 
+ signIn(user : User): Promise<any>{
+      let headers = new Headers({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(user.email+ ':' + user.password)});
+      let options = new RequestOptions({ headers: headers });
+
+      return this.http.post('/signIn','',options)
+      .toPromise()
+      .then(res => this.user = res.json() as any);
+    };
+
+
     getCurrentUser(){
       return this.http.get('/getCurrentUser')
       .toPromise()
