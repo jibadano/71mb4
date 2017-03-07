@@ -9,7 +9,7 @@ var database = require('./database');
 var eh = require('./errorHandler');
 var random = require('./random');
 var atob = require('atob');
-var io = require('socket.io').listen(8081,'186.22.78.117');
+var io = require('socket.io').listen(4000,'186.22.78.117');
 io.set('origins','*:*');
 var $ = require('jquery');
 var mail = require('./mail');
