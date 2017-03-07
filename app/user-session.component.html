@@ -1,5 +1,9 @@
 <div class="header">
-  <h3 class="title">71mb4</h3>
+  <div class="col-lg-6  col-md-12" style="height:100%">
+    <h3 class="title">71mb4</h3>
+  </div>
+  <div class="col-lg-6  col-md-12" style="height:100%">
+
   <div class="session-buttons">
     <div class="btn-group">
       <button type="button" class="btn btn-default" (click)="showMenu = !showMenu"><i class="fa fa-user" style="margin-right:5px"></i>  {{services.user.email}}</button>
@@ -9,5 +13,6 @@
       <button type="button" (click)="return.emit('rules');showMenu = false" class="btn btn-default"><i class="fa fa-info"></i></button>
       <button type="button" (click)="logOut.emit();showMenu = false" class="btn btn-default"><i class="fa fa-power-off"></i></button>
     </div>
+  </div>
   </div>
 </div>
