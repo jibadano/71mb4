@@ -10,7 +10,7 @@ var eh = require('./errorHandler');
 var random = require('./random');
 var atob = require('atob');
 var io = require('socket.io').listen(8081,'186.22.78.117');
-io.set('origins','186.22.78.117:*');
+io.set('origins','*:*');
 var $ = require('jquery');
 var mail = require('./mail');
 io.sockets.on('connection', function(socket){

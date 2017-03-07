@@ -18,6 +18,13 @@ var requestHandler = require('./scripts/server/requestHandler');
 
 //Config application
 var app = express();
+app.use(function(req, res, next) {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Headers", "X-Requested-With");
+        res.header("Access-Control-Allow-Headers", "Content-Type");
+        res.header("Access-Control-Allow-Methods", "PUT, GET, POST, DELETE, OPTIONS");
+        next();
+    });
 app.use(express.static('.'));
 
 app.set('trust proxy', 1) // trust first proxy
