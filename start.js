@@ -4,8 +4,6 @@
  *	jibadano@gmail.com
  *	Date: 2015-11-24
  */
-setTimeout(function(){
-	
 //Modules
 var express = require('express');
 var session = require('express-session');
@@ -43,6 +41,5 @@ app.locals.port = 8080;
 //Run application
 router.init(app,requestHandler);
 server.init(app);
-},3000);
 
 console.log("starting 71mb4");
