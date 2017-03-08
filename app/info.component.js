@@ -8,21 +8,22 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
 var InfoComponent = (function () {
     function InfoComponent(services) {
         this.services = services;
     }
-    InfoComponent = __decorate([
-        core_1.Component({
-            selector: 'info',
-            templateUrl: 'app/info.component.html',
-            styleUrls: ['app/info.component.css']
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], InfoComponent);
     return InfoComponent;
 }());
+InfoComponent = __decorate([
+    core_1.Component({
+        selector: 'info',
+        templateUrl: 'app/info.component.html',
+        styleUrls: ['app/info.component.css']
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], InfoComponent);
 exports.InfoComponent = InfoComponent;
 //# sourceMappingURL=info.component.js.map

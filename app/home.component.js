@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
-var user_1 = require('./user');
-var forms_1 = require('@angular/forms');
-require('./rxjs-extensions');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
+var user_1 = require("./user");
+var forms_1 = require("@angular/forms");
+require("./rxjs-extensions");
 var HomeComponent = (function () {
     function HomeComponent(services, fb) {
         this.services = services;
@@ -54,23 +55,23 @@ var HomeComponent = (function () {
             _this.services.fetchTimba();
         });
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', user_1.User)
-    ], HomeComponent.prototype, "user", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], HomeComponent.prototype, "loginSuccess", void 0);
-    HomeComponent = __decorate([
-        core_1.Component({
-            selector: 'home',
-            templateUrl: 'app/home.component.html',
-            directives: [forms_1.FORM_DIRECTIVES, forms_1.REACTIVE_FORM_DIRECTIVES]
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService, forms_1.FormBuilder])
-    ], HomeComponent);
     return HomeComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", user_1.User)
+], HomeComponent.prototype, "user", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], HomeComponent.prototype, "loginSuccess", void 0);
+HomeComponent = __decorate([
+    core_1.Component({
+        selector: 'home',
+        templateUrl: 'app/home.component.html',
+        directives: [forms_1.FORM_DIRECTIVES, forms_1.REACTIVE_FORM_DIRECTIVES]
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService, forms_1.FormBuilder])
+], HomeComponent);
 exports.HomeComponent = HomeComponent;
 //# sourceMappingURL=home.component.js.map

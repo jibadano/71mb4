@@ -8,10 +8,11 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var user_1 = require('./user');
-var app_service_1 = require('./app.service');
-require('./rxjs-extensions');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var user_1 = require("./user");
+var app_service_1 = require("./app.service");
+require("./rxjs-extensions");
 var CursorComponent = (function () {
     function CursorComponent(services) {
         this.services = services;
@@ -64,23 +65,23 @@ var CursorComponent = (function () {
             _this.setDisplay();
         }, 6000);
     };
-    __decorate([
-        core_1.Input(), 
-        __metadata('design:type', user_1.User)
-    ], CursorComponent.prototype, "user", void 0);
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], CursorComponent.prototype, "showOrHide", void 0);
-    CursorComponent = __decorate([
-        core_1.Component({
-            selector: 'cursor',
-            templateUrl: 'app/cursor.component.html',
-            styleUrls: ['app/cursor.component.css']
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], CursorComponent);
     return CursorComponent;
 }());
+__decorate([
+    core_1.Input(),
+    __metadata("design:type", user_1.User)
+], CursorComponent.prototype, "user", void 0);
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], CursorComponent.prototype, "showOrHide", void 0);
+CursorComponent = __decorate([
+    core_1.Component({
+        selector: 'cursor',
+        templateUrl: 'app/cursor.component.html',
+        styleUrls: ['app/cursor.component.css']
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], CursorComponent);
 exports.CursorComponent = CursorComponent;
 //# sourceMappingURL=cursor.component.js.map

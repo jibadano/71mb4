@@ -8,9 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
-require('./rxjs-extensions');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
+require("./rxjs-extensions");
 var RouletteComponent = (function () {
     function RouletteComponent(services) {
         this.services = services;
@@ -79,15 +80,15 @@ var RouletteComponent = (function () {
         $("#roulette").css("transition", "transform 20s cubic-bezier(0.2, 0, 0.000000000000000000000000000000000000000001, 1)");
         $("#roulette").css("transform", "rotate(" + (4320 - Math.floor(i * 360 / this.services.timba.players.length)) + "deg)");
     };
-    RouletteComponent = __decorate([
-        core_1.Component({
-            selector: 'roulette',
-            templateUrl: 'app/roulette.component.html',
-            styleUrls: ['app/roulette.component.css']
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], RouletteComponent);
     return RouletteComponent;
 }());
+RouletteComponent = __decorate([
+    core_1.Component({
+        selector: 'roulette',
+        templateUrl: 'app/roulette.component.html',
+        styleUrls: ['app/roulette.component.css']
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], RouletteComponent);
 exports.RouletteComponent = RouletteComponent;
 //# sourceMappingURL=roulette.component.js.map

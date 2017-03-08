@@ -8,12 +8,14 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
 var AppComponent = (function () {
     function AppComponent(services) {
         this.services = services;
         this.nav = 'dashboard';
+        this.isMobile = false;
         this.showPlayers = false;
         this.showInfo = false;
         this.showChat = false;
@@ -27,17 +29,18 @@ var AppComponent = (function () {
         this.showBet = (component == "bet") ? !this.showBet : this.showBet;
     };
     AppComponent.prototype.ngOnInit = function () {
+        this.isMobile = isMobile;
     };
-    AppComponent = __decorate([
-        core_1.Component({
-            selector: 'my-app',
-            templateUrl: 'app/app.component.html',
-            styleUrls: ['app/app.component.css'],
-            providers: [app_service_1.AppService]
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], AppComponent);
     return AppComponent;
 }());
+AppComponent = __decorate([
+    core_1.Component({
+        selector: 'my-app',
+        templateUrl: 'app/app.component.html',
+        styleUrls: ['app/app.component.css'],
+        providers: [app_service_1.AppService]
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], AppComponent);
 exports.AppComponent = AppComponent;
 //# sourceMappingURL=app.component.js.map

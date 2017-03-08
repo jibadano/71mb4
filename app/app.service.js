@@ -8,11 +8,12 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var http_1 = require('@angular/http');
-var user_1 = require('./user');
-var timba_1 = require('./timba');
-require('./rxjs-extensions');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var http_1 = require("@angular/http");
+var user_1 = require("./user");
+var timba_1 = require("./timba");
+require("./rxjs-extensions");
 var AppService = (function () {
     function AppService(http) {
         var _this = this;
@@ -130,11 +131,11 @@ var AppService = (function () {
             seconds + 's'
         ].join(' ');
     };
-    AppService = __decorate([
-        core_1.Injectable(), 
-        __metadata('design:paramtypes', [http_1.Http])
-    ], AppService);
     return AppService;
 }());
+AppService = __decorate([
+    core_1.Injectable(),
+    __metadata("design:paramtypes", [http_1.Http])
+], AppService);
 exports.AppService = AppService;
 //# sourceMappingURL=app.service.js.map

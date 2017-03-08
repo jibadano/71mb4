@@ -8,8 +8,9 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
 var BetComponent = (function () {
     function BetComponent(services) {
         this.services = services;
@@ -17,15 +18,15 @@ var BetComponent = (function () {
     BetComponent.prototype.setBet = function (action) {
         this.services.exec('setBet', { action: action });
     };
-    BetComponent = __decorate([
-        core_1.Component({
-            selector: 'bet',
-            templateUrl: 'app/bet.component.html',
-            styleUrls: ['app/bet.component.css'],
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], BetComponent);
     return BetComponent;
 }());
+BetComponent = __decorate([
+    core_1.Component({
+        selector: 'bet',
+        templateUrl: 'app/bet.component.html',
+        styleUrls: ['app/bet.component.css'],
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], BetComponent);
 exports.BetComponent = BetComponent;
 //# sourceMappingURL=bet.component.js.map

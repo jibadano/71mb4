@@ -60,16 +60,51 @@
 
 <roulette *ngIf="services.timba.closed && !services.timba.winner"></roulette>
 
-<div [class.bg-blur]="(services.nav !='dashboard' || (services.timba.closed && !services.timba.winner)) && services.user.email " class="intro-header">
+<div *ngIf="isMobile">
+	<div class="text-center">	
+	<home *ngIf="!services.user.email"></home>
+	
+	<div *ngIf="services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
+		<div class="row">	
+			<div class="col-xs-12">			
+				<div class="btn-group">
+					<button (click)="services.nav='players'" class="btn btn-primary" >Players</button>
+					<button (click)="services.nav='info'" class="btn btn-primary" >Info</button>
+					<button (click)="services.nav='bet'" class="btn btn-primary" >Bets</button>
+					<button (click)="services.nav='chat'" class="btn btn-primary" >Chat</button>
+					<button (click)="services.nav='rules'" class="btn btn-primary" >Rules</button>
+					<button (click)="services.logout();" class="btn btn-primary" >Log out</button>
+
+				</div>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="col-xs-12">			
+				<cursor *ngIf="services.user.email "></cursor>
+			</div>
+		</div>
+		<div class="row">	
+			<div class="col-xs-12">			
+				<players *ngIf="services.nav=='players'"></players>
+				<info *ngIf="services.nav=='info'"></info>
+				<bet *ngIf="services.nav=='bet'"></bet>
+				<chat *ngIf="services.nav=='chat'"></chat>
+			</div>
+		</div>
+	</div>
+	</div>
+</div>
+
+<div *ngIf="!isMobile" [class.bg-blur]="(services.nav !='dashboard' || (services.timba.closed && !services.timba.winner)) && services.user.email " class="intro-header">
 	<home *ngIf="!services.user.email"></home>
 	<section *ngIf="services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))" id="about" style="height:100%">
 		<user-session (return)="services.nav = $event" (logOut)="services.logout();"></user-session>
 		<div class="container" style="height:100%">
 			<div class="row" style="height:100%">
-				<div class="col-lg-4 col-md-12" style="height:100%">
+				<div class="col-lg-4 col-xs-12" style="height:100%">
 					<players *ngIf="showPlayers"></players>
 				</div>
-				<div class="col-lg-4 col-md-12" style="height:100%">
+				<div class="col-lg-4 col-xs-12" style="height:100%">
 					<div class="row" style="height:30%">
 						<info *ngIf="showInfo"></info>
 					</div>
@@ -80,7 +115,7 @@
 						<bet *ngIf="showBet"></bet>
 					</div>
 				</div>
-				<div class="col-lg-4  col-md-12" style="height:100%">
+				<div class="col-lg-4  col-xs-12" style="height:100%">
 					<chat *ngIf="showChat"></chat>
 				</div>
 			</div>

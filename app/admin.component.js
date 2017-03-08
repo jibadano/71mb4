@@ -8,9 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var app_service_1 = require('./app.service');
-var user_1 = require('./user');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var app_service_1 = require("./app.service");
+var user_1 = require("./user");
 var AdminComponent = (function () {
     function AdminComponent(services) {
         this.services = services;
@@ -21,19 +22,19 @@ var AdminComponent = (function () {
     }
     AdminComponent.prototype.ngOnInit = function () {
     };
-    __decorate([
-        core_1.Output(), 
-        __metadata('design:type', Object)
-    ], AdminComponent.prototype, "return", void 0);
-    AdminComponent = __decorate([
-        core_1.Component({
-            selector: 'admin',
-            templateUrl: 'app/admin.component.html',
-            styleUrls: ['app/admin.component.css']
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], AdminComponent);
     return AdminComponent;
 }());
+__decorate([
+    core_1.Output(),
+    __metadata("design:type", Object)
+], AdminComponent.prototype, "return", void 0);
+AdminComponent = __decorate([
+    core_1.Component({
+        selector: 'admin',
+        templateUrl: 'app/admin.component.html',
+        styleUrls: ['app/admin.component.css']
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], AdminComponent);
 exports.AdminComponent = AdminComponent;
 //# sourceMappingURL=admin.component.js.map

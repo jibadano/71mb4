@@ -8,9 +8,10 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-var core_1 = require('@angular/core');
-var timba_1 = require('./timba');
-var app_service_1 = require('./app.service');
+Object.defineProperty(exports, "__esModule", { value: true });
+var core_1 = require("@angular/core");
+var timba_1 = require("./timba");
+var app_service_1 = require("./app.service");
 var ChatComponent = (function () {
     function ChatComponent(services) {
         this.services = services;
@@ -25,15 +26,15 @@ var ChatComponent = (function () {
         if (message != '')
             this.services.exec('addLog', { log: { type: timba_1.logType.CHAT, username: this.services.user.email, msg: message } }).then(function (res) { });
     };
-    ChatComponent = __decorate([
-        core_1.Component({
-            selector: 'chat',
-            templateUrl: 'app/chat.component.html',
-            styleUrls: ['app/chat.component.css']
-        }), 
-        __metadata('design:paramtypes', [app_service_1.AppService])
-    ], ChatComponent);
     return ChatComponent;
 }());
+ChatComponent = __decorate([
+    core_1.Component({
+        selector: 'chat',
+        templateUrl: 'app/chat.component.html',
+        styleUrls: ['app/chat.component.css']
+    }),
+    __metadata("design:paramtypes", [app_service_1.AppService])
+], ChatComponent);
 exports.ChatComponent = ChatComponent;
 //# sourceMappingURL=chat.component.js.map

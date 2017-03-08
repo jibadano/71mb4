@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService }		from './app.service'
 import { HTTP_PROVIDERS } from '@angular/http';
-
-
+declare var isMobile:any;
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.component.html',
@@ -12,7 +11,7 @@ import { HTTP_PROVIDERS } from '@angular/http';
 
 export class AppComponent {
   nav = 'dashboard';
-  
+  isMobile = false;
   showPlayers = false;
   showInfo = false;
   showChat = false;
@@ -28,5 +27,6 @@ export class AppComponent {
   }
 
   ngOnInit(){
+    this.isMobile = isMobile;
   }
 }
