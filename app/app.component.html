@@ -65,30 +65,28 @@
 	<home *ngIf="!services.user.email"></home>
 	
 	<div *ngIf="services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
-		<div class="row">	
+		<div [@fadeState]="fadeState" style="position:fixed;">	
 			<div class="col-xs-12">			
 				<div class="btn-group">
-					<button (click)="services.nav='players'" class="btn btn-primary" >Players</button>
 					<button (click)="services.nav='info'" class="btn btn-primary" >Info</button>
 					<button (click)="services.nav='bet'" class="btn btn-primary" >Bets</button>
-					<button (click)="services.nav='chat'" class="btn btn-primary" >Chat</button>
 					<button (click)="services.nav='rules'" class="btn btn-primary" >Rules</button>
 					<button (click)="services.logout();" class="btn btn-primary" >Log out</button>
 
 				</div>
 			</div>
 		</div>
-		<div class="row">	
+		<div  style="position:fixed;width:100%;top:50%">	
 			<div class="col-xs-12">			
-				<cursor *ngIf="services.user.email "></cursor>
+				<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email"></cursor>
 			</div>
 		</div>
-		<div class="row">	
+		<div  [@fadeState]="fadeState" style="position:fixed;bottom:0;width:100%">	
 			<div class="col-xs-12">			
-				<players *ngIf="services.nav=='players'"></players>
-				<info *ngIf="services.nav=='info'"></info>
-				<bet *ngIf="services.nav=='bet'"></bet>
-				<chat *ngIf="services.nav=='chat'"></chat>
+				<players  [@fadeState]="fadeState" *ngIf="services.nav=='players'"></players>
+				<info  [@fadeState]="fadeState" *ngIf="services.nav=='info'"></info>
+				<bet  [@fadeState]="fadeState" *ngIf="services.nav=='bet'"></bet>
+				<chat  [@fadeState]="fadeState" *ngIf="services.nav=='chat'"></chat>
 			</div>
 		</div>
 	</div>

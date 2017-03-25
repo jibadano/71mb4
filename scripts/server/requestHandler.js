@@ -220,9 +220,13 @@ function signIn(req, res) {
 	var usr = {email: email, password: password, firstLogin: false, admin: false};
 	
 	database.insertUser(usr,function(err,user){
+		if(err)
+			res.end(JSON.stringify(err));
+		if(user)
+			res.end(JSON.stringify(user));
 		
 	});
-	res.end();
+	
 }
 
 /*	

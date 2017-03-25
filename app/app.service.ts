@@ -14,7 +14,7 @@ export class AppService implements OnInit{
     timeCountDown : string;
     nav:string='welcome';
     //socket : any = io.connect('http://186.22.78.117:8081');
-    socket : any = io.connect('http://localhost:8081');
+    socket : any = io.connect('http://192.168.0.7:8081');
 
     constructor(private http: Http) {
       setInterval(() => {

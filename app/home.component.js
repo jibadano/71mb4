@@ -20,18 +20,24 @@ var HomeComponent = (function () {
         this.fb = fb;
         this.nav = 'welcome';
         this.user = new user_1.User();
+        this.repeatPassword = '';
         this.loginSuccess = new core_1.EventEmitter();
     }
     ;
     HomeComponent.prototype.login = function () {
         var _this = this;
-        if (this.user.password != '' && this.user.email != '') {
+        if (this.user.password && this.user.password != '' && this.user.email && this.user.email != '') {
             this.services.login(this.user).then(function (res) {
                 if (res.err)
                     _this.err = res.err;
-                else
+                else {
                     _this.services.fetchTimba();
+                    _this.err = {};
+                }
             });
+        }
+        else {
+            this.err = { msg: "Must complete user and password" };
         }
     };
     HomeComponent.prototype.forgotPassword = function () {
@@ -41,9 +47,19 @@ var HomeComponent = (function () {
         }
     };
     HomeComponent.prototype.signIn = function () {
-        if (this.user.email != '') {
+        var _this = this;
+        if (this.user.email && this.user.email != '' && this.user.password == this.repeatPassword) {
             this.services.signIn(this.user).then(function (res) {
+                _this.nav = 'login';
+                _this.err = {};
+                _this.login();
             });
+        }
+        else {
+            if (!this.user.email || this.user.email == '')
+                this.err = { msg: "Must complete email" };
+            if (this.user.password != this.repeatPassword)
+                this.err = { msg: "Wrong password confirmation" };
         }
     };
     HomeComponent.prototype.logout = function () {

@@ -23,19 +23,25 @@ export class HomeComponent implements OnInit {
 err : any;
 	@Input()
 	user : User = new User();
+  repeatPassword = '';
 	
 	@Output() loginSuccess = new EventEmitter<User>();
 
     constructor(private services: AppService, private fb: FormBuilder) {};
 
   	login(){
-      if(this.user.password != '' && this.user.email != ''){
+      if(this.user.password && this.user.password != '' && this.user.email && this.user.email != ''){
         this.services.login(this.user).then((res)=>{
           if(res.err)
            this.err = res.err;
-          else
+          else{
             this.services.fetchTimba();
+            this.err = {};
+          }
         });
+      }
+      else{
+        this.err = {msg:"Must complete user and password"};
       }
   	}
 
@@ -48,10 +54,18 @@ err : any;
   	}
 
     signIn(){
-      if(this.user.email != ''){
+      if(this.user.email && this.user.email != '' && this.user.password == this.repeatPassword){
         this.services.signIn(this.user).then((res)=>{
-          
+          this.nav='login';
+          this.err = {};
+          this.login();
         });
+      }
+      else{
+        if(!this.user.email || this.user.email == '')
+          this.err = {msg:"Must complete email"};
+        if(this.user.password != this.repeatPassword)
+          this.err = {msg:"Wrong password confirmation"};
       }
   	}
   
