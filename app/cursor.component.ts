@@ -26,7 +26,7 @@ export class CursorComponent implements OnInit {
 		'info': false
 	}
 
-	display = 'title';
+	display = 'play';
 
 	constructor(private services: AppService) { }
 
@@ -63,10 +63,12 @@ export class CursorComponent implements OnInit {
 
 
 	ngOnInit() {
-		this.setDisplay();
+		if(this.services.timba.winner)
+			this.display = 'title';
 	}
 
 	setDisplay(){
+		
 		setTimeout(()=>{
 				if(this.display == 'title')
 					this.display = 'timeLeft';

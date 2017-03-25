@@ -1,7 +1,8 @@
 .cursor{
     margin-left: auto;
     margin-right: auto;
-    height: 200px;
+    height: 100%;
+    width:100%;
 transition: transform 0.3s;
   transform: skewY(0deg);
 }
@@ -45,12 +46,17 @@ transition: transform 0.3s;
 
 .display{
         opacity: 0;
-    position: absolute;
-    top: calc(50% - 40px);
-    left: calc(50% - 100px);
+        position:absolute;
+        width:100%;
+        top:calc(50% - 60px);
 }
 .title{
     width: 100%;
     margin-top:20px;
     margin-bottom:20px;
+    font-size:70px;
+}
+
+.subtitle{
+    margin:0;
 }

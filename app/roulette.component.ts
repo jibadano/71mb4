@@ -49,7 +49,7 @@ export class RouletteComponent implements OnInit {
 		 });
 	}
 
-startTimba(){
+	startTimba(){
         this.services.exec('startTimba',{}).then(res =>{});
     }
 

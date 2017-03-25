@@ -575,7 +575,7 @@ fieldset[disabled] .btn {
   top: 2px;
 }
 .btn-default,.btn-default:focus {
-  color: #cecece;
+  color: #fafafa;
       background-color: transparent;
     border: 0;
     transition: text-shadow 0.4s, color 0.4s;

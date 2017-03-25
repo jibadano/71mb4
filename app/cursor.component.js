@@ -26,7 +26,7 @@ var CursorComponent = (function () {
             'bet': false,
             'info': false
         };
-        this.display = 'title';
+        this.display = 'play';
         this.showOrHide = new core_1.EventEmitter();
     }
     CursorComponent.prototype.show = function (component, event) {
@@ -51,7 +51,8 @@ var CursorComponent = (function () {
         this.skewdown = (component == 'bet') ? val : this.skewdown;
     };
     CursorComponent.prototype.ngOnInit = function () {
-        this.setDisplay();
+        if (this.services.timba.winner)
+            this.display = 'title';
     };
     CursorComponent.prototype.setDisplay = function () {
         var _this = this;

@@ -102,21 +102,21 @@
 		<div class="container" style="height:100%">
 			<div class="row" style="height:100%">
 				<div class="col-lg-4 col-xs-12" style="height:100%">
-					<players *ngIf="showPlayers"></players>
+					<players [@fadeState]="fadeState" ></players>
 				</div>
 				<div class="col-lg-4 col-xs-12" style="height:100%">
-					<div class="row" style="height:30%">
-						<info *ngIf="showInfo"></info>
+					<div class="row" style="height:25%">
+						<info  style="display:block" [@fadeState]="fadeState"  ></info>
 					</div>
-					<div class="row" style="height:50%">
+					<div class="row" style="height:55%">
 						<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email && services.nav=='dashboard'"></cursor>
 					</div>
 					<div class="row" style="height:20%">
-						<bet *ngIf="showBet"></bet>
+						<bet style="display:block" [@fadeState]="fadeState" ></bet>
 					</div>
 				</div>
 				<div class="col-lg-4  col-xs-12" style="height:100%">
-					<chat *ngIf="showChat"></chat>
+					<chat [@fadeState]="fadeState" ></chat>
 				</div>
 			</div>
 		</div>

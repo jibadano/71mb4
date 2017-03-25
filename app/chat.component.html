@@ -6,7 +6,7 @@
 			<tbody>
 				<tr *ngFor="let log of services.timba.log">
 					<td *ngIf="log.email == services.user.email" style="padding-bottom:2px;float:right;margin-top:10px;width:100%;text-align:right">You</td>
-					<td *ngIf="log.email != services.user.email" style="padding-bottom:2px;margin-top:10px;width:100%">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
+					<td *ngIf="log.email != services.user.email" style="padding-bottom:2px;width:100%">{{log.email.substring(0,log.email.indexOf('@'))}}</td>
 					<td [class.timba-msg]="log.email == 'timbaBot@'" [class.user-msg]="log.email == services.user.email" class="msg">{{log.msg}}</td>
 				</tr>
 			</tbody>

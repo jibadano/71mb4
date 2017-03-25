@@ -31,7 +31,8 @@ var timba = {
 	winner: undefined,
 	winnerIndex: 0,
 	closed: false,
-	status: 0
+	status: 0,
+	running: false
 }
 
 /*
@@ -133,25 +134,27 @@ closeTimba: function (user, data, then){
 
 //START TIMBA
 startTimba : function(user, data, then){
-	var finalList = [];
-	for(var i=0; i<timba.players.length;i++)
-		for(var j=0; j< timba.players[i].bets; j++)
-			finalList.push(timba.players[i].email);
-		
-	random.get(finalList.length, function(winnerIndex){
-		timba.winnerIndex = getPlayerIndex(finalList[winnerIndex]);
-		sockets.forEach(function(socket){
-			socket.emit('timbaStart', timba);
+	if(user.admin && !timba.running){
+		timba.running = true;
+		var finalList = [];
+		for(var i=0; i<timba.players.length;i++)
+			for(var j=0; j< timba.players[i].bets; j++)
+				finalList.push(timba.players[i].email);
+			
+		random.get(finalList.length, function(winnerIndex){
+			timba.winnerIndex = getPlayerIndex(finalList[winnerIndex]);
+			sockets.forEach(function(socket){
+				socket.emit('timbaStart', timba);
+			});
+			
 		});
-		
-	});
-	then(undefined,{});
-	setTimeout(function(){
-		timba.winner = timba.players[timba.winnerIndex].email;
-		addBotLog(logType.TIMBA, 'GANADOR: ' + timba.winner);
-		sendTimba();
-	},30000);
-	
+		then(undefined,{});
+		setTimeout(function(){
+			timba.winner = timba.players[timba.winnerIndex].email;
+			addBotLog(logType.TIMBA, 'GANADOR: ' + timba.winner);
+			sendTimba();
+		},30000);
+	}
 	},
 }
 

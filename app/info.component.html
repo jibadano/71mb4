@@ -1,21 +1,39 @@
 <div class="blur-bg">
 </div>
 <div>
-	<div class="info-row">
-		<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Total <div class="info-value"> $ {{services.getTotalAmount()}}</div>
-	</div>
-	<div class="info-row">
-		<i class="fa fa-users" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Players <div class="info-value">{{services.timba.players.length}}</div>
-	</div>
-	<div class="info-row">
-		<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Average <div class="info-value">$ {{services.getAverageAmount()}}</div>
-	</div>
-	<div *ngIf="!services.timba.winner" style="text-align:left;" >
-		<i  class="fa fa-clock-o" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i>Remaining time <div class="info-value"> {{services.timeCountDown}}</div>
-
-	</div>
-		<div *ngIf="services.timba.winner" style="text-align:left;" >
-
-		<i  class="fa fa-trophy" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i>Winner <div class="info-value"> {{services.timba.winner}}</div>
+	<div  class="info-row" *ngIf="!services.timba.winner" style="text-align:left;">
+		<div class="info-title">			
+		<i class="fa fa-clock-o" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i>
+		Remaining time
 		</div>
+		<div class="info-value">
+		{{services.timeCountDown}}</div>
+	</div>
+	<div  class="info-row" *ngIf="services.timba.winner" style="text-align:left;">
+		<div class="info-title">
+		<i class="fa fa-trophy" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i>Winner
+		</div>
+		<div class="info-value">
+		{{services.timba.winner}}</div>
+	</div>
+	<div class="info-row">
+		<div class="info-title">
+		<i class="fa fa-users" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Players
+		</div>
+		<div class="info-value">{{services.timba.players.length}}</div>
+	</div>
+	<div class="info-row">
+		<div class="info-title">
+		<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Average
+		</div>
+		<div class="info-value">$ {{services.getAverageAmount()}}</div>
+	</div>
+	<div style="font-size:18px;text-align:left;">
+		<div class="info-title">
+		<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px"></i> Total
+		</div>
+		<div class="info-value" style="font-size:26px">
+		$ {{services.getTotalAmount()}}</div>
+	</div>
+
 </div>

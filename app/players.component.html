@@ -1,8 +1,8 @@
 <div class="blur-bg">
 
 </div>
-<div class="players">
-	<table style="height:100%;width:100%;">
+<div class="players" style="left:0px">
+	<table style="width:100%;">
 		<tr class="player-row" *ngFor="let player of services.timba.players">
 			<td style="text-align:left;width:85%">{{player.email}}</td>
 			<td style="width:15%">$ {{player.bets * services.timba.betAmount}}</td>
