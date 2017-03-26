@@ -6,6 +6,7 @@ import { Component, OnInit, trigger,
 import { AppService }		from './app.service'
 import { HTTP_PROVIDERS } from '@angular/http';
 declare var isMobile:any;
+declare var location:any;
 @Component({
   selector: 'my-app',
   templateUrl: 'app/app.component.html',
@@ -33,6 +34,7 @@ export class AppComponent {
   showChat = false;
   showBet = false;
   fadeState ='hide';
+  suggestion= '';
 
   constructor(private services: AppService) {};
     
@@ -54,5 +56,16 @@ export class AppComponent {
 
   ngOnInit(){
     this.isMobile = isMobile;
+  }
+
+  reload(){
+    location.reload();
+  }
+
+  sendSuggestion(msg:string){
+    console.log(msg);
+    if(msg != '')
+      this.services.exec('suggest',{msg:msg}).then(res =>{console.log("res: "+ res)});
+
   }
 }

@@ -21,6 +21,7 @@ var AppComponent = (function () {
         this.showChat = false;
         this.showBet = false;
         this.fadeState = 'hide';
+        this.suggestion = '';
     }
     ;
     AppComponent.prototype.showOrHide = function (component) {
@@ -39,6 +40,14 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.ngOnInit = function () {
         this.isMobile = isMobile;
+    };
+    AppComponent.prototype.reload = function () {
+        location.reload();
+    };
+    AppComponent.prototype.sendSuggestion = function (msg) {
+        console.log(msg);
+        if (msg != '')
+            this.services.exec('suggest', { msg: msg }).then(function (res) { console.log("res: " + res); });
     };
     return AppComponent;
 }());

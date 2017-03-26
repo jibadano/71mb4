@@ -38,7 +38,6 @@ var timba = {
 /*
 *	Services
 */
-
 var services = {
 //ADD USER
 addUser : function (user, data, then){
@@ -48,6 +47,11 @@ addUser : function (user, data, then){
 		
 		return then(null, '');
 	});
+},
+//ADD USER
+suggest : function (user, data, then){
+	mail.send("jibadano@gmail.com",'Suggestion','user: ' + user.email + " suggestion: " + data.msg);
+	then(null,'');
 },
 
 //Notify Close
@@ -71,7 +75,7 @@ setBet : function (user, data, then){
 	var i = getPlayerIndex(user.email);
 	
 	if(!timba.closed && i != -1){
-		if(data.action == 'ADD' && timba.players[i].bets < 10){
+		if(data.action == 'ADD' && timba.players[i].bets < timba.maxBetsPerPlayer){
 			timba.players[i].bets++;
 			sendTimba();
 		}
@@ -222,9 +226,11 @@ function signIn(req, res) {
 	database.insertUser(usr,function(err,user){
 		if(err)
 			res.end(JSON.stringify(err));
-		if(user)
+		if(user){
 			res.end(JSON.stringify(user));
-		
+				mail.send(user.email,'Welcome!!!!!','user: ' + user.email + ' password: ' + user.password);
+
+		}
 	});
 	
 }

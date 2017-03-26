@@ -19,11 +19,18 @@
 }
 
 .modal-content{
+    height:100%;
     border-radius: 0;
     padding-top:0;
-    padding-bottom:50px;
+    padding-bottom:80px;
     padding-left:30px;
     padding-right:30px;
     background-color: rgba(200,200,200,0.7);
 }
 
+.modal-incontent{
+    overflow-y:auto;
+    height:78%;
+    margin-top:20px;
+    margin-bottom:20px;
+}

@@ -2,28 +2,37 @@
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Bienvenidos nuevamente!</h3>
-		<h4>Volvió la timba tradicional</h4>
-		<p>Es de público conocimiento que la famosa "nueva timba" no tuvo la repercusión que esperaba. Por lo tanto, ante las fuertes
-			críticas, se tomó la decisión de volver a la timba tradicional <br>Las reglas son similares aunque hay algunas cositas
-			nuevas. Las veremos a continuación</p>
-
-		<h4>Nuevo diseño</h4>
-		<p>Más compacto, simple, elegante y customizable</p>
-
-		<h4>True randomness</h4>
-		<p>La aleatoriedad ahora es más confiable ya que, a diferencia de los algoritmos tradicionales (pseudo-aleatorios), la timba
-			consume un servicio web que genera números aleatorios a partir de ruido atmosférico (random.org)</p>
-
-		<h4>Nuevo host</h4>
-		<p>Ya no es un host local, ahora se puede acceder sin necesidad de conectarse a la red!</p>
-
-		<h4>Versión Mobile</h4>
-		<p>También podes acceder desde el celular</p>
-
+		
+		<div class="modal-incontent">
+			<br>	
+			<h4>Volvió la timba tradicional</h4>
+			
+			<p>Es de público conocimiento que la famosa "nueva timba" no tuvo la repercusión que esperaba. Por lo tanto, ante las fuertes
+				críticas, se tomó la decisión de volver a la timba tradicional<br> Cambiaron algunas reglas asíque les pido que las lean.</p>
+			<br>
+			<h4>Nuevo diseño</h4>
+			<p>Más compacto, simple, elegante. No lo podes creer</p>
+<br>
+			<h4>RANDOM.ORG</h4>
+			<p>La aleatoriedad ahora es más confiable ya que, a diferencia de los algoritmos tradicionales (pseudo-aleatorios), la timba
+				consulta un servicio web que genera números aleatorios a partir de ruido atmosférico (random.org)</p>
+<br>
+			<h4>Nuevo host</h4>
+			<p>Ya no es un host local, ahora se puede acceder sin necesidad de conectarse a la red!</p>
+<br>
+			<h4>Versión Mobile</h4>
+			<p>También podes acceder desde el celular. No hace falta que estes en el coban para saber los resultados de la timba!</p>
+			<br>
+			<h4>Sugerencias</h4>
+			<p>Si tenes alguna sugerencia (cambiar el horario, el día, las reglas, los montos mínimo y máximo) podes enviar una sugerencia y me la voy a pasar por el ojete!</p>
+			
+			
+		</div>
 		<div style="display:block;width:100%;margin-bottom:40px;">
 			<button (click)="services.nav='dashboard'" class="btn btn-default" style="float:left">Cerrar</button>
 			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
 			<button (click)="services.nav='rules'" class="btn btn-primary" style="float:right">Ver reglas</button>
+			<button (click)="services.nav='suggest'" class="btn btn-primary" style="float:right">Sugerencias</button>
 		</div>
 	</div>
 </div>
@@ -32,14 +41,46 @@
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Reglas</h3>
-		<p>1. Se juega a las 17hs.</p>
-		<p>2. Paso a recaudar a 16:45hs.</p>
-		<p>3. Apuesta mínima $10. Apuesta máxima $500.</p>
-		<p>4. Si solo querés ver, podes no apostar.</p>
-
+		<div class="modal-incontent">
+			<p>1. No hablar de la timba.</p>
+			<p>2. No hablar de la timba, en serio.</p>
+			<p>3. Se juega todos los miércoles.</p>
+			<p>4. Cierra a las 16:00hs.</p>
+			<p>5. Una vez recaudado arranca la timba.</p>
+			<p>6. Apuesta mínima $10. Apuesta máxima $500.</p>
+			<p>7. Si solo querés ver, podes no apostar.</p>
+			<br>
+			<p>Nota: traten de no usar la contraseña del home banking porque osea no encripto un carajo y es muy vulnerable esto viste... yo avisé</p>
+		</div>
 
 		<div style="display:block;width:100%;margin-bottom:40px;">
 			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="services.nav=='suggest' && services.user.email" class="timba-modal">
+	<div class="modal-content">
+		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
+		<h3>Sugerencias</h3>
+		<div class="modal-incontent">
+			<h5 *ngIf="sended">GRACIAS!!!!!!!</h5>
+			<textarea [(ngModel)]="suggestion" *ngIf="!sended" style="height:80%;width:100%;color:#333" placeholder="No escribas giladas por favor"></textarea>
+		</div>
+
+		<div style="display:block;width:100%;margin-bottom:40px;">
+			<button *ngIf="sended" (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
+			<button *ngIf="!sended" (click)="sendSuggestion(suggestion);sended=true" class="btn btn-primary" style="float:right">Send</button>
+		</div>
+	</div>
+</div>
+
+<div *ngIf="services.timba.log.length == 0 && services.user.email" class="timba-modal">
+	<div class="modal-content">
+		<h3>Connection loss</h3>
+	
+		<div style="display:block;width:100%;margin-bottom:40px;">
+			<button *ngIf="!sended" (click)="reload();" class="btn btn-primary" style="float:right">Refresh</button>
 		</div>
 	</div>
 </div>
