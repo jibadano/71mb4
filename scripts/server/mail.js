@@ -17,7 +17,7 @@ function sendMail(to, subject,body){
 		subject: '71mb4 - ' + subject, // Subject line
 		text: '', // plain text body
 		html: `<div style="    color: white;
-    background: #234350;
+    background: #2a3330;
     font-size: 50px;
     padding: 70px;
     text-align: center;

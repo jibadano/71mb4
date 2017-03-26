@@ -13,6 +13,7 @@ function init(app,requestHandler){
 	app.post('/logout', requestHandler.logout);
 	app.post('/services', requestHandler.execService);
 	app.get('/getCurrentUser',requestHandler.getCurrentUser );
+	app.get('/getTimba',requestHandler.getTimba );
 	app.post('/forgotPassword',requestHandler.forgotPassword );
 	app.post('/signIn',requestHandler.signIn );
 

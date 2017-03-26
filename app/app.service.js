@@ -24,7 +24,7 @@ var AppService = (function () {
         this.socket = io.connect('http://186.22.78.117:8081');
         setInterval(function () {
             var playTime = new Date();
-            playTime.setHours(17);
+            playTime.setHours(16);
             playTime.setMinutes(0);
             playTime.setSeconds(0);
             var diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
@@ -69,6 +69,12 @@ var AppService = (function () {
         return this.http.get('/getCurrentUser')
             .toPromise()
             .then(function (res) { _this.user = res.json(); });
+    };
+    AppService.prototype.getTimba = function () {
+        var _this = this;
+        return this.http.get('/getTimba')
+            .toPromise()
+            .then(function (res) { _this.timba = res.json(); });
     };
     AppService.prototype.fetchTimba = function () {
         var _this = this;

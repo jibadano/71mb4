@@ -48,7 +48,7 @@ addUser : function (user, data, then){
 		return then(null, '');
 	});
 },
-//ADD USER
+//SUGGEST
 suggest : function (user, data, then){
 	mail.send("jibadano@gmail.com",'Suggestion','user: ' + user.email + " suggestion: " + data.msg);
 	then(null,'');
@@ -114,7 +114,6 @@ addLog : function (user, data, then){
 
 //GET CURRENT USER
 getCurrentUser : function (user, data, then){
-	sendTimba();
 	return then(undefined,user);
 },
 
@@ -368,4 +367,5 @@ exports.redirect = redirect;
 exports.getCurrentUser = getCurrentUser;
 exports.forgotPassword = forgotPassword;
 exports.signIn = signIn;
+exports.getTimba = getTimba;
 

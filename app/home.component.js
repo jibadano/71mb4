@@ -69,6 +69,7 @@ var HomeComponent = (function () {
         var _this = this;
         this.services.getCurrentUser().then(function () {
             _this.services.fetchTimba();
+            _this.services.getTimba();
         });
     };
     return HomeComponent;

@@ -19,7 +19,7 @@ export class AppService implements OnInit{
     constructor(private http: Http) {
       setInterval(() => {
         let playTime = new Date();
-        playTime.setHours(17);
+        playTime.setHours(16);
         playTime.setMinutes(0);
         playTime.setSeconds(0);
         let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
@@ -65,6 +65,12 @@ export class AppService implements OnInit{
       return this.http.get('/getCurrentUser')
       .toPromise()
       .then(res => {this.user = res.json()});
+    }
+
+    getTimba(){
+      return this.http.get('/getTimba')
+      .toPromise()
+      .then(res => {this.timba = res.json()});
     }
 
     fetchTimba(){

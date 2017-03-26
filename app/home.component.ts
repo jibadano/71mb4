@@ -77,6 +77,7 @@ err : any;
 
      this.services.getCurrentUser().then(()=>{
            this.services.fetchTimba();
+           this.services.getTimba();
      });
     }
 
