@@ -12,12 +12,14 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
 var user_1 = require("./user");
+var timba_1 = require("./timba");
 require("./rxjs-extensions");
 var AppService = (function () {
     function AppService(http) {
         var _this = this;
         this.http = http;
         this.user = new user_1.User();
+        this.timba = new timba_1.Timba();
         this.nav = 'welcome';
         this.socket = io.connect('http://186.22.78.117:8081');
         setInterval(function () {

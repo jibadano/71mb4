@@ -10,7 +10,7 @@ declare var io: any;
 @Injectable()
 export class AppService implements OnInit{
     user : User = new User();
-    timba : Timba;
+    timba : Timba = new Timba();
     timeCountDown : string;
     nav:string='welcome';
     socket : any = io.connect('http://186.22.78.117:8081');
