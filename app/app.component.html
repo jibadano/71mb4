@@ -1,4 +1,4 @@
-<div *ngIf="services.nav=='welcome' && services.user.email" class="timba-modal">
+<div *ngIf="services.timba.log.length != 0 && services.nav=='welcome' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Bienvenidos nuevamente!</h3>
@@ -37,7 +37,7 @@
 	</div>
 </div>
 
-<div *ngIf="services.nav=='rules' && services.user.email" class="timba-modal">
+<div *ngIf="services.timba.log.length != 0 && services.nav=='rules' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Reglas</h3>
@@ -59,7 +59,7 @@
 	</div>
 </div>
 
-<div *ngIf="services.nav=='suggest' && services.user.email" class="timba-modal">
+<div *ngIf="services.timba.log.length != 0 && services.nav=='suggest' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Sugerencias</h3>
@@ -85,13 +85,15 @@
 	</div>
 </div>
 
-<div *ngIf="services.nav=='winner' && services.user.email" class="timba-modal">
+<div *ngIf="services.timba.log.length != 0 &&services.nav=='winner' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Felicitaciones!</h3>
+		<div class="modal-incontent">
 		<p>Ganador: {{services.timba.winner}}</p>
 		<p>Premio: $ {{services.getTotalAmount()}}</p>
 		<p>Apuesta: $ {{services.getWinnerAmount()}}</p>
+		</div>
 
 		<div style="display:block;width:100%;margin-bottom:40px;">
 			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
