@@ -72,9 +72,7 @@ var AppService = (function () {
     };
     AppService.prototype.getTimba = function () {
         var _this = this;
-        return this.http.get('/getTimba')
-            .toPromise()
-            .then(function (res) { _this.timba = res.json(); });
+        this.exec('getTimba', {}).then(function (res) { _this.timba = res; });
     };
     AppService.prototype.fetchTimba = function () {
         var _this = this;

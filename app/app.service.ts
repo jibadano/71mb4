@@ -68,9 +68,7 @@ export class AppService implements OnInit{
     }
 
     getTimba(){
-      return this.http.get('/getTimba')
-      .toPromise()
-      .then(res => {this.timba = res.json()});
+      this.exec('getTimba',{}).then(res =>{this.timba = res});
     }
 
     fetchTimba(){

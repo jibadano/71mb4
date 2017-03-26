@@ -367,5 +367,4 @@ exports.redirect = redirect;
 exports.getCurrentUser = getCurrentUser;
 exports.forgotPassword = forgotPassword;
 exports.signIn = signIn;
-exports.getTimba = getTimba;
 
