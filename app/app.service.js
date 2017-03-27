@@ -21,7 +21,7 @@ var AppService = (function () {
         this.user = new user_1.User();
         this.timba = new timba_1.Timba();
         this.nav = 'welcome';
-        this.socket = io.connect('http://186.22.78.117:8081');
+        this.socket = io.connect('http://192.168.0.7:8081');
         setInterval(function () {
             var playTime = new Date();
             playTime.setHours(16);
@@ -95,6 +95,10 @@ var AppService = (function () {
         });
     };
     AppService.prototype.ngOnInit = function () {
+        this.socket.on('error', function (exception) {
+            this.exception = exception;
+            this.socket.destroy();
+        });
     };
     AppService.prototype.getTotalAmount = function () {
         var players = this.timba.players;

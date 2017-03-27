@@ -76,8 +76,10 @@ err : any;
   	ngOnInit(){
 
      this.services.getCurrentUser().then(()=>{
+          
            this.services.fetchTimba();
-           this.services.getTimba();
+           //this.services.getTimba();
+          
      });
     }
 

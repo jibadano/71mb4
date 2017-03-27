@@ -1,4 +1,4 @@
-<div *ngIf="services.timba && services.nav=='welcome' && services.user.email" class="timba-modal">
+<div *ngIf="!services.exception && services.nav=='welcome' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Bienvenidos nuevamente!</h3>
@@ -37,7 +37,7 @@
 	</div>
 </div>
 
-<div *ngIf="services.timba && services.nav=='rules' && services.user.email" class="timba-modal">
+<div *ngIf="!services.exception && services.nav=='rules' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Reglas</h3>
@@ -59,7 +59,7 @@
 	</div>
 </div>
 
-<div *ngIf="services.timba && services.nav=='suggest' && services.user.email" class="timba-modal">
+<div *ngIf="!services.exception && services.nav=='suggest' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>Sugerencias</h3>
@@ -75,7 +75,7 @@
 	</div>
 </div>
 
-<div *ngIf="!services.timba && services.user.email" class="timba-modal" style="width:30%">
+<div *ngIf="services.exception && services.user.email" class="timba-modal" style="width:30%">
 	<div class="modal-content" style="height:30%;background-color:rgba(255,0,0,0.7)">
 		<h3>Connection loss</h3>
 	
@@ -85,7 +85,7 @@
 	</div>
 </div>
 
-<div *ngIf="services.timba && services.nav=='winner' && services.user.email" class="timba-modal">
+<div *ngIf="!services.exception && services.nav=='winner' && services.user.email" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
 		<h3>¡Felicitaciones!</h3>
@@ -101,13 +101,13 @@
 	</div>
 </div>
 
-<roulette *ngIf="services.timba && services.timba.closed && !services.timba.winner"></roulette>
+<roulette *ngIf="!services.exception && services.timba.closed && !services.timba.winner"></roulette>
 
 <div *ngIf="isMobile">
 	<div class="text-center">	
 	<home *ngIf="!services.user.email"></home>
 	
-	<div *ngIf="services.timba && services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
+	<div *ngIf="!services.exception && services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
 		<div [@fadeState]="fadeState" style="position:fixed;">	
 			<div class="col-xs-12">			
 				<div class="btn-group">
