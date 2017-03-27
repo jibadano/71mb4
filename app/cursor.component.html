@@ -14,7 +14,7 @@
 		 class="btn btn-default btn-lg btn-cursor"><i  class="fa fa-users"></i></button-->
 		
 		<h2 class="title" style="cursor:pointer" *ngIf="display=='play'" (click)="display = 'title';setDisplay();showOrHide.emit('all')">
-			<div class="display on" >Play</div>
+			<div class="display on" >Start</div>
 		</h2>
 		<h2 class="title" style="cursor:pointer" (click)="showOrHide.emit('all')" *ngIf="display!='play'">
 			<div class="display" [class.on]="display=='title'" ><h5 class="subtitle"></h5>71mb4</div>
