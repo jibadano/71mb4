@@ -119,7 +119,8 @@ getCurrentUser : function (user, data, then){
 
 //GET TIMBA
 getTimba: function (user, data, then){
-	return then(undefined, timba);
+	sendTimba();
+	return then(undefined, '');
 },
 
 //CLOSE TIMBA

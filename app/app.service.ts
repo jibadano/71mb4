@@ -74,6 +74,7 @@ export class AppService implements OnInit{
     }
 
     fetchTimba(){
+      
       this.socket.on('timbaChange', (timba)=>{
         if(timba.log.length != this.timba.log.length || this.timba.log.length == 0){
           this.timba = timba;
@@ -85,6 +86,7 @@ export class AppService implements OnInit{
           },500);
         }
           this.timba = timba});
+      //this.exec('getTimba',{});
 	  }
 
     logout(){
