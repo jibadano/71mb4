@@ -16,8 +16,7 @@ mongoose.connect('mongodb://localhost/db');
 var timbaSchema = new mongoose.Schema({
 	winner: String,
 	date: Date,
-	numbers: [{players:[{email:String}]}],
-	players: [{email: String}]
+	players: [{email: String, bets: Number}]
 });
 
 var userSchema = new mongoose.Schema({
@@ -26,7 +25,9 @@ var userSchema = new mongoose.Schema({
 	firstname: String,
 	lastname: String,
 	admin: Boolean,
-	firstLogin: Boolean
+	firstLogin: Boolean,
+	balance: Number,
+	balanceRequest: Number
 });
 
 /*	Models	*/
@@ -77,17 +78,18 @@ function existsUser(user, then){
 
 function findUser(user, then){
 	User.findOne(user).
-	populate('groups.friends').
 	exec(then);
 }
 
 //FIND
 
 function findUsers(user, then){
-	User.find(user).exec(then);
+	User.find(user).
+	select('_id email admin balance balanceRequest').
+	exec(then);
 }
 
-function findAllTimbas(then){
+function findTimbas(then){
 	Timba.find().exec(then);
 }
 
@@ -95,7 +97,7 @@ function findAllTimbas(then){
 
 function findUserBasic(user, then){
 	User.findOne(user).
-	select('_id email admin').
+	select('_id email admin balance balanceRequest').
 	exec(then);
 }
 
@@ -111,3 +113,5 @@ exports.insertUser = insertUser;
 exports.findUser = findUser;
 exports.findUsers = findUsers;
 exports.updateUser = updateUser;
+exports.findTimbas = findTimbas;
+exports.insertTimba = insertTimba;

@@ -18,3 +18,14 @@
     right: 50px;
     position: absolute;
 }
+
+.user{
+    transform: translateX(0);
+    transition: transform 1s;
+    position: absolute;
+    right: 110px;
+}
+
+.open{
+    transform: translateX(-90%);
+}

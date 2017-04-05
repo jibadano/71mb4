@@ -1,18 +1,26 @@
-<div class="blur-bg">
-</div>
+
 <div style="z-index:2">
 	<div class="info-row" style="text-align: left;">
 		<div class="info-title">
-		<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Your bet
+		<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Apuesta
 		</div>
 		<div class="info-value">$ {{services.getPlayerAmount()}}</div>
+			<button (click)="setBet('ADD')" class="btn btn-primary" style="">
+				<i class="fa fa-plus" style="text-align: center;padding-right: 5px;"></i> 		 
+			</button>
+			<button (click)="setBet('SUBSTRACT')" class="btn btn-primary" style="">
+				<i class="fa fa-minus" style="text-align: center;padding-right: 5px;"></i>
+			</button>
+		
 	</div>
-	<div style="display:flex">
-		<button (click)="setBet('SUBSTRACT')" class="btn btn-primary" style="height:100%;width:50%">
-			<i class="fa fa-minus" style="text-align: center;padding-right: 5px;"></i> $10
-		</button>
-		<button (click)="setBet('ADD')" class="btn btn-primary" style="height:100%;width:50%">
-			<i class="fa fa-plus" style="text-align: center;padding-right: 5px;"></i> $10		 
-		</button>
+	<div class="info-row" style="text-align: left;">
+		<div class="info-title">
+		<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Saldo
+		</div>
+		<div class="info-value">$ {{services.user.balance * services.timba.betAmount}}</div>
+			<button (click)="services.nav = 'menu'" class="btn btn-primary" style="">
+				Solicitar
+			</button>
 	</div>
+
 </div>

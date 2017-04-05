@@ -6,23 +6,28 @@ import { Timba }        from './timba';
 import './rxjs-extensions';
 
 declare var io: any;
+declare var $: any;
+declare var window: any;
 
 @Injectable()
 export class AppService implements OnInit{
     user : User = new User();
     timba : Timba = new Timba();
     timeCountDown : string;
-    nav:string='welcome';
+    nav:string='dashboard';
+    active:boolean = false;
+    socketId = '';
     //socket : any = io.connect('http://192.168.0.7:8081');
     socket : any = io.connect('http://186.22.78.117:8081');
 
     exception : any;
 
     constructor(private http: Http) {
+      
       setInterval(() => {
         let playTime = new Date();
-        playTime.setHours(16);
-        playTime.setMinutes(0);
+        playTime.setHours(22);
+        playTime.setMinutes(30);
         playTime.setSeconds(0);
         let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
         this.timeCountDown = this.dhms(diff);
@@ -36,10 +41,10 @@ export class AppService implements OnInit{
     }
 
     login(user : User): Promise<any>{
+       
       let headers = new Headers({ 'Content-Type': 'application/json' , 'Authorization': 'Basic ' + btoa(user.email+ ':' + user.password)});
       let options = new RequestOptions({ headers: headers });
-
-      return this.http.post('/login','',options)
+      return this.http.post('/login',JSON.stringify({socketId:this.socket.id}),options)
       .toPromise()
       .then(res => this.user = res.json() as any);
     };
@@ -64,17 +69,23 @@ export class AppService implements OnInit{
 
 
     getCurrentUser(){
-      return this.http.get('/getCurrentUser')
+      return this.http.post('/getCurrentUser',JSON.stringify({socketId:this.socket.id}))
       .toPromise()
-      .then(res => {this.user = res.json()});
+      .then(res => {this.user = res.json()})
+      
     }
 
-    getTimba(){
-      this.exec('getTimba',{}).then(res =>{this.timba = res});
-    }
 
     fetchTimba(){
+      this.socket.on('error', function(exception) {
+        this.exception = exception;
+        this.socket.destroy();
+      });
       
+      this.socket.on('userChange', (user) => {
+        console.log('userChange: '+ user);
+        this.user = user;
+      });
       this.socket.on('timbaChange', (timba)=>{
         if(timba.log.length != this.timba.log.length || this.timba.log.length == 0){
           this.timba = timba;
@@ -86,7 +97,6 @@ export class AppService implements OnInit{
           },500);
         }
           this.timba = timba});
-      //this.exec('getTimba',{});
 	  }
 
     logout(){
@@ -96,10 +106,8 @@ export class AppService implements OnInit{
 	  }
 
     ngOnInit(){
-      this.socket.on('error', function(exception) {
-        this.exception = exception;
-        this.socket.destroy();
-      })
+     
+      
     }
 
 

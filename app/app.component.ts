@@ -3,7 +3,10 @@ import { Component, OnInit, trigger,
   style,
   transition,
   animate } from '@angular/core';
-import { AppService }		from './app.service'
+import { AppService }		from './app.service';
+import { User }		from './user'
+import { Timba }		from './timba'
+
 import { HTTP_PROVIDERS } from '@angular/http';
 declare var isMobile:any;
 declare var location:any;
@@ -35,6 +38,10 @@ export class AppComponent {
   showBet = false;
   fadeState ='hide';
   suggestion= '';
+  users : User[] = [];
+  timbas: Timba[] = [];
+  menu='account';
+  balanceRequest: number= 0;
 
   constructor(private services: AppService) {};
     
@@ -68,4 +75,35 @@ export class AppComponent {
       this.services.exec('suggest',{msg:msg}).then(res =>{console.log("res: "+ res)});
 
   }
+
+  getUsers(){
+    this.services.exec('getUsers',{}).then(users =>{this.users = users});
+  }
+
+  getTimbas(){
+    this.services.exec('getTimbas',{}).then(timbas =>{this.timbas = timbas});
+  }
+
+  getUser(){
+    this.services.exec('getUser',{}).then(user =>{this.services.user = user});
+  }
+
+
+  setBalance(user:User,action:string){
+    this.services.exec('setBalance',{user:user,action:action}).then(res =>{this.getUsers()});
+  }
+
+   sendBalanceRequest(){
+    this.services.exec('balanceRequest',{balanceRequest: this.balanceRequest}).then(() =>{this.balanceRequest = 0});
+  }
+
+  cancelBalanceRequest(user:User){
+    this.services.exec('cancelBalanceRequest',{user:user}).then(res =>{this.getUsers()});
+  }
+
+  approveBalanceRequest(user:User){
+    this.services.exec('approveBalanceRequest',{user:user}).then(res =>{this.getUsers()});
+  }
+
+
 }

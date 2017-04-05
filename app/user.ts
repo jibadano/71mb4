@@ -8,4 +8,6 @@ export class User {
 	age: number;
 	position: string;
 	about: string;
+	balanceRequest: number = 0;
+	balance:number ;
 }

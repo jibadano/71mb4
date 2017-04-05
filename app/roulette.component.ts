@@ -30,28 +30,27 @@ export class RouletteComponent implements OnInit {
 			this.addPlayerRoulette(0);
 			this.addPlayerRouletteFade(0);
 		},5000);
-		 this.services.socket.on('timbaStart', (timba)=>{
-			this.showAndHide("three");
+		
+		this.services.socket.on('timbaStart', (timba)=>{
 			setTimeout(()=>{
-				this.showAndHide("two");
+				this.showAndHide("three");
 				setTimeout(()=>{
-					this.showAndHide("one");
+					this.showAndHide("two");
 					setTimeout(()=>{
-						this.rotate(timba.winnerIndex);
+						this.showAndHide("one");
 						setTimeout(()=>{
-							this.services.nav='winner';							
-						},24000);
-					},2000);				
+							this.rotate(timba.winnerIndex);
+							setTimeout(()=>{
+								this.services.nav='winner';							
+							},24000);
+						},2000);				
+					},2000);
 				},2000);
-			},2000);
-			console.log(timba.winner);
-			console.log(timba.winnerIndex);
-		 });
+				console.log(timba.winner);
+				console.log(timba.winnerIndex);
+			},500 * this.services.timba.players.length);
+		});
 	}
-
-	startTimba(){
-        this.services.exec('startTimba',{}).then(res =>{});
-    }
 
 
 	showAndHide(n:string){

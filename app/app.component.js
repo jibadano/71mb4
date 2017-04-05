@@ -22,6 +22,10 @@ var AppComponent = (function () {
         this.showBet = false;
         this.fadeState = 'hide';
         this.suggestion = '';
+        this.users = [];
+        this.timbas = [];
+        this.menu = 'account';
+        this.balanceRequest = 0;
     }
     ;
     AppComponent.prototype.showOrHide = function (component) {
@@ -48,6 +52,34 @@ var AppComponent = (function () {
         console.log(msg);
         if (msg != '')
             this.services.exec('suggest', { msg: msg }).then(function (res) { console.log("res: " + res); });
+    };
+    AppComponent.prototype.getUsers = function () {
+        var _this = this;
+        this.services.exec('getUsers', {}).then(function (users) { _this.users = users; });
+    };
+    AppComponent.prototype.getTimbas = function () {
+        var _this = this;
+        this.services.exec('getTimbas', {}).then(function (timbas) { _this.timbas = timbas; });
+    };
+    AppComponent.prototype.getUser = function () {
+        var _this = this;
+        this.services.exec('getUser', {}).then(function (user) { _this.services.user = user; });
+    };
+    AppComponent.prototype.setBalance = function (user, action) {
+        var _this = this;
+        this.services.exec('setBalance', { user: user, action: action }).then(function (res) { _this.getUsers(); });
+    };
+    AppComponent.prototype.sendBalanceRequest = function () {
+        var _this = this;
+        this.services.exec('balanceRequest', { balanceRequest: this.balanceRequest }).then(function () { _this.balanceRequest = 0; });
+    };
+    AppComponent.prototype.cancelBalanceRequest = function (user) {
+        var _this = this;
+        this.services.exec('cancelBalanceRequest', { user: user }).then(function (res) { _this.getUsers(); });
+    };
+    AppComponent.prototype.approveBalanceRequest = function (user) {
+        var _this = this;
+        this.services.exec('approveBalanceRequest', { user: user }).then(function (res) { _this.getUsers(); });
     };
     return AppComponent;
 }());

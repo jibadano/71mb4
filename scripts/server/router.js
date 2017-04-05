@@ -12,7 +12,7 @@ function init(app,requestHandler){
 	app.post('/login', requestHandler.login);
 	app.post('/logout', requestHandler.logout);
 	app.post('/services', requestHandler.execService);
-	app.get('/getCurrentUser',requestHandler.getCurrentUser );
+	app.post('/getCurrentUser',requestHandler.getCurrentUser );
 	app.post('/forgotPassword',requestHandler.forgotPassword );
 	app.post('/signIn',requestHandler.signIn );
 

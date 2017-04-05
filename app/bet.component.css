@@ -10,13 +10,13 @@
 }
 
 .info-row{
-  height:74px;
+  height:auto;
   border-bottom: 1px solid rgba(200,200,200,0.3);
 }
 
 .info-value{
     display: inline; 
-    font-size: 35px;
+    font-size: 25px;
     font-weight: bold;
 }
 
@@ -24,4 +24,9 @@
   padding-left:5px;
   width: 43%;
     display: inline-table;
+}
+
+button{
+  float:right;
+  height:100%;
 }

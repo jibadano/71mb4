@@ -20,13 +20,15 @@ var AppService = (function () {
         this.http = http;
         this.user = new user_1.User();
         this.timba = new timba_1.Timba();
-        this.nav = 'welcome';
+        this.nav = 'dashboard';
+        this.active = false;
+        this.socketId = '';
         //socket : any = io.connect('http://192.168.0.7:8081');
         this.socket = io.connect('http://186.22.78.117:8081');
         setInterval(function () {
             var playTime = new Date();
-            playTime.setHours(16);
-            playTime.setMinutes(0);
+            playTime.setHours(22);
+            playTime.setMinutes(30);
             playTime.setSeconds(0);
             var diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
             _this.timeCountDown = _this.dhms(diff);
@@ -42,7 +44,7 @@ var AppService = (function () {
         var _this = this;
         var headers = new http_1.Headers({ 'Content-Type': 'application/json', 'Authorization': 'Basic ' + btoa(user.email + ':' + user.password) });
         var options = new http_1.RequestOptions({ headers: headers });
-        return this.http.post('/login', '', options)
+        return this.http.post('/login', JSON.stringify({ socketId: this.socket.id }), options)
             .toPromise()
             .then(function (res) { return _this.user = res.json(); });
     };
@@ -67,16 +69,20 @@ var AppService = (function () {
     ;
     AppService.prototype.getCurrentUser = function () {
         var _this = this;
-        return this.http.get('/getCurrentUser')
+        return this.http.post('/getCurrentUser', JSON.stringify({ socketId: this.socket.id }))
             .toPromise()
             .then(function (res) { _this.user = res.json(); });
     };
-    AppService.prototype.getTimba = function () {
-        var _this = this;
-        this.exec('getTimba', {}).then(function (res) { _this.timba = res; });
-    };
     AppService.prototype.fetchTimba = function () {
         var _this = this;
+        this.socket.on('error', function (exception) {
+            this.exception = exception;
+            this.socket.destroy();
+        });
+        this.socket.on('userChange', function (user) {
+            console.log('userChange: ' + user);
+            _this.user = user;
+        });
         this.socket.on('timbaChange', function (timba) {
             if (timba.log.length != _this.timba.log.length || _this.timba.log.length == 0) {
                 _this.timba = timba;
@@ -88,7 +94,6 @@ var AppService = (function () {
             }
             _this.timba = timba;
         });
-        this.exec('getTimba', {});
     };
     AppService.prototype.logout = function () {
         var _this = this;
@@ -97,10 +102,6 @@ var AppService = (function () {
         });
     };
     AppService.prototype.ngOnInit = function () {
-        this.socket.on('error', function (exception) {
-            this.exception = exception;
-            this.socket.destroy();
-        });
     };
     AppService.prototype.getTotalAmount = function () {
         var players = this.timba.players;

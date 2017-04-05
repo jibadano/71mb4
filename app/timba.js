@@ -10,6 +10,7 @@ var Timba = (function () {
         this.players = [];
         this.executing = false;
         this.closed = false;
+        this.running = false;
     }
     return Timba;
 }());

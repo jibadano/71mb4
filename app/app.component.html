@@ -1,165 +1,295 @@
-<div *ngIf="!services.exception && services.nav=='welcome' && services.user.email" class="timba-modal">
+<roulette *ngIf="!services.exception && services.timba.running && !services.timba.winner"></roulette>
+
+<div *ngIf="!isMobile" [class.bg-blur]="(services.nav !='dashboard' || (services.timba.running && !services.timba.winner)) && services.user.email "
+ class="intro-header">
+	<!-- HOME -->
+	<home *ngIf="!services.user.email"></home>
+
+	<!-- Main Section -->
+	<section *ngIf="!services.exception && services.user.email && (services.timba.winner || !services.timba.running)"
+	 id="about" style="height:100%">
+		<!-- User Session -->
+		<user-session (return)="services.nav = $event" (logOut)="services.logout();"></user-session>
+
+		<!-- Main Container -->
+		<div class="container" style="height:100%">
+			<div class="row" style="height:100%">
+				<!-- 1 Players -->
+				<div class="col-lg-4 col-xs-12" style="height:100%">
+					<players [@fadeState]="fadeState"></players>
+				</div>
+
+				<div class="col-lg-4 col-xs-12" style="height:100%">
+
+					<!-- 2 Info -->
+					<div class="row" style="height:25%">
+						<info style="display:block" [@fadeState]="fadeState"></info>
+					</div>
+
+					<!-- Cursor -->
+					<div class="row" style="height:55%">
+						<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email && services.nav=='dashboard'"></cursor>
+					</div>
+
+					<!-- 3 Bet -->
+					<div class="row" style="height:20%">
+						<bet style="display:block" [@fadeState]="fadeState"></bet>
+					</div>
+				</div>
+
+				<!-- 4 Chat -->
+				<div class="col-lg-4  col-xs-12" style="height:100%">
+					<chat [@fadeState]="fadeState"></chat>
+				</div>
+			</div>
+		</div>
+	</section>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MODALES -->
+
+<div *ngIf="!services.exception && services.user.email && services.nav != 'dashboard'" class="timba-modal">
 	<div class="modal-content">
 		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
-		<h3>¡Bienvenidos nuevamente!</h3>
-		
-		<div class="modal-incontent">
-			<br>	
-			<h4>Volvió la timba tradicional</h4>
-			
-			<p>Es de público conocimiento que la famosa "nueva timba" no tuvo la repercusión que esperaba. Por lo tanto, ante las fuertes
-				críticas, se tomó la decisión de volver a la timba tradicional<br> Cambiaron algunas reglas asíque les pido que las lean.</p>
-			<br>
-			<h4>Nuevo diseño</h4>
-			<p>Más compacto, simple, elegante. No lo podes creer</p>
-<br>
-			<h4>RANDOM.ORG</h4>
-			<p>La aleatoriedad ahora es más confiable ya que, a diferencia de los algoritmos tradicionales (pseudo-aleatorios), la timba
-				consulta un servicio web que genera números aleatorios a partir de ruido atmosférico (random.org)</p>
-<br>
-			<h4>Nuevo host</h4>
-			<p>Ya no es un host local, ahora se puede acceder sin necesidad de conectarse a la red!</p>
-<br>
-			<h4>Versión Mobile</h4>
-			<p>También podes acceder desde el celular. No hace falta que estes en el coban para saber los resultados de la timba!</p>
-			<br>
-			<h4>Sugerencias</h4>
-			<p>Si tenes alguna sugerencia (cambiar el horario, el día, las reglas, los montos mínimo y máximo) podes enviar una sugerencia y me la voy a pasar por el ojete!</p>
-			
-			
+
+		<!-- Reglas -->
+		<div *ngIf="services.nav=='rules'" style="display:initial">
+			<h3>Reglas</h3>
+			<div class="modal-incontent">
+				<p>1. No hablar de la timba.</p>
+				<p>2. No hablar de la timba, en serio.</p>
+				<p>3. Se juega todos los miércoles.</p>
+				<p>4. Cierra a las 16:00hs.</p>
+				<p>5. Una vez recaudado arranca la timba.</p>
+				<p>6. Apuesta mínima $10. Apuesta máxima $500.</p>
+				<p>7. Si solo querés ver, podes no apostar.</p>
+				<br>
+				<p>Nota: traten de no usar la contraseña del home banking porque osea no encripto un carajo y es muy vulnerable esto viste...
+					yo avisé</p>
+			</div>
+			<div style="display:block;width:100%;margin-bottom:40px;">
+				<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+				<button (click)="services.nav='suggest'" class="btn btn-primary" style="float:right">Sugerencias</button>
+			</div>
 		</div>
-		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button (click)="services.nav='dashboard'" class="btn btn-default" style="float:left">Cerrar</button>
-			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
-			<button (click)="services.nav='rules'" class="btn btn-primary" style="float:right">Ver reglas</button>
-			<button (click)="services.nav='suggest'" class="btn btn-primary" style="float:right">Sugerencias</button>
+
+
+		<!--Suggest-->
+		<div *ngIf="services.nav=='suggest'" style="display:initial">
+			<h3>Sugerencias</h3>
+			<div class="modal-incontent">
+				<h5 *ngIf="sended">GRACIAS!!!!!!!</h5>
+				<textarea [(ngModel)]="suggestion" *ngIf="!sended" style="height:80%;width:100%;color:#333" placeholder="No escribas giladas por favor"></textarea>
+			</div>
+
+			<div style="display:block;width:100%;margin-bottom:40px;">
+				<button *ngIf="sended" (click)="services.nav='rules'" class="btn btn-primary" style="float:right">Continuar</button>
+				<button *ngIf="!sended && suggestion != ''" (click)="sendSuggestion(suggestion);sended=true" class="btn btn-primary" style="float:right">Send</button>
+				<button (click)="services.nav='dashboard'" class="btn btn-default" style="float:left">Cancelar</button>
+			</div>
 		</div>
+
+		<!-- Winner -->
+		<div *ngIf="services.nav=='winner'" style="display:initial">
+			<h3>¡Felicitaciones!</h3>
+			<div class="modal-incontent">
+				<p>Ganador: {{services.timba.winner}}</p>
+				<p>Premio: $ {{services.getTotalAmount()}}</p>
+				<p>Apuesta: $ {{services.getWinnerAmount()}}</p>
+			</div>
+
+			<div style="display:block;width:100%;margin-bottom:40px;">
+				<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+			</div>
+		</div>
+
+
+		<div *ngIf="services.nav=='menu'" style="display:initial">
+			<ul class="nav nav-tabs">
+				<li [class.active]="menu=='account'" (click)="menu='account';getUser()"><a href="#"><i class="fa fa-user" style="margin-right:10px"></i>Mi cuenta</a></li>
+				<li [class.active]="menu=='history'" (click)="menu='history';getTimbas()"><a href="#"><i class="fa fa-tasks" style="margin-right:10px"></i>Historial</a></li>
+				<li [class.active]="menu=='suggest'" (click)="menu='suggest';sended= false;"><a href="#"><i class="fa fa-mail" style="margin-right:10px"></i>Sugerencias</a></li>
+				<li *ngIf="services.user.admin" [class.active]="menu=='admin'" (click)="menu='admin';getUsers()"><a href="#"><i class="fa fa-signal" style="margin-right:10px"></i>Admin</a></li>
+			</ul>
+			<div class="modal-incontent">
+				<div *ngIf="menu=='account'">
+					<div class="content-title">
+						{{services.user.email}}
+					</div>
+					<div class="info-row" style="font-size:18px;text-align:left;">
+						<div class="info-title">
+							<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px"></i> Saldo
+						</div>
+						<div class="info-value" style="font-size:26px">
+							$ {{services.user.balance * services.timba.betAmount}}</div>
+					</div>
+					<div class="info-row" style="text-align:left;">
+						<div class="info-title">
+							<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Solicitar crédito
+						</div>
+						<div class="info-value" style="display:inline-block">
+							<div *ngIf="services.user.balanceRequest == 0">
+								<div class="inline" style="width:45px;display:inline-block">$ {{balanceRequest * services.timba.betAmount}}</div>
+								<button (click)="balanceRequest= balanceRequest - 1" class="btn btn-sm btn-primary inline"><i class="fa fa-minus"></i></button>
+								<button (click)="balanceRequest= balanceRequest + 1" class="btn btn-sm btn-primary inline"><i class="fa fa-plus"></i></button>
+								<button (click)="sendBalanceRequest()" class="btn btn-sm btn-primary inline">Enviar</button>
+							</div>
+							<div *ngIf="services.user.balanceRequest != 0">
+								Enviado
+								<div class="inline" style="width:45px;display:inline-block">$ {{services.user.balanceRequest * services.timba.betAmount}}</div>
+								<button (click)="cancelBalanceRequest(services.user)" class="btn btn-sm btn-primary inline">Cancelar</button>
+							</div>
+						</div>
+					</div>
+					<div class="info-row">
+						<div class="info-title">
+							<i class="fa fa-users" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Total ganado:
+						</div>
+						<div class="info-value">proximamente</div>
+					</div>
+					<div class="info-row">
+						<div class="info-title">
+							<i class="fa fa-usd" style="text-align: center;padding-top: 12px;padding-right: 5px;"></i> Apuesta promedoi
+						</div>
+						<div class="info-value">proximamente</div>
+					</div>
+					
+				</div>
+				<div *ngIf="menu=='suggest'">
+					<div *ngIf="!sended" class="content-title">
+						Escribe una sugerencia
+					</div>
+					<div *ngIf="sended" class="content-title">
+						¡Gracias!
+					</div>
+					<textarea [(ngModel)]="suggestion" *ngIf="!sended" style="height:80%;width:100%;color:#333" placeholder="Nada de giladas, por favor. Gracias"></textarea>
+					<div style="display:block;width:100%;margin-bottom:40px;">
+						<button *ngIf="!sended && suggestion != ''" (click)="sendSuggestion(suggestion);sended=true" class="btn btn-primary" style="float:right">Send</button>
+					</div>
+				</div>
+				<div *ngIf="menu=='history'">
+					<table style="width:100%" class="">
+						<thead>
+							<th>Fecha</th>
+							<th>Ganador</th>
+							<th>Jugadores</th>
+						</thead>
+						<tr *ngFor="let timba of timbas">
+							<td>{{timba.date | date}}</td>
+							<td>{{timba.winner}}</td>
+							<td>{{timba.players.length}} jugadores</td>
+						</tr>
+					</table>
+				</div>
+				<div *ngIf="menu=='admin'">
+
+					<table style="width:100%" class="">
+						<thead>
+							<th>Usuario</th>
+							<th>Saldo</th>
+							<th></th>
+							<th>Solicitud</th>
+							<th></th>
+						</thead>
+						<tr *ngFor="let user of users">
+							<td>{{user.email}}</td>
+							<td>$ {{user.balance * services.timba.betAmount}}</td>
+							<td>
+								<button (click)="setBalance(user,'SUBSTRACT');" class="btn btn-primary"><i class="fa fa-minus"></i></button>
+								<button (click)="setBalance(user,'ADD');" class="btn btn-primary"><i class="fa fa-plus"></i></button>
+							</td>
+							<td>$ {{user.balanceRequest * services.timba.betAmount}}</td>
+							<td>
+								<button (click)="cancelBalanceRequest(user)" class="btn btn-primary"><i class="fa fa-times"></i></button>
+								<button (click)="approveBalanceRequest(user);" class="btn btn-primary"><i class="fa fa-check"></i></button>
+							</td>
+						</tr>
+					</table>
+				</div>
+			</div>
+
+			<div style="display:block;width:100%;margin-bottom:40px;">
+				<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
+			</div>
+		</div>
+
+
+
 	</div>
 </div>
 
-<div *ngIf="!services.exception && services.nav=='rules' && services.user.email" class="timba-modal">
-	<div class="modal-content">
-		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
-		<h3>Reglas</h3>
-		<div class="modal-incontent">
-			<p>1. No hablar de la timba.</p>
-			<p>2. No hablar de la timba, en serio.</p>
-			<p>3. Se juega todos los miércoles.</p>
-			<p>4. Cierra a las 16:00hs.</p>
-			<p>5. Una vez recaudado arranca la timba.</p>
-			<p>6. Apuesta mínima $10. Apuesta máxima $500.</p>
-			<p>7. Si solo querés ver, podes no apostar.</p>
-			<br>
-			<p>Nota: traten de no usar la contraseña del home banking porque osea no encripto un carajo y es muy vulnerable esto viste... yo avisé</p>
-		</div>
 
-		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
-		</div>
-	</div>
-</div>
-
-<div *ngIf="!services.exception && services.nav=='suggest' && services.user.email" class="timba-modal">
-	<div class="modal-content">
-		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
-		<h3>Sugerencias</h3>
-		<div class="modal-incontent">
-			<h5 *ngIf="sended">GRACIAS!!!!!!!</h5>
-			<textarea [(ngModel)]="suggestion" *ngIf="!sended" style="height:80%;width:100%;color:#333" placeholder="No escribas giladas por favor"></textarea>
-		</div>
-
-		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button *ngIf="sended" (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Continuar</button>
-			<button *ngIf="!sended" (click)="sendSuggestion(suggestion);sended=true" class="btn btn-primary" style="float:right">Send</button>
-		</div>
-	</div>
-</div>
-
+<!-- ERROR -->
 <div *ngIf="services.exception && services.user.email" class="timba-modal" style="width:30%">
 	<div class="modal-content" style="height:30%;background-color:rgba(255,0,0,0.7)">
 		<h3>Connection loss</h3>
-	
+
 		<div style="display:block;width:100%;margin-bottom:40px;">
 			<button *ngIf="!sended" (click)="reload();" class="btn btn-primary" style="float:right">Refresh</button>
 		</div>
 	</div>
 </div>
 
-<div *ngIf="!services.exception && services.nav=='winner' && services.user.email" class="timba-modal">
-	<div class="modal-content">
-		<button (click)="services.nav='dashboard'" class="btn btn-default btn-lg" style="float:right;margin-right:-30px"><i  class="fa fa-times"></i></button>
-		<h3>¡Felicitaciones!</h3>
-		<div class="modal-incontent">
-		<p>Ganador: {{services.timba.winner}}</p>
-		<p>Premio: $ {{services.getTotalAmount()}}</p>
-		<p>Apuesta: $ {{services.getWinnerAmount()}}</p>
-		</div>
 
-		<div style="display:block;width:100%;margin-bottom:40px;">
-			<button (click)="services.nav='dashboard'" class="btn btn-primary" style="float:right">Aceptar</button>
-		</div>
-	</div>
-</div>
 
-<roulette *ngIf="!services.exception && services.timba.closed && !services.timba.winner"></roulette>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- MOBILE -->
 <div *ngIf="isMobile">
-	<div class="text-center">	
-	<home *ngIf="!services.user.email"></home>
-	
-	<div *ngIf="!services.exception && services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
-		<div [@fadeState]="fadeState" style="position:fixed;">	
-			<div class="col-xs-12">			
-				<div class="btn-group">
-					<button (click)="services.nav='info'" class="btn btn-primary" >Info</button>
-					<button (click)="services.nav='bet'" class="btn btn-primary" >Bets</button>
-					<button (click)="services.nav='rules'" class="btn btn-primary" >Rules</button>
-					<button (click)="services.logout();" class="btn btn-primary" >Log out</button>
+	<div class="text-center">
+		<home *ngIf="!services.user.email"></home>
 
+		<div *ngIf="!services.exception && services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))">
+			<div [@fadeState]="fadeState" style="position:fixed;">
+				<div class="col-xs-12">
+					<div class="btn-group">
+						<button (click)="services.nav='info'" class="btn btn-primary">Info</button>
+						<button (click)="services.nav='bet'" class="btn btn-primary">Bets</button>
+						<button (click)="services.nav='rules'" class="btn btn-primary">Rules</button>
+						<button (click)="services.logout();" class="btn btn-primary">Log out</button>
+
+					</div>
 				</div>
 			</div>
-		</div>
-		<div  style="position:fixed;width:100%;top:50%">	
-			<div class="col-xs-12">			
-				<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email"></cursor>
+			<div style="position:fixed;width:100%;top:50%">
+				<div class="col-xs-12">
+					<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email"></cursor>
+				</div>
 			</div>
-		</div>
-		<div  [@fadeState]="fadeState" style="position:fixed;bottom:0;width:100%">	
-			<div class="col-xs-12">			
-				<players  [@fadeState]="fadeState" *ngIf="services.nav=='players'"></players>
-				<info  [@fadeState]="fadeState" *ngIf="services.nav=='info'"></info>
-				<bet  [@fadeState]="fadeState" *ngIf="services.nav=='bet'"></bet>
-				<chat  [@fadeState]="fadeState" *ngIf="services.nav=='chat'"></chat>
+			<div [@fadeState]="fadeState" style="position:fixed;bottom:0;width:100%">
+				<div class="col-xs-12">
+					<players [@fadeState]="fadeState" *ngIf="services.nav=='players'"></players>
+					<info [@fadeState]="fadeState" *ngIf="services.nav=='info'"></info>
+					<bet [@fadeState]="fadeState" *ngIf="services.nav=='bet'"></bet>
+					<chat [@fadeState]="fadeState" *ngIf="services.nav=='chat'"></chat>
+				</div>
 			</div>
 		</div>
 	</div>
-	</div>
-</div>
-
-<div *ngIf="!isMobile" [class.bg-blur]="(services.nav !='dashboard' || (services.timba.closed && !services.timba.winner)) && services.user.email " class="intro-header">
-	<home *ngIf="!services.user.email"></home>
-	<section *ngIf="services.timba && services.user.email && ((!services.timba.closed && !services.timba.winner) || (services.timba.closed && services.timba.winner))" id="about" style="height:100%">
-		<user-session (return)="services.nav = $event" (logOut)="services.logout();"></user-session>
-		<div class="container" style="height:100%">
-			<div class="row" style="height:100%">
-				<div class="col-lg-4 col-xs-12" style="height:100%">
-					<players [@fadeState]="fadeState" ></players>
-				</div>
-				<div class="col-lg-4 col-xs-12" style="height:100%">
-					<div class="row" style="height:25%">
-						<info  style="display:block" [@fadeState]="fadeState"  ></info>
-					</div>
-					<div class="row" style="height:55%">
-						<cursor (showOrHide)="showOrHide($event)" *ngIf="services.user.email && services.nav=='dashboard'"></cursor>
-					</div>
-					<div class="row" style="height:20%">
-						<bet style="display:block" [@fadeState]="fadeState" ></bet>
-					</div>
-				</div>
-				<div class="col-lg-4  col-xs-12" style="height:100%">
-					<chat [@fadeState]="fadeState" ></chat>
-				</div>
-			</div>
-		</div>
-	</section>
 </div>

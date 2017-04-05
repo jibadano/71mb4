@@ -6,6 +6,7 @@
 		<tr class="player-row" *ngFor="let player of services.timba.players">
 			<td style="text-align:left;width:85%">{{player.email}}</td>
 			<td style="width:15%">$ {{player.bets * services.timba.betAmount}}</td>
+			<td style="width:15%">{{player.active}}</td>
 		</tr>
 	</table>
 </div>
