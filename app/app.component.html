@@ -72,8 +72,8 @@
 				<p>1. No hablar de la timba.</p>
 				<p>2. No hablar de la timba, en serio.</p>
 				<p>3. Se juega todos los miércoles.</p>
-				<p>4. Cierra a las 16:00hs.</p>
-				<p>5. Una vez recaudado arranca la timba.</p>
+				<p>4. Arranca automáticamente a las 16:00hs previo aviso por mail. El que no llegó a apostar para esa hora se jode!!</p>
+				<p>5. Para jugar deben solicitar crédito en el menú <i class="fa fa-bars"></i> y traerme la plata. Una vez aprobado lo tienen disponible para apostar.</p>
 				<p>6. Apuesta mínima $10. Apuesta máxima $500.</p>
 				<p>7. Si solo querés ver, podes no apostar.</p>
 				<br>
@@ -204,7 +204,7 @@
 							<th>Solicitud</th>
 							<th></th>
 						</thead>
-						<tr *ngFor="let user of users">
+						<tr *ngFor="let user of users | orderBy : ['email']">
 							<td>{{user.email}}</td>
 							<td>$ {{user.balance * services.timba.betAmount}}</td>
 							<td>
