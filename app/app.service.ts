@@ -18,8 +18,8 @@ export class AppService implements OnInit{
     active:boolean = false;
     socketId = '';
     playing = true;
-    socket : any = io.connect('http://192.168.0.7:8081');
-    //socket : any = io.connect('http://186.22.78.117:8081');
+    //socket : any = io.connect('http://192.168.0.7:8081');
+    socket : any = io.connect('http://186.22.78.117:8081');
 
     exception : any;
 

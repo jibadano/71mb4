@@ -24,7 +24,8 @@ var AppService = (function () {
         this.active = false;
         this.socketId = '';
         this.playing = true;
-        this.socket = io.connect('http://192.168.0.7:8081');
+        //socket : any = io.connect('http://192.168.0.7:8081');
+        this.socket = io.connect('http://186.22.78.117:8081');
         setInterval(function () {
             var playTime = new Date();
             playTime.setHours(_this.timba.playTime);
