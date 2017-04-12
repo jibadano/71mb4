@@ -27,8 +27,8 @@ export class AppService implements OnInit{
       
        setInterval(() => {
           let playTime = new Date();
-          playTime.setHours(this.timba.playTime);
-          playTime.setMinutes(30);
+          playTime.setHours(16);
+          playTime.setMinutes(0);
           playTime.setSeconds(0);
           let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
           this.timeCountDown = this.dhms(diff);

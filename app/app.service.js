@@ -28,8 +28,8 @@ var AppService = (function () {
         this.socket = io.connect('http://186.22.78.117:8081');
         setInterval(function () {
             var playTime = new Date();
-            playTime.setHours(_this.timba.playTime);
-            playTime.setMinutes(30);
+            playTime.setHours(16);
+            playTime.setMinutes(0);
             playTime.setSeconds(0);
             var diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
             _this.timeCountDown = _this.dhms(diff);
