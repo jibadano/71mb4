@@ -22,34 +22,34 @@ export class RouletteComponent implements OnInit {
 	initialRounds = 10*this.services.timba.players.length;
 	accRounds = 15*this.services.timba.players.length;
   ngOnInit(){
+	  	
 		$("#welcome").css("opacity","1");
 		setTimeout(()=>{
 			$("#welcome").css("opacity","0");
-		},4000);
-		setTimeout(()=>{
-			this.addPlayerRoulette(0);
-			this.addPlayerRouletteFade(0);
-		},5000);
-		
-		this.services.socket.on('timbaStart', (timba)=>{
 			setTimeout(()=>{
-				this.showAndHide("three");
+				this.addPlayerRoulette(0);
+				this.addPlayerRouletteFade(0);
 				setTimeout(()=>{
-					this.showAndHide("two");
+					this.showAndHide("three");
 					setTimeout(()=>{
-						this.showAndHide("one");
+						this.showAndHide("two");
 						setTimeout(()=>{
-							this.rotate(timba.winnerIndex);
+							this.showAndHide("one");
 							setTimeout(()=>{
-								this.services.nav='winner';							
-							},24000);
-						},2000);				
+								this.rotate(this.services.timba.winnerIndex);
+								setTimeout(()=>{
+									this.services.playing = false;
+									this.services.nav='winner';							
+								},24000);
+							},2000);				
+						},2000);
 					},2000);
-				},2000);
-				console.log(timba.winner);
-				console.log(timba.winnerIndex);
-			},500 * this.services.timba.players.length);
-		});
+				},500 * this.services.timba.players.length);
+			},1000);
+		},4000);
+		
+		
+			
 	}
 
 

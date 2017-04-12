@@ -31,11 +31,81 @@ var logType = {CHAT:0, LOGIN:1, LOGOUT:2, KICKED:3,TIMBA:4};
 
 //Timba session
 var timba = {
+	playTime: 16,
 	betAmount: 10,
 	maxBetsPerPlayer : 50,
 	date: new Date(),
 	log: [{type:logType.TIMBA, email: 'timbaBot@', msg: 'Timba has been created successfully!'}],
-	players: [],
+	players: [
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4},
+	{email:'usuario1@gmail.com', bets:4}
+
+],
 	winner: undefined,
 	winnerIndex: 0,
 	closed: false,
@@ -46,7 +116,7 @@ var timba = {
 //Init
 
 var timbaTime = new Date();
-timbaTime.setHours(16);
+timbaTime.setHours(timba.playTime);
 timbaTime.setMinutes(0);
 timbaTime.setSeconds(0);
 
@@ -54,7 +124,8 @@ var firstNotifyTime = 600000;
 var lastNotifyTime = 60000; 
 var initialRemainingTime = timbaTime - new Date().getTime() - firstNotifyTime - lastNotifyTime;
 
-setTimeout(firstNotify, initialRemainingTime);
+if(initialRemainingTime > 0)
+	setTimeout(firstNotify, initialRemainingTime);
 
 
 function firstNotify(){
@@ -86,7 +157,6 @@ function lastNotify(){
 function startTimba(){
 	timba.running = true;
 	timba.closed = true;
-	sendTimba();
 	var finalList = [];
 	for(var i=0; i<timba.players.length;i++)
 		for(var j=0; j< timba.players[i].bets; j++)
@@ -94,27 +164,23 @@ function startTimba(){
 	
 	if(finalList.length > 0){
 		random.get(finalList.length, function(winnerIndex){
-			console.log('winnerIndex: ' + winnerIndex);
 			timba.winnerIndex = getPlayerIndex(finalList[winnerIndex]);
-			setTimeout(function(){
-				sendTimbaStart();
-				setTimeout(function(){
-					timba.winner = timba.players[timba.winnerIndex].email;
-					addBotLog(logType.TIMBA, 'GANADOR: ' + timba.winner);
-					timba.players.forEach(function(player){
-						database.findUser({email:player.email}, function(err, usr) {
-							usr.balance -= player.bets;
-							sendUser(socketsByUser[usr.email], usr);
-							usr.save();
-						});
-					});
-					database.insertTimba(timba, function(err, tmb){
-						if(err)
-							console.log(err);
-					});
-					sendTimba();
-				},30000);
-			},6000);
+			timba.winner = timba.players[timba.winnerIndex].email;
+			addBotLog(logType.TIMBA, 'GANADOR: ' + timba.winner);
+			timba.players.forEach(function(player){
+				database.findUser({email:player.email}, function(err, usr) {
+					if(usr){
+						usr.balance -= player.bets;
+						sendUser(socketsByUser[usr.email], usr);
+						usr.save();
+					}
+				});
+			});
+			database.insertTimba(timba, function(err, tmb){
+				if(err)
+					console.log(err);
+			});
+			sendTimba();
 		});
 		
 	}
@@ -332,13 +398,21 @@ suggest : function (user, data, then){
 setActiveFlag : function (user, data, then){
 	var i = getPlayerIndex(user.email);
 	
-	if(!timba.closed && i != -1){
+	if(i != -1){
 		timba.players[i].active = data.flag;
 		sendTimba();
 	}
 
 	return then(null, '');
 },
+
+
+//START TIMBA
+startTimba : function (user, data, then){
+	startTimba();
+	then(null,'');
+},
+
 
 //SERVICES END
 }
@@ -385,7 +459,7 @@ function login(req, res) {
 			return res.end(eh.USER.AUTH_FAILED);
 		
 		if(getPlayerIndex(email) == -1){
-			timba.players.push({email:user.email, bets:0});
+			timba.players.push({email:user.email, bets:0, active:true});
 			timba.log.push({type:logType.LOGIN, email: 'timbaBot@', msg: user.email + ' connected'});
 			sendTimba();
 		}
@@ -502,12 +576,13 @@ function redirect(req, res){
 */
 function execService(req, res) {
 	getData(req, function(serviceExecution){
-		if(!req.session.user){
-			serviceExecution.err = eh.USER.SESSION_EXPIRED;
-			return res.end(JSON.stringify(serviceExecution));
-		}
-
 		try{
+			if(!req.session.user){
+				serviceExecution.err = eh.USER.SESSION_EXPIRED;
+				return res.end(JSON.stringify(serviceExecution));
+			}
+
+		
 			services[serviceExecution.serviceId](req.session.user, serviceExecution.data, function(err, data){
 				serviceExecution.data = data;
 				if(err)
@@ -549,8 +624,6 @@ function sendTimba(){
 }
 
 function sendUser(socketId, user){
-	console.log('sendUser: ' + user);
-	console.log('socketId: ' + socketId);
 	var socket = getSocket(socketId);
 	if(socket)
 		socket.emit('userChange',user);
@@ -577,11 +650,12 @@ var getData = function(req, then){
 	 });
 
 	req.addListener('end',function (){
-		var dataObj = JSON.parse(data);
-		console.log('socket session en getData: ' + req.session.socketId);
-		if(req.session.socketId && dataObj.data)
-			dataObj.data.socketId = req.session.socketId;
-		then(dataObj);
+		try{
+			var dataObj = JSON.parse(data);
+			if(req.session.socketId && dataObj.data)
+				dataObj.data.socketId = req.session.socketId;
+			then(dataObj);
+		}catch(e){console.log(e)};
 	});
 }
 
@@ -621,7 +695,6 @@ function removePlayer(email){
 
 function getSocket(id){
 	for(var i=0; i< sockets.length; i++){
-	console.log('socket ' + i + ': ' + sockets[i].conn.id)
 		if(sockets[i].conn.id == id)
 			return sockets[i];
 	}

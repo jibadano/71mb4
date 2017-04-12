@@ -4,9 +4,9 @@
 <div class="players" style="left:0px">
 	<table style="width:100%;">
 		<tr class="player-row" *ngFor="let player of services.timba.players">
-			<td style="text-align:left;width:85%">{{player.email}}</td>
+			<td style="width:5%;padding-right:3px"><i *ngIf="services.user.admin" class="fa fa-eye" [class.notview]="!player.active" [class.view]="player.active" ></i></td>
+			<td style="text-align:left;width:80%">{{player.email}}</td>
 			<td style="width:15%">$ {{player.bets * services.timba.betAmount}}</td>
-			<td style="width:15%">{{player.active}}</td>
 		</tr>
 	</table>
 </div>

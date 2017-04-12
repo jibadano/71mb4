@@ -71,15 +71,29 @@ var AppComponent = (function () {
     };
     AppComponent.prototype.sendBalanceRequest = function () {
         var _this = this;
-        this.services.exec('balanceRequest', { balanceRequest: this.balanceRequest }).then(function () { _this.balanceRequest = 0; });
+        this.services.exec('balanceRequest', { balanceRequest: this.balanceRequest }).then(function () { _this.balanceRequest = 0; _this.getUser(); });
     };
     AppComponent.prototype.cancelBalanceRequest = function (user) {
         var _this = this;
-        this.services.exec('cancelBalanceRequest', { user: user }).then(function (res) { _this.getUsers(); });
+        this.services.exec('cancelBalanceRequest', { user: user }).then(function (res) { _this.getUser(); _this.getUsers(); });
     };
     AppComponent.prototype.approveBalanceRequest = function (user) {
         var _this = this;
         this.services.exec('approveBalanceRequest', { user: user }).then(function (res) { _this.getUsers(); });
+    };
+    AppComponent.prototype.getTotalAmount = function (timba) {
+        var players = timba.players;
+        var totalAmount = 0;
+        for (var i = 0; i < players.length; i++)
+            totalAmount += players[i].bets;
+        return totalAmount * this.services.timba.betAmount;
+    };
+    AppComponent.prototype.getWinnerAmount = function (timba) {
+        var players = timba.players;
+        for (var i = 0; i < players.length; i++)
+            if (players[i].email == timba.winner)
+                return Math.trunc(players[i].bets * this.services.timba.betAmount * 100) / 100;
+        return 0;
     };
     return AppComponent;
 }());

@@ -20,6 +20,7 @@ export class UserSessionComponent implements OnInit {
     constructor( private services: AppService) {}
 
     startTimba(){
+        if(this.services.user.admin)
         this.services.exec('startTimba',{}).then(res =>{});
     }
 

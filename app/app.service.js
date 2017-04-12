@@ -23,11 +23,11 @@ var AppService = (function () {
         this.nav = 'dashboard';
         this.active = false;
         this.socketId = '';
-        //socket : any = io.connect('http://192.168.0.7:8081');
-        this.socket = io.connect('http://186.22.78.117:8081');
+        this.playing = true;
+        this.socket = io.connect('http://192.168.0.7:8081');
         setInterval(function () {
             var playTime = new Date();
-            playTime.setHours(22);
+            playTime.setHours(_this.timba.playTime);
             playTime.setMinutes(30);
             playTime.setSeconds(0);
             var diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);

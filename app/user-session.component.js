@@ -18,7 +18,8 @@ var UserSessionComponent = (function () {
         this.logOut = new core_1.EventEmitter();
     }
     UserSessionComponent.prototype.startTimba = function () {
-        this.services.exec('startTimba', {}).then(function (res) { });
+        if (this.services.user.admin)
+            this.services.exec('startTimba', {}).then(function (res) { });
     };
     UserSessionComponent.prototype.closeTimba = function () {
         this.services.exec('closeTimba', {}).then(function (res) { });

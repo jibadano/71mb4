@@ -2,25 +2,24 @@
 <div style="z-index:2">
 	<div class="info-row" style="text-align: left;">
 		<div class="info-title">
-		<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Apuesta
+			<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Apuesta
 		</div>
 		<div class="info-value">$ {{services.getPlayerAmount()}}</div>
-			<button (click)="setBet('ADD')" class="btn btn-primary" style="">
-				<i class="fa fa-plus" style="text-align: center;padding-right: 5px;"></i> 		 
-			</button>
-			<button (click)="setBet('SUBSTRACT')" class="btn btn-primary" style="">
-				<i class="fa fa-minus" style="text-align: center;padding-right: 5px;"></i>
-			</button>
-		
+		<button *ngIf="!services.timba.running" (click)="setBet('ADD')" class="btn btn-primary" style="">
+			<i class="fa fa-plus" style="text-align: center;padding-right: 5px;"></i> 		 
+		</button>
+		<button *ngIf="!services.timba.running" (click)="setBet('SUBSTRACT')" class="btn btn-primary" style="">
+			<i class="fa fa-minus" style="text-align: center;padding-right: 5px;"></i>
+		</button>
 	</div>
 	<div class="info-row" style="text-align: left;">
 		<div class="info-title">
 		<i class="fa fa-usd" style="text-align: left;padding-top: 12px;padding-right: 5px;"></i> Saldo
 		</div>
 		<div class="info-value">$ {{services.user.balance * services.timba.betAmount}}</div>
-			<button (click)="services.nav = 'menu'" class="btn btn-primary" style="">
-				Solicitar
-			</button>
+		<button (click)="services.nav = 'menu'" class="btn btn-primary" style="width:94px">
+			Solicitar
+		</button>
 	</div>
 
 </div>

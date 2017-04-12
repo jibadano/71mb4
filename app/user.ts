@@ -4,6 +4,7 @@ export class User {
 	password: string;
 	firstname: string;
 	lastname: string;
+	admin: boolean;
 	groups:[{name: string, friends: User[]}];
 	age: number;
 	position: string;

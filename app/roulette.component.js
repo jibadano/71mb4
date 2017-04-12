@@ -25,30 +25,27 @@ var RouletteComponent = (function () {
         $("#welcome").css("opacity", "1");
         setTimeout(function () {
             $("#welcome").css("opacity", "0");
-        }, 4000);
-        setTimeout(function () {
-            _this.addPlayerRoulette(0);
-            _this.addPlayerRouletteFade(0);
-        }, 5000);
-        this.services.socket.on('timbaStart', function (timba) {
             setTimeout(function () {
-                _this.showAndHide("three");
+                _this.addPlayerRoulette(0);
+                _this.addPlayerRouletteFade(0);
                 setTimeout(function () {
-                    _this.showAndHide("two");
+                    _this.showAndHide("three");
                     setTimeout(function () {
-                        _this.showAndHide("one");
+                        _this.showAndHide("two");
                         setTimeout(function () {
-                            _this.rotate(timba.winnerIndex);
+                            _this.showAndHide("one");
                             setTimeout(function () {
-                                _this.services.nav = 'winner';
-                            }, 24000);
+                                _this.rotate(_this.services.timba.winnerIndex);
+                                setTimeout(function () {
+                                    _this.services.playing = false;
+                                    _this.services.nav = 'winner';
+                                }, 24000);
+                            }, 2000);
                         }, 2000);
                     }, 2000);
-                }, 2000);
-                console.log(timba.winner);
-                console.log(timba.winnerIndex);
-            }, 500 * _this.services.timba.players.length);
-        });
+                }, 500 * _this.services.timba.players.length);
+            }, 1000);
+        }, 4000);
     };
     RouletteComponent.prototype.showAndHide = function (n) {
         $("#" + n).css("opacity", "1");

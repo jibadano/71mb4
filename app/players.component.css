@@ -19,3 +19,11 @@
     width: 80%;
     position: absolute;
 }
+
+.view{
+    color:#2ecc71;
+}
+
+.notview{
+    color:#e74c3c;
+}

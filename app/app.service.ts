@@ -17,21 +17,22 @@ export class AppService implements OnInit{
     nav:string='dashboard';
     active:boolean = false;
     socketId = '';
-    //socket : any = io.connect('http://192.168.0.7:8081');
-    socket : any = io.connect('http://186.22.78.117:8081');
+    playing = true;
+    socket : any = io.connect('http://192.168.0.7:8081');
+    //socket : any = io.connect('http://186.22.78.117:8081');
 
     exception : any;
 
     constructor(private http: Http) {
       
-      setInterval(() => {
-        let playTime = new Date();
-        playTime.setHours(22);
-        playTime.setMinutes(30);
-        playTime.setSeconds(0);
-        let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
-        this.timeCountDown = this.dhms(diff);
-     }, 1000);
+       setInterval(() => {
+          let playTime = new Date();
+          playTime.setHours(this.timba.playTime);
+          playTime.setMinutes(30);
+          playTime.setSeconds(0);
+          let diff = Math.floor((playTime.getTime() - new Date().getTime()) / 1000);
+          this.timeCountDown = this.dhms(diff);
+      }, 1000);
     };
 
     exec(serviceId : string, data: any): Promise<any>{
@@ -106,8 +107,7 @@ export class AppService implements OnInit{
 	  }
 
     ngOnInit(){
-     
-      
+    
     }
 
 

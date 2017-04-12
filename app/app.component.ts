@@ -94,16 +94,34 @@ export class AppComponent {
   }
 
    sendBalanceRequest(){
-    this.services.exec('balanceRequest',{balanceRequest: this.balanceRequest}).then(() =>{this.balanceRequest = 0});
+    this.services.exec('balanceRequest',{balanceRequest: this.balanceRequest}).then(() =>{this.balanceRequest = 0;this.getUser()});
   }
 
   cancelBalanceRequest(user:User){
-    this.services.exec('cancelBalanceRequest',{user:user}).then(res =>{this.getUsers()});
+    this.services.exec('cancelBalanceRequest',{user:user}).then(res =>{this.getUser();this.getUsers()});
   }
 
   approveBalanceRequest(user:User){
     this.services.exec('approveBalanceRequest',{user:user}).then(res =>{this.getUsers()});
   }
+
+  getTotalAmount(timba: Timba):number{
+    let players = timba.players;
+      let totalAmount = 0;
+      for(var i = 0; i<players.length;i++)
+        totalAmount += players[i].bets;
+    
+      return totalAmount * this.services.timba.betAmount;
+  }
+
+  getWinnerAmount(timba: Timba):number{
+      let players = timba.players;
+      for(var i = 0; i<players.length;i++)
+        if(players[i].email == timba.winner)
+          return Math.trunc(players[i].bets * this.services.timba.betAmount*100)/100;
+      
+      return 0;
+    }
 
 
 }
