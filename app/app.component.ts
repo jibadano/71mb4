@@ -114,6 +114,11 @@ export class AppComponent {
       return totalAmount * this.services.timba.betAmount;
   }
 
+  startTimba(){
+     if(this.services.user.admin)
+        this.services.exec('startTimba',{}).then(res =>{});
+  }
+
   getWinnerAmount(timba: Timba):number{
       let players = timba.players;
       for(var i = 0; i<players.length;i++)

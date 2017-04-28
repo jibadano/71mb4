@@ -312,9 +312,11 @@ addLog : function (user, data, then){
 	else if(!user.admin)
 		return then('user violation',undefined);
 	
-	timba.log.push(data.log);
-	sendTimba();
-	sendLog();
+	if(data.log && data.log.msg){
+		timba.log.push(data.log);
+		sendTimba();
+		sendLog();
+	}
 	return then(undefined,timba);
 },
 

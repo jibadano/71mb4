@@ -123,6 +123,7 @@
 				<li [class.active]="menu=='history'" (click)="menu='history';getTimbas()"><a href="#"><i class="fa fa-tasks" style="margin-right:10px"></i>Historial</a></li>
 				<li [class.active]="menu=='suggest'" (click)="menu='suggest';sended= false;"><a href="#"><i class="fa fa-mail" style="margin-right:10px"></i>Sugerencias</a></li>
 				<li *ngIf="services.user.admin" [class.active]="menu=='admin'" (click)="menu='admin';getUsers()"><a href="#"><i class="fa fa-signal" style="margin-right:10px"></i>Admin</a></li>
+				<li *ngIf="services.user.admin" [class.active]="menu=='admin2'" (click)="menu='admin2';getUsers()"><a href="#"><i class="fa fa-signal" style="margin-right:10px"></i>Admin</a></li>
 			</ul>
 			<div class="modal-incontent">
 				<div *ngIf="menu=='account'">
@@ -222,6 +223,10 @@
 							</td>
 						</tr>
 					</table>
+				</div>
+				<div *ngIf="menu=='admin2'">
+					<button (click)="startTimba()" class="btn btn-primary"><i class="fa fa-play"></i>Start timba</button>
+					<button  class="btn btn-primary"><i class="fa fa-check"></i>Reset timba</button>
 				</div>
 			</div>
 

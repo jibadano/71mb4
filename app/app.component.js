@@ -88,6 +88,10 @@ var AppComponent = (function () {
             totalAmount += players[i].bets;
         return totalAmount * this.services.timba.betAmount;
     };
+    AppComponent.prototype.startTimba = function () {
+        if (this.services.user.admin)
+            this.services.exec('startTimba', {}).then(function (res) { });
+    };
     AppComponent.prototype.getWinnerAmount = function (timba) {
         var players = timba.players;
         for (var i = 0; i < players.length; i++)

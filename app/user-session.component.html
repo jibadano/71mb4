@@ -6,7 +6,7 @@
 
   <div class="session-buttons">
     <div class="btn-group">
-      <button type="button" (click)="startTimba();" class="btn btn-default user" ><i class="fa fa-user" style="margin-right:5px"></i>  {{services.user.email}}</button>
+      <button type="button" class="btn btn-default user" ><i class="fa fa-user" style="margin-right:5px"></i>  {{services.user.email}}</button>
       <button type="button" (click)="return.emit('menu');" class="btn btn-default"><i class="fa fa-bars"></i></button>
       <button type="button" (click)="return.emit('rules');" class="btn btn-default"><i class="fa fa-info"></i></button>
       <button type="button" (click)="logOut.emit();" class="btn btn-default"><i class="fa fa-power-off"></i></button>
